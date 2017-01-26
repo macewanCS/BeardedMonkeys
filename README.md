@@ -1,6 +1,6 @@
 # README
 
-# We are BeardedMonkeys LOL
+# We are BeardedMonkeys
 
 ## Members
 - Hafiz Temuri
