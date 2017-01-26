@@ -7,16 +7,17 @@ If something goes wrong, make sure python 3.4 is installed, and that virtualenv 
 
 source venv/bin/activate
 
-
-Finally, you can install Django using this command (should only do once):
-
-pip install Django 
-
-
-
 Using the virtual environment:
 Now whenever you want to run or do anything with the Django server, you simply need to run:
 
 source venv/bin/activate
 
 at this directory level, and then the shell you're using will be able to issue all python commands correctly for Django until you close it.
+
+Finally, you can install Django using this command (should only do once):
+
+pip install Django
+
+Then run,
+
+python manage.py migrate
