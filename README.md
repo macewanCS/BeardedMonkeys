@@ -3,10 +3,10 @@
 # We are BeardedMonkeys
 
 ## Members
-- Hafiz Temuri
-- Connor Dykstra
-- Mohammed Alhamood
-- Abdullah Alshakhs
+- [Hafiz Temuri](#https://github.com/temurih)
+- [Connor Dykstra](#https://github.com/DykstraC7)
+- [Mohammed Alhamood](#https://github.com/alhamoodm)
+- [Abdullah Alshakhs](#https://github.com/abdullah1413)
 
 ### Hafiz Temuri
 Hi, I am Hafiz Temuri and I am a computer science student. I used to be crazy passionate about ethical hacking since I was in high school, and that lead me computer science. Once I got into the field, I become more interested in web design and development.
