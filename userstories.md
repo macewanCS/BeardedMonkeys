@@ -17,3 +17,7 @@
 9-     As user, I can request assistance to help me sign up.
 
 10-  As user , I can lend a laptop through the website.
+
+11-	As user, I can close my ticket
+
+12-	As user, I can create a ticket for help.
