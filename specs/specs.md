@@ -54,7 +54,7 @@ but cannot otherwise alter anything about the database.
 
 - Tickets (submissions and modifications) are written to existing SQL database for management by IT Department 
 
-### Usability:
+#### Usability:
 
 - System will be usable by all major browsers
 
