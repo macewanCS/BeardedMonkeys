@@ -1,9 +1,9 @@
-PROJECT DESCRIPTION:
+### PROJECT DESCRIPTION:
 
    The Edmonton Public Library’s IT Department currently handles every electronically-submitted issue ticket with very outdated 
 software, causing several difficulties:
 
-o	Tickets cannot be directly submitted, instead being created automatically when an email is sent to a certain address
+- Tickets cannot be directly submitted, instead being created automatically when an email is sent to a certain address
 
 o	Users cannot edit or close their own tickets 
 
@@ -21,7 +21,7 @@ but cannot otherwise alter anything about the database.
 
 
 
-REQUIREMENTS:
+### REQUIREMENTS:
 
 Functional: 
 
@@ -40,7 +40,7 @@ o	Users can see (non-private details of) previously submitted tickets from other
 
 o	Managers can edit tickets from all users within their branch
 
-Technical:
+### Technical:
 
 o	System is web-based
 
@@ -54,7 +54,7 @@ o	System can access existing tickets for users to edit
 
 o	Tickets (submissions and modifications) are written to existing SQL database for management by IT Department 
 
-Usability:
+### Usability:
 
 o	System will be usable by all major browsers
 
@@ -62,9 +62,7 @@ o	System will have mobile support
 
 o	System aids users in creating, submitting, and editing tickets
 
-
-
-WORKFLOW/SYSTEM DESCRIPTION:
+### WORKFLOW/SYSTEM DESCRIPTION:
 
    The web interface will closely follow the established style of the EPL. When the user logs in to the system, they are taken to 
 their personal profile page, which presents a video demonstration of how to use the system. From there the user can submit 
