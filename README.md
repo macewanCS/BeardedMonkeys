@@ -1,5 +1,10 @@
 # README
 
+- [Specs](https://github.com/macewanCS/BeardedMonkeys/blob/master/specs/specs.md)
+- [Mock-ups](https://github.com/macewanCS/BeardedMonkeys/tree/master/specs/mockups)
+- [User Stories](https://github.com/macewanCS/BeardedMonkeys/blob/master/specs/stories.md)
+- [PowerPoint Slides](https://github.com/macewanCS/BeardedMonkeys/blob/master/specs/BeardedMonkeys-%20Presentation.pptx)
+
 # We are BeardedMonkeys
 
 ## Members
@@ -13,13 +18,13 @@ Hi, I am Hafiz Temuri and I am a computer science student. I used to be crazy pa
 
 I have been using core web languages such as HTML, CSS, JavaScript and jQuery for quite a few years. Also, I am a great supporter of WordPress, that means I like to design/develop it's templates and plugins. I am a huge fan of Adobe Creative Design, and I use Adobe Photoshop, Illustrator, After Effects, Premier Pro, InDesign depending on the project. My knowledge of programming language extend to Python, C language, Java, Ruby, VB.net PHP and SQL. I just like to taste everything.
 
-You can checkout my current websites to know me better, http://www.webpro.tech/ and https://www.searchbeast.ca/
+You can checkout my current websites to know me better, [webpro.tech](http://www.webpro.tech/) and [Search Beast](https://www.searchbeast.ca/)
 
-## Abdullah Alshakhs
+### Abdullah Alshakhs##
 I am Abdullah, and I am here to attend the CMPT395 lab and learn more about github and its feature. 
 
 ### Connor Dykstra
 I am Connor Dykstra, and I'm not interested in saying anything interesting about myself.
 
-## Mohammed Al Hamood
+### Mohammed Al Hamood#
 i am Mohammed , and i am here in thursday lab lering how to use github.and i like to cude using C#.
