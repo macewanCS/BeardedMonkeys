@@ -1,6 +1,6 @@
-1-	As a forgettable user, I want to reset my password to access my account.
+1-	As a forgettable user, I can reset my password to access my account.
 
-2-	As user, I should be able to create hardware issue ticket
+2-	As user, I can create hardware issue ticket once I have hardware problem.
 
 3-	As user, I can create a ticket for general questions about EPL services. 
 
@@ -10,11 +10,11 @@
 
 6-	As user, I can manage my log in information through my account page
 
-7-	As manager, I want to view, edit, and close tickets that created from my branch.
+7-	As manager, I can view, edit, and close tickets that created from my branch.
 
-8-	As user, I want to create a ticket that contains sensitive data that is hidden from another department.
+8-	As user, I can create a ticket that contains sensitive data to be hidden from another department.
 
-9-	As IT hardware expert, I want to sort the tickets in a way that only hardware tickets are visible.
+9-	As IT hardware expert, I can sort the tickets in a way that only hardware tickets are visible.
 
 10-	As user, I can view my tickets and other user’s tickets in the same branch.
 
