@@ -1,35 +1,30 @@
-1-	As a forgettable user, I can reset my password to access my account.
+1-	As a user, I can reset my password to access my account.
 
-2-	As user, I can create hardware issue ticket once I have hardware problem.
+2-	As a user, I can create a hardware issue ticket to report a hardware problem.
 
-3-	As user, I can create a ticket for general questions about EPL services. 
+3-	As a user, I can create a ticket for general questions about EPL services. 
 
-4-	As user, I can close my ticket once my issue been resolved itself.
+4-	As a user, I can close a ticket if the reported issue has resolved itself.
 
-5-	As user, I can filter my ticket to show me my software ticket.
+5-	As a user, I can filter my ticket view to show only the software tickets I have submitted.
 
-6-	As user, I can manage my log in information through my account page
+6-	As a user, I can manage my login information through my account page.
 
-7-	As manager, I can view, edit, and close tickets that created from my branch.
+7-	As a manager, I can add information to a ticket that another user created in my branch.
 
-8-	As user, I can create a ticket that contains sensitive data to be hidden from another department.
+8-	As a user, I can create a ticket that contains sensitive data to be hidden from another department.
 
-9-	As IT hardware expert, I can sort the tickets in a way that only hardware tickets are visible.
+9-	As a user, I can view my tickets and other users' tickets in the same branch.
 
-10-	As user, I can view my tickets and other user’s tickets in the same branch.
+10-	As a user, I can edit my ticket if I want to add any useful information.
 
-11-	As user, I can edit my ticket if I want to provide any useful information.
+11-	As a user, I can see the progress of my tickets.
 
-12-	As user, I can see the progress of my ticket.
+12-	As a user, I can sort the tickets within the branch by the username of the submitter.
 
-13-	As IT, I can close a ticket once I solved the problem.
+13- As a manager, I can close a ticket that another user created in my branch.
 
-14-	As IT, I can pick a ticket to work on it.
+14- As a user, I can submit a ticket to reset my password for another EPL system.
 
-15-	As manager, I can approve and disapprove tickets in within my branch.
+15- As a user, I can view the tickets I have submitted to find a particular ticket.
 
-16-	As user, I can distinguish my tickets with green bar.
-
-17-	As IT, I can filter the tickets based on its priority.
-
-18-	As manager, I can filter the tickets in away that only show me the tickets that need approval.
