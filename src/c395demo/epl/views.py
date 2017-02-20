@@ -24,5 +24,5 @@ def login(request):
 
 def manage(request):
     context = {}
-    return render(request, 'epl/manage.html', context)
+    return render(request, 'epl/manage-tickets.html', context)
 
