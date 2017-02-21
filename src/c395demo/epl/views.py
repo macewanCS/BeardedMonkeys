@@ -3,6 +3,8 @@ import random
 
 # Create your views here.
 from django.http import HttpResponse
+# import models
+from epl.models import CallLog
 
 
 def index(request):
@@ -11,6 +13,9 @@ def index(request):
     return render(request, 'epl/index.html', context)
     
 def hardware(request):
+    #number = random.randint(1,6)
+    #numberData = CallLog(Severity = number)
+    #numberData.save()
     context = {}
     return render(request, 'epl/hardware.html', context)
     
