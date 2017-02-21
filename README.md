@@ -5,6 +5,11 @@
 - [User Stories](https://github.com/macewanCS/BeardedMonkeys/blob/master/specs/stories.md)
 - [PowerPoint Slides](https://github.com/macewanCS/BeardedMonkeys/blob/master/specs/BeardedMonkeys-%20Presentation.pptx)
 
+###Admin Login
+**email:** cmpt395@email.com
+**username:** ubuntu
+**password:** asdfghjkl
+
 # We are BeardedMonkeys
 
 ## Members
