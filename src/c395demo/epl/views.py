@@ -16,6 +16,7 @@ def hardware(request):
     #number = random.randint(1,6)
     #numberData = CallLog(Severity = number)
     #numberData.save()
+    
     context = {}
     return render(request, 'epl/hardware.html', context)
     
@@ -28,6 +29,9 @@ def login(request):
     return render(request, 'epl/login.html', context)
 
 def manage(request):
-    context = {}
+    # retriving all the data
+    tickets = CallLog.objects.all()
+    
+    context = { "tickets" : tickets }
     return render(request, 'epl/manage-tickets.html', context)
 

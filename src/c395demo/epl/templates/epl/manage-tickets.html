@@ -4,5 +4,59 @@
 </head>
 <body>
 	<h1>Manage Tickets Page</h1>
+	<hr>
+	{% for ticket in tickets %}
+	    <h3>Ticket Number: </h3>
+	    <p> <b>CallID:</b> {{ ticket.CallID }}</p>
+        <p> <b>CustID:</b> {{ ticket.CustID }}</p>
+        <p> <b>CustType:</b> {{ ticket.CustType }}</p>
+        <p> <b>CallType:</b> {{ ticket.CallType }}</p>
+        <p> <b>Tracker:</b> {{ ticket.Tracker }}</p>
+        <p> <b>CallStatus:</b> {{ ticket.CallStatus }}</p>
+        <p> <b>Severity:</b> {{ ticket.Severity }}</p>
+        <p> <b>CDuration:</b> {{ ticket.CDuration }}</p>
+        <p> <b>CallCount:</b> {{ ticket.CallCount }}</p>
+        <p> <b>StopWatch:</b> {{ ticket.StopWatch }}</p>
+        <p> <b>ClosedBy:</b> {{ ticket.ClosedBy }}</p>
+        <p> <b>ClosedDate:</b> {{ ticket.ClosedDate }}</p>
+        <p> <b>ClosedTime:</b> {{ ticket.ClosedTime }}</p>
+        <p> <b>Symptoms:</b> {{ ticket.Symptoms }}</p>
+        <p> <b>CallResolution:</b> {{ ticket.CallResolution }}</p>
+        <p> <b>RecvdBy:</b> {{ ticket.RecvdBy }}</p>
+        <p> <b>RecvdDate:</b> {{ ticket.RecvdDate }}</p>
+        <p> <b>RecvdTime:</b> {{ ticket.RecvdTime }}</p>
+        <p> <b>ModBy:</b> {{ ticket.ModBy }}</p>
+        <p> <b>ModDate:</b> {{ ticket.ModDate }}</p>
+        <p> <b>ModTime:</b> {{ ticket.ModTime }}</p>
+        <p> <b>DTLastMod:</b> {{ ticket.DTLastMod }}</p>
+        <p> <b>CallSource:</b> {{ ticket.CallSource }}</p>
+        <p> <b>Category:</b> {{ ticket.Category }}</p>
+        <p> <b>TotalAsgnmntTime:</b> {{ ticket.TotalAsgnmntTime }}</p>
+        <p> <b>CatHeading:</b> {{ ticket.CatHeading }}</p>
+        <p> <b>TotalJournalTime:</b> {{ ticket.TotalJournalTime }}</p>
+        <p> <b>TotalTime:</b> {{ ticket.TotalTime }}</p>
+        <p> <b>SL_Callback_Target:</b> {{ ticket.SL_Callback_Target }}</p>
+        <p> <b>SL_Callback_Date:</b> {{ ticket.SL_Callback_Date }}</p>
+        <p> <b>SL_Callback_Time :</b> {{ ticket.SL_Callback_Time }}</p>
+        <p> <b>SL_Resolution_Target:</b> {{ ticket.SL_Resolution_Target }}</p>
+        <p> <b>SL_Resolution_Date:</b> {{ ticket.SL_Resolution_Date }}</p>
+        <p> <b>SL_Resolution_Time:</b> {{ ticket.SL_Resolution_Time }}</p>
+        <p> <b>SL_Clock_Status:</b> {{ ticket.SL_Clock_Status }}</p>
+        <p> <b>SL_Button_Status:</b> {{ ticket.SL_Button_Status }}</p>
+        <p> <b>FirstResolution:</b> {{ ticket.FirstResolution }}</p>
+        <p> <b>SL_Complete_Status:</b> {{ ticket.SL_Complete_Status }}</p>
+        <p> <b>ProblemDesc:</b> {{ ticket.ProblemDesc }}</p>
+        <p> <b>ProbType:</b> {{ ticket.ProbType }}</p>
+        <p> <b>SevChanged:</b> {{ ticket.SevChanged }}</p>
+        <p> <b>Hostname:</b> {{ ticket.Hostname }}</p>
+        <p> <b>Yes_No:</b> {{ ticket.Yes_No }}</p>
+        <p> <b>TimeSpent:</b> {{ ticket.TimeSpent }}</p>
+        <p> <b>Priority:</b> {{ ticket.Priority }}</p>
+        <p> <b>Dueby:</b> {{ ticket.Dueby }}</p>
+        <p> <b>PastDue:</b> {{ ticket.PastDue }}</p>
+        <p> <b>SaveFlag:</b> {{ ticket.SaveFlag }}</p>
+        <p> <b>TempTime:</b> {{ ticket.TempTime }}</p>
+	    <hr>
+	{% endfor %}
 </body>
 </html>
