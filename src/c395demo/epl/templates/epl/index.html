@@ -1,17 +1,21 @@
 <html>
 <head>
-	<title>EPL Home Page</title>
 	{% load static %}
 	<link rel="stylesheet" type="text/css" href="{% static '/demo/main.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static '/demo/grid.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static '/demo/normalize.css' %}">
 </head>
 <body>
 	<header>
 		<img src="{% static 'demo/epl-logo.png' %}" alt="epl logo">
 		<nav>
 			<li>Add Tickets</li>
-			<li>Check Tickets</li>
-			<li>Something</li>
+			<a href="{% url 'manage' %}"><li>Manage/View Tickets</li></a>
 		</nav>
 	</header>
+	<div class="row">
+	    {% block content %}
+        {% endblock %}
+    </div>
 </body>
 </html>

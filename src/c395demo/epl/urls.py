@@ -8,4 +8,5 @@ urlpatterns = [
     url(r'^software/', views.software, name='software'),
     url(r'^login/', views.login, name='login'),
     url(r'^manage-tickets/', views.manage, name='manage'),
+    url(r'^general/', views.general, name='general'),
 ]

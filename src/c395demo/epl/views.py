@@ -11,7 +11,7 @@ def index(request):
     #return HttpResponse("Hello, world. You're at the demo index!!!!1")
     context = { 'diceroll': str(random.randint(1,6)) }
     return render(request, 'epl/index.html', context)
-    
+
 def hardware(request):
     #number = random.randint(1,6)
     #numberData = CallLog(Severity = number)
@@ -19,10 +19,22 @@ def hardware(request):
     
     context = {}
     return render(request, 'epl/hardware.html', context)
-    
+
 def software(request):
     context = {}
     return render(request, 'epl/software.html', context)
+
+def service(request):
+    context = {}
+    return render(request, 'epl/service.html', context)
+
+def general(request):
+    context = {}
+    return render(request, 'epl/general.html', context)
+
+def password(request):
+    context = {}
+    return render(request, 'epl/password.html', context)
 
 def login(request):
     context = {}
