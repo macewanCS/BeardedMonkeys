@@ -27,6 +27,7 @@ li{
 	list-style-type: none;
 	display: inline;
 	padding: 10px;
+	border: 1px solid #ccc;
 }
 
 li:hover{
@@ -36,6 +37,11 @@ li:hover{
 .row{
     width: 90%;
     margin: 0 auto;
+}
+
+a{
+    color: inherit;
+    text-decoration: inherit;
 }
 
 /*
