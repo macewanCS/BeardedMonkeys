@@ -1,8 +1,6 @@
-<html>
-<head>
-	<title>Hardware Tickets</title>
-</head>
-<body>
-	<h1>Hardware Tickets</h1>
-</body>
-</html>
+<h1>Hardware Ticket</h>
+<form role="form action="" method="post">
+    {% csrf_tokem %}
+    {{ from.as_p }}
+   <button type="submit">Submit</button>
+</form>					
