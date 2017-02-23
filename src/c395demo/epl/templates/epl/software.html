@@ -1,8 +1,6 @@
-<html>
-<head>
-	<title>Software Tickets</title>
-</head>
-<body>
-	<h1>Software Tickets</h1>
-</body>
-</html>
+<h1>Software Ticket</h1>
+<form role="form action="" method="post">
+    {% csrf_token%}
+    {{ from.as_p }}
+   <button type="submit">Submit</button>
+</form>
