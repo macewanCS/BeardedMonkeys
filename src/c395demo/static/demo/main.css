@@ -27,10 +27,21 @@ li{
 	list-style-type: none;
 	display: inline;
 	padding: 10px;
+	border: 1px solid #ccc;
 }
 
 li:hover{
 	background-color: #ccc;
+}
+
+.row{
+    width: 90%;
+    margin: 0 auto;
+}
+
+a{
+    color: inherit;
+    text-decoration: inherit;
 }
 
 /*
@@ -79,11 +90,11 @@ li:hover{
 	}
 
 	#nav ul li a:hover {
-		color: #9b4048; /* Lighter red */
+		color: #9b4048; /* Lighter red
 	}
 
 	#nav ul li a.selected {
-		color: #781d2e; /* Raspberry */
+		color: #781d2e; /* Raspberry
 		font-weight: bold;
 	}
 
