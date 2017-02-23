@@ -9,6 +9,11 @@
 </head>
 <body>
 	<h1>Hardware Tickets</h1>
+  <form role="form action="" method="post">
+    {% csrf_tokem %}
+    {{ from.as_p }}
+   <button type="submit">Submit</button>
+  </form>	
 </body>
 </html>
 
