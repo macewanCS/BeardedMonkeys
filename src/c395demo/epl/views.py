@@ -3,6 +3,7 @@ import random
 
 # Create your views here.
 from django.http import HttpResponse
+from .forms import HardwareTicketForm, SoftwareTicketForm
 # import models
 from epl.models import CallLog
 
@@ -18,11 +19,20 @@ def hardware(request):
     #numberData.save()
     
     context = {}
-    return render(request, 'epl/hardware.html', context)
+    #return render(request, 'epl/hardware.html', context)
+    form_class = HardwareTicketForm
+    return render(request, 'epl/hardware.html', {
+        'form': form_class,
+    })
 
 def software(request):
     context = {}
-    return render(request, 'epl/software.html', context)
+    #return render(request, 'epl/software.html', context)
+    form_class = SoftwareTicketForm
+    return render(request, 'epl/software.html', {
+        'form': form_class,
+    })
+    
 
 def service(request):
     context = {}

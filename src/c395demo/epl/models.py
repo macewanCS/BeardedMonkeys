@@ -1,4 +1,5 @@
 from django.db import models
+from epl.choices import *
 
 # Create your models here.
 
@@ -53,4 +54,22 @@ class CallLog(models.Model):
     SaveFlag = models.CharField(max_length=5,default='NULL')
     TempTime = models.IntegerField(default=0)
     
-    
+class HardwareTicket(models.Model):
+	asset_id = models.CharField(max_length=200)
+	equipment_type = models.CharField(
+		max_length=3,
+		choices=EQUIPMENT_TYPE_CHOICES,
+		default=NONE)
+	problem_description = models.TextField(max_length=500, default=' ')
+	error_messages = models.CharField(max_length=500,blank=True)
+	file_upload = models.BinaryField(blank=True)
+	device_name = models.CharField(max_length=200,blank=True)
+	
+class SoftwareTicket(models.Model):
+	system = models.CharField(choices=SOFTWARE_CHOICES,
+		default=NONE,
+		max_length=200)
+	system_offline = models.CharField(choices=YES_NO_CHOICE, max_length=1)
+	problem_description = models.CharField(max_length=500)
+	steps_replicate_problem = models.CharField(max_length=500)
+	file_upload = models.BinaryField()
