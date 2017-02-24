@@ -9,10 +9,13 @@
 <body>
 	<header>
 		<a href="{% url 'index' %}"><img src="{% static 'demo/epl-logo.png' %}" alt="epl logo"></a>
-		<nav>
-			<a href="#"><li>Add Tickets</li></a>
-			<a href="{% url 'manage' %}"><li>Manage/View Tickets</li></a>
-		</nav>
+		{% if user.is_authenticated %}
+		    <nav>
+			    <a href="#"><li>Add Tickets</li></a>
+			    <a href="{% url 'manage' %}"><li>Manage/View Tickets</li></a>
+			    <a href="/logout"><li>Logout</li></a>
+		    </nav>
+	    {% endif %}
 	</header>
 	<div class="row">
 	    {% block content %}
