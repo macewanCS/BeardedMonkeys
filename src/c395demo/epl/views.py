@@ -5,6 +5,7 @@ from django.shortcuts import redirect
 
 # Create your views here.
 from django.http import HttpResponse
+from .forms import HardwareTicketForm, SoftwareTicketForm
 # import models
 from epl.models import CallLog
 
@@ -39,7 +40,11 @@ def hardware(request):
     #numberData.save()
     
     context = {}
-    return render(request, 'epl/hardware.html', context)
+    #return render(request, 'epl/hardware.html', context)
+    form_class = HardwareTicketForm
+    return render(request, 'epl/hardware.html', {
+        'form': form_class,
+    })
 
 # software tickets page view
 def software(request):
@@ -48,7 +53,12 @@ def software(request):
         return redirect('/login')
     
     context = {}
-    return render(request, 'epl/software.html', context)
+    #return render(request, 'epl/software.html', context)
+    form_class = SoftwareTicketForm
+    return render(request, 'epl/software.html', {
+        'form': form_class,
+    })
+    
 
 # service tickets page view
 def service(request):
