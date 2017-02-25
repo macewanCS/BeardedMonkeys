@@ -1,3 +1,4 @@
+from datetime import datetime
 from django.shortcuts import render
 import random
 
@@ -7,7 +8,7 @@ from django.shortcuts import redirect
 from django.http import HttpResponse
 from .forms import HardwareTicketForm, SoftwareTicketForm
 # import models
-from epl.models import CallLog
+from epl.models import CallLog, Asgnmnt, ProbType
 
 # import for user authentication
 from .forms import UserLogin
@@ -34,10 +35,10 @@ def hardware(request):
     if (not request.user.is_authenticated()):
         return redirect('/login')
         
-    #example of how to save data
-    #number = random.randint(1,6)
-    #numberData = CallLog(Severity = number)
-    #numberData.save()
+    form = HardwareTicketForm(request.POST or None)
+    if form.is_valid():
+        # saving data into the database
+        msg = database_saved(form, request.user.username)
     
     context = {}
     #return render(request, 'epl/hardware.html', context)
@@ -131,4 +132,127 @@ def logout_view(request):
     logout(request)
     context = {}
     return render(request, 'epl/logout.html', context)
+
+def parsing(string, parse):
+    return string.split(parse)
+    
+# saving data into database
+def database_saved(form, username):
+    try:
+        # getting data from the form
+        asset_tag = form.cleaned_data.get("asset_tag")
+        equipment_type = form.cleaned_data.get("equipment_type")
+        problem_description = form.cleaned_data.get("problem_description")
+        error_messages = form.cleaned_data.get("error_messages")
+        file_upload = form.cleaned_data.get("file_upload")
+        device_name = form.cleaned_data.get("device_name")
+
+        # equipment type
+        probType_ProbType = equipment_type
+        callLog_Symptoms = equipment_type
+        asgnmnt_Description = equipment_type
+
+        # asset tag
+        callLog_Symptoms += "`"
+        asgnmnt_Description += "`"
+        callLog_Symptoms += asset_tag
+        asgnmnt_Description += asset_tag
+
+        # device name
+        callLog_Symptoms += "`"
+        asgnmnt_Description += "`"
+        callLog_Symptoms += device_name
+        asgnmnt_Description += device_name
+
+        # description of the problem
+        callLog_Symptoms += "`"
+        asgnmnt_Description += "`"
+        callLog_Symptoms += problem_description
+        asgnmnt_Description += problem_description
+
+        # error messages
+        callLog_Symptoms += "`"
+        asgnmnt_Description += "`"
+        callLog_Symptoms += error_messages
+        asgnmnt_Description += error_messages
+
+        # priority
+        if ( equipment_type == "Sorter" ):
+            callLog_Priority = "1"
+            
+        elif( equipment_type == "Smart Chute" or 
+            equipment_type == "Self-checkout" ):
+            callLog_Priority = "2"
+            
+        else:
+            callLog_Priority = "3"
+
+        # call source
+        callLog_CallSource = "Web"
+
+        # assigned team name
+        if( equipment_type == "PC" or 
+            equipment_type == "Laptop" ):
+            asgnmnt_TeamName = "Help Desk Team"
+            
+        else:
+            asgnmnt_TeamName = "Project Team"
+
+        # assigned by
+        asgnmnt_AssignedBy = "Selfserve"
+
+        # assignment status
+        asgnmnt_Status = "Unacknowledged"
+
+        # current timestamp
+        callLog_RecvdDate = str(datetime.now())
+        callLog_RecvdTime = callLog_RecvdDate
+        asgnmnt_DateAssign = callLog_RecvdDate
+        asgnmnt_TimeAssign = callLog_RecvdDate
+
+        # user ID
+        callLog_CustID = username
+
+        # tracker
+        callLog_Tracker = "selfserve"
+
+        # call log status
+        callLog_Status = "Open"
+
+        # CallLog Table
+        callLog_table = CallLog(
+            Symptoms = callLog_Symptoms,
+            Priority = callLog_Priority,
+            CallSource = callLog_CallSource,
+            RecvdDate = callLog_RecvdDate,
+            RecvdTime = callLog_RecvdTime,
+            CustID = callLog_CustID,
+            Tracker = callLog_Tracker,
+            CallStatus = callLog_Status
+        )
+
+        # Asgnmnt Table
+        asgnmnt_table = Asgnmnt(
+            Description = asgnmnt_Description,
+            TeamName = asgnmnt_TeamName,
+            AssignedBy = asgnmnt_AssignedBy,
+            Status = asgnmnt_Status,
+            DateAssign = asgnmnt_DateAssign,
+            TimeAssign = asgnmnt_TimeAssign
+        )
+
+        # ProbType Table
+        probType_table = ProbType(
+            ProbType = probType_ProbType
+        )
+
+        # Saving data into the database
+        callLog_table.save()
+        asgnmnt_table.save()
+        probType_table.save()
+            
+        return "Ticket added sucessfully"
+        
+    except:
+        return "Something went wrong"
 
