@@ -11,7 +11,31 @@
 	<h1>Hardware Tickets</h1>
 	<form role="form" action="" method="post">
     {% csrf_token %}
-    {{ form.as_p }}
+    <P>Asset Tag (<a href="javascript:alert('An asset tag is ....');">What is an Asset ID?</a>)</P>
+    {{form.asset_tag}}
+    <div class="required">*</div>
+    <P></P> 
+    <DIV>
+        <TABLE WIDTH="100%">
+            <TR>
+                <TD WIDTH="30%"><P>Equipment Type:</P></TD>
+                <TD><P>Computer/Device Name</P></TD>
+            </TR>
+            <TR>
+                <TD>{{form.equipment_type}} <div class="required">*</div></TD>
+                <TD>{{form.device_name}}</TD>
+            </TR>
+        </TABLE>
+    <DIV>
+    <P>Problem Description: </P>
+    {{form.problem_description}}
+    <div class="required">*</div>
+    <P>Share Any Error Messages</P>
+    {{form.error_messages}}
+    <div class="required">*</div>
+    <P></P>
+    {{form.file_upload}}
+    <P></P>
     <button type="submit">Submit</button>
 </form>	
 </body>
