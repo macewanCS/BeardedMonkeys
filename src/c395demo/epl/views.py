@@ -95,12 +95,20 @@ def manage(request):
         return redirect('/login')
         
     # retriving all the data
-    tickets = CallLog.objects.all()
+    callLogs = CallLog.objects.all()
+    asgnmnts = Asgnmnt.objects.all()
+    probTypes = ProbType.objects.all()
     
-    context = { "tickets" : tickets }
+    context = { 
+        "callLogs" : callLogs,
+        "asgnmnts" : asgnmnts,
+        "probTypes" : probTypes
+        }
     return render(request, 'epl/manage-tickets.html', context)
 
+#---------------------------------
 # login and user authentication
+#---------------------------------
 
 # login page view
 def login_view(request):
@@ -136,6 +144,10 @@ def logout_view(request):
 def parsing(string, parse):
     return string.split(parse)
     
+#------------------------------------
+# data saving for hardware tickets
+#------------------------------------
+
 # saving data into database
 def database_saved(form, username):
     try:
