@@ -82,6 +82,18 @@ table{
     background-color: #ccc;
 }
 
+#main-nav{
+    display: block;
+}
+
+#sub{
+    display: none;
+}
+
+#add{
+    cursor: pointer;
+}
+
 /*
 .title {
     height: 50px;

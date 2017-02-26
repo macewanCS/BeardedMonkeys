@@ -5,15 +5,40 @@
 	<link rel="stylesheet" type="text/css" href="{% static '/demo/grid.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static '/demo/normalize.css' %}">
 	<link rel="icon" href="{% static '/demo/favicon.png' %}" sizes="16x16 32x32" type="image/png">
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	
+	<script>
+	    $(document).ready(function(){
+	        $("#add").click(function(){
+	            $("#sub").toggle();
+	        });
+	    });
+	</script>
 </head>
 <body>
 	<header>
 		<a href="{% url 'index' %}"><img src="{% static 'demo/epl-logo.png' %}" alt="epl logo"></a>
 		{% if user.is_authenticated %}
 		    <nav>
-			    <a href="#"><li>Add Tickets</li></a>
-			    <a href="{% url 'manage' %}"><li>Manage/View Tickets</li></a>
-			    <a href="/logout"><li>Logout</li></a>
+		        <ul id="main-nav">
+			        <a id="add"><li>Add Tickets</li></a>
+			        <a href="{% url 'manage' %}"><li>Manage/View Tickets</li></a>
+			        <a href="/logout"><li>Logout</li></a>
+		        </ul>
+			    
+			    <ul id="sub">
+                    <a href="{% url 'hardware' %}"><li>Hardware Tickets</li></a>
+                    <a href="{% url 'software' %}"><li>Software Tickets</li></a>
+                    <a href="{% url 'service' %}"><li>Service Request Tickets</li></a>
+                    <a href="{% url 'general' %}"><li>General/Other Tickets</li></a>
+                    <a href="{% url 'password' %}"><li>Password Recovery Tickets</li></a>
+			    </ul>
+		    </nav>
+		    
+		    <nav>
+                
 		    </nav>
 	    {% endif %}
 	</header>
