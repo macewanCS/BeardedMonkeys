@@ -65,6 +65,7 @@ tr:hover {
 }
 
 th {
+    padding: 15px !important;
     background-color: #4CAF50;
     color: white;
 }
@@ -76,6 +77,8 @@ table{
 .button{
     padding: 5px 7px;
     background-color: #b7b7b7;
+    border-radius: 10px;
+    border: 2px solid #000;
 }
 
 .button:hover{

@@ -217,7 +217,8 @@ def database_saved(form, username):
         asgnmnt_Status = "Unacknowledged"
 
         # current timestamp
-        callLog_RecvdDate = str(datetime.now())
+        temp = parsing(str(datetime.now()), " ")
+        callLog_RecvdDate = temp[0]
         callLog_RecvdTime = callLog_RecvdDate
         asgnmnt_DateAssign = callLog_RecvdDate
         asgnmnt_TimeAssign = callLog_RecvdDate
@@ -240,7 +241,8 @@ def database_saved(form, username):
             RecvdTime = callLog_RecvdTime,
             CustID = callLog_CustID,
             Tracker = callLog_Tracker,
-            CallStatus = callLog_Status
+            CallStatus = callLog_Status,
+            Category = "Hardware"
         )
 
         # Asgnmnt Table
