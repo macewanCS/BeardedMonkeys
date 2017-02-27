@@ -24,16 +24,19 @@ table, th, td {
 	        <th>Priority</th>
 	        <th>Options</th>
 	    </tr>
-	    {% for ticket in tickets %}
+	    {% for callLog in callLogs %}
 	    <tr>
-	        <td> {{ ticket.CallID }} </td>
-	        <td> {{ ticket.CustID }} </td>
-	        <td> {{ ticket.RecvdDate }} </td>
-	        <td> {{ ticket.Category }} </td>
-	        <td> {{ ticket.CallStatus }} </td>
-	        <td> {{ ticket.Priority }} </td>
-	        <td><a href="view.asp">View</a><a href="edit.asp">Edit</a>
-	            <a href="close.asp">Close</a></td>
+	        <td> {{ callLog.CallID }} </td>
+	        <td> {{ callLog.CustID }} </td>
+	        <td> 20{{ callLog.RecvdDate }} </td>
+	        <td> {{ callLog.Category }} </td>
+	        <td> {{ callLog.CallStatus }} </td>
+	        <td> {{ callLog.Priority }} </td>
+	        <td>
+	            <a class="button" href="view.asp">View</a>
+                <a class="button" href="edit.asp">Edit</a>
+                <a class="button" href="close.asp">Close</a>
+            </td>
 	    {% endfor %}
 </body>
 </html>

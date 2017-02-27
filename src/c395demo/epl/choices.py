@@ -6,7 +6,6 @@ EQUIPMENT_TYPE_CHOICES = (
 	(LAPTOP, 'Laptop'),
 	(TABLET, 'Tablet'),
 	(MOBILE, 'Mobile Phone'),
-	(NONE, ''),
 )
 
 INOVAH = 'iNovah'
