@@ -218,7 +218,7 @@ def database_saved(form, username):
 
         # current timestamp
         temp = parsing(str(datetime.now()), " ")
-        callLog_RecvdDate = temp[0]
+        callLog_RecvdDate = temp[0][2:]
         callLog_RecvdTime = callLog_RecvdDate
         asgnmnt_DateAssign = callLog_RecvdDate
         asgnmnt_TimeAssign = callLog_RecvdDate
