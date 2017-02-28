@@ -51,6 +51,7 @@ a{
 }
 
 table, th, td {
+    padding:0;
     border-collapse: collapse;
 }
 
@@ -95,6 +96,14 @@ table{
 
 #add{
     cursor: pointer;
+}
+
+/* Sortable tables */
+table.sortable thead {
+    background-color:#eee;
+    color:#666666;
+    font-weight: bold;
+    cursor: default;
 }
 
 /*

@@ -1,0 +1,27 @@
+{% extends 'epl/index.html' %}
+
+{% block content %}
+
+<html>
+<head>
+	<title>View Ticket Page</title>
+</head>
+	<h1>View Ticket Page</h1>
+<body>
+
+    <p> <span style="font-weight:bold;">ID: </span> {{ CallID }} </p>
+    <p> <span style="font-weight:bold;">CustID: </span> {{ CustID }} </p>
+    <p> <span style="font-weight:bold;">RecvdDate: </span> {{ RecvdDate }} </p>
+    <p> <span style="font-weight:bold;">EquipType: </span> {{ EquipType }} </p>
+    <p> <span style="font-weight:bold;">AssetTag: </span> {{ AssetTag }} </p>
+    <p> <span style="font-weight:bold;">DeviceName: </span> {{ DeviceName }} </p>
+    <p> <span style="font-weight:bold;">Description: </span> {{ Description }} </p>
+    <p> <span style="font-weight:bold;">ErrorMsg: </span> {{ ErrorMsg }} </p>
+    <p> <span style="font-weight:bold;">Category: </span> {{ Category }} </p>
+    <p> <span style="font-weight:bold;">CallStatus: </span> {{ CallStatus }} </p>
+    <p> <span style="font-weight:bold;">Priority: </span> {{ Priority }} </p>
+
+</body>
+</html>
+
+{% endblock %}

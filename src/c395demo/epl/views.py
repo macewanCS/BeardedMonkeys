@@ -105,6 +105,30 @@ def manage(request):
         "probTypes" : probTypes
         }
     return render(request, 'epl/manage-tickets.html', context)
+    
+def detail(request, id):
+    ticket = CallLog.objects.get(CallID = id)
+    
+    recvdDate = "20"
+    recvdDate += ticket.RecvdDate
+    
+    temp = parsing(ticket.Symptoms, "`")
+    
+    context = {
+        "CallID" : ticket.CallID,
+        "CustID" : ticket.CustID,
+        "Symptoms" : ticket.Symptoms,
+        "RecvdDate" : recvdDate,
+        "EquipType" : temp[0],
+        "AssetTag" : temp[1],
+        "DeviceName" : temp[2],
+        "Description" : temp[3],
+        "ErrorMsg" : temp[4],
+        "Category" : ticket.Category,
+        "CallStatus" : ticket.CallStatus,
+        "Priority" : ticket.Priority
+    }
+    return render(request, 'epl/view-ticket.html', context)
 
 #---------------------------------
 # login and user authentication
