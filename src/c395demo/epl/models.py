@@ -4,7 +4,7 @@ from epl.choices import *
 # Create your models here.
 
 class CallLog(models.Model):
-    CallID = models.CharField(max_length=8,default='NULL')
+    CallID = models.AutoField(primary_key=True)
     CustID = models.CharField(max_length=50,default='NULL')
     CustType = models.CharField(max_length=50,default='NULL')
     CallType = models.CharField(max_length=100,default='NULL')
