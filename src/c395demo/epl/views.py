@@ -52,7 +52,12 @@ def software(request):
     # user must need to login to view pages
     if (not request.user.is_authenticated()):
         return redirect('/login')
-    
+        
+    form = SoftwareTicketForm(request.POST or None)
+    if form.is_valid():
+        # saving data into the database
+        msg = soft_database_saved(form, request.user.username)
+        
     context = {}
     #return render(request, 'epl/software.html', context)
     form_class = SoftwareTicketForm
@@ -293,4 +298,117 @@ def database_saved(form, username):
         
     except:
         return "Something went wrong"
+
+# saving data into database for software
+def soft_database_saved(form, username):
+    try:
+        # getting data from the form
+        system = form.cleaned_data.get("system")
+        system_offline = form.cleaned_data.get("system_offline")
+        problem_description = form.cleaned_data.get("problem_description")
+        steps_replicate_problem = form.cleaned_data.get("steps_replicate_problem")
+        file_upload = form.cleaned_data.get("file_upload")
+
+        # system type
+        probType_ProbType = system
+        callLog_Symptoms = system
+        asgnmnt_Description = system
+        
+
+        # offline/broken
+        callLog_Symptoms += "`"
+        asgnmnt_Description += "`"
+        callLog_Symptoms += system_offline
+        asgnmnt_Description += system_offline
+        
+
+        # description of problem
+        callLog_Symptoms += "`"
+        asgnmnt_Description += "`"
+        callLog_Symptoms += problem_description
+        asgnmnt_Description += problem_description
+        
+        # priority
+        if ( system_offline == "Yes" ):
+            callLog_Priority = "1"
+        else:
+            callLog_Priority = "3"
+
+        # call source
+        callLog_CallSource = "Web"
+
+        
+        # assigned team name
+        if( probType_ProbType == "Internet/Network" or probType_ProbType=="S:/ drive"):
+            asgnmnt_TeamName = "Netwrok Team"
+            
+        
+        elif( probType_ProbType == "Workflows"):
+            asgnmnt_TeamName = "ILS Team"
+            
+        else:
+            asgnmnt_TeamName = "Help Desk Team"
+        
+
+        # assigned by
+        asgnmnt_AssignedBy = "Selfserve"
+        
+
+        # assignment status
+        asgnmnt_Status = "Unacknowledged"
+
+        # current timestamp
+        callLog_RecvdDate = str(datetime.now())
+        callLog_RecvdTime = callLog_RecvdDate
+        asgnmnt_DateAssign = callLog_RecvdDate
+        asgnmnt_TimeAssign = callLog_RecvdDate
+
+        # user ID
+        callLog_CustID = username
+
+        # tracker
+        callLog_Tracker = "selfserve"
+
+        # call log status
+        callLog_Status = "Open"
+        
+        # CallLog Table
+        callLog_table = CallLog(
+            Symptoms = callLog_Symptoms,
+            Priority = callLog_Priority,
+            CallSource = callLog_CallSource,
+            RecvdDate = callLog_RecvdDate,
+            RecvdTime = callLog_RecvdTime,
+            CustID = callLog_CustID,
+            Tracker = callLog_Tracker,
+            CallStatus = callLog_Status
+        )
+        
+
+        # Asgnmnt Table
+        asgnmnt_table = Asgnmnt(
+            Description = asgnmnt_Description,
+            TeamName = asgnmnt_TeamName,
+            AssignedBy = asgnmnt_AssignedBy,
+            Status = asgnmnt_Status,
+            DateAssign = asgnmnt_DateAssign,
+            TimeAssign = asgnmnt_TimeAssign
+        )
+
+        # ProbType Table
+        probType_table = ProbType(
+            ProbType = probType_ProbType
+        )
+
+        # Saving data into the database
+        callLog_table.save()
+        asgnmnt_table.save()
+        probType_table.save()
+        
+            
+        return "Ticket added sucessfully"
+        
+    except:
+        return "Something went wrong"
+
 
