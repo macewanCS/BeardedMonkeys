@@ -1,7 +1,6 @@
 LAPTOP = 'LT'
 TABLET = 'TAB'
 MOBILE = 'PH'
-NONE = ''
 EQUIPMENT_TYPE_CHOICES = (
 	(LAPTOP, 'Laptop'),
 	(TABLET, 'Tablet'),
@@ -12,13 +11,11 @@ INOVAH = 'iNovah'
 WEBSITE = 'Website'
 SOFTWARE_CHOICES = (
 	(INOVAH, 'iNovah'),
-	(WEBSITE, 'EPL Website'),
-	(NONE, '')
+	(WEBSITE, 'EPL Website')
 )
 
-YES = 'Y'
-NO = 'N'
 YES_NO_CHOICE = (
-	(YES, 'Yes'),
-	(NO, 'No')
+	('YES', 'Yes'),
+	('NO', 'No'),
+	("I am not sure", "I am not sure")
 )
