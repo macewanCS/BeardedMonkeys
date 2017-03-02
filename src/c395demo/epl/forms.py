@@ -41,7 +41,7 @@ class HardwareTicketForm(forms.Form):
 		label=mark_safe('Asset Tag (<a href="/questions/whyname/" target="_blank">Where to find the Asset Tag</a>?)'))
 	equipment_type = forms.ChoiceField(choices=EQUIPMENT_TYPE_CHOICES)
 	problem_description = forms.CharField(widget=forms.Textarea)
-	error_messages = forms.CharField(widget=forms.Textarea)
+	error_messages = forms.CharField(widget=forms.Textarea, required=False)
 	file_upload = forms.FileField(required=False)
 	device_name = forms.CharField(max_length=200, required=False)
 	
