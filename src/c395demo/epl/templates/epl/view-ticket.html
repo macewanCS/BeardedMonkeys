@@ -9,32 +9,49 @@
 	<h1>View Ticket Page</h1>
 <body>
 
+    <P><span style="font-weight:bold;">Ticket ID:</span> {{ CallID }}</P> 
+    
+    <P><span style="font-weight:bold;">Posted on</span> {{ RecvdDate }} 
+       <span style="font-weight:bold;">Category:</span> {{ Category }} 
+       <span style="font-weight:bold;">Status:</span> {{ CallStatus }}
+       <a class="button" href="{% url 'manage' %}">Back</a>
+       <a class="button" href="edit.asp">Edit</a> 
+       <a class="button" href="resolve.asp">Resolved</a></P>
+     
+	<P><span style="font-weight:bold;">Posted by</span> {{ CustID }}</P>
+
     {% if Category == "Hardware" %}
-        <p> <span style="font-weight:bold;">ID: </span> {{ CallID }} </p>
-        <p> <span style="font-weight:bold;">CustID: </span> {{ CustID }} </p>
-        <p> <span style="font-weight:bold;">RecvdDate: </span> {{ RecvdDate }} </p>
-        <p> <span style="font-weight:bold;">EquipType: </span> {{ EquipType }} </p>
-        <p> <span style="font-weight:bold;">AssetTag: </span> {{ AssetTag }} </p>
-        <p> <span style="font-weight:bold;">DeviceName: </span> {{ DeviceName }} </p>
-        <p> <span style="font-weight:bold;">Description: </span> {{ Description }} </p>
-        <p> <span style="font-weight:bold;">ErrorMsg: </span> {{ ErrorMsg }} </p>
-        <p> <span style="font-weight:bold;">Category: </span> {{ Category }} </p>
-        <p> <span style="font-weight:bold;">CallStatus: </span> {{ CallStatus }} </p>
-        <p> <span style="font-weight:bold;">Priority: </span> {{ Priority }} </p>
+        <p> <span style="font-weight:bold;">Type of equipment: </span> 
+        <br>{{ EquipType }} </p>
+        <p> <span style="font-weight:bold;">Asset tag: </span> 
+        <br>{{ AssetTag }} </p>
+        <p> <span style="font-weight:bold;">Name of device: </span> 
+        <br>{{ DeviceName }} </p>
+        <p> <span style="font-weight:bold;">Error message displayed: </span> 
+        <br>{{ ErrorMsg }} </p>
     {% endif %}
     
     {% if Category == "Software" %}
-        <p> <span style="font-weight:bold;">ID: </span> {{ CallID }} </p>
-        <p> <span style="font-weight:bold;">CustID: </span> {{ CustID }} </p>
-        <p> <span style="font-weight:bold;">RecvdDate: </span> {{ RecvdDate }} </p>
-        <p> <span style="font-weight:bold;">Which system?: </span> {{ System }} </p>
-        <p> <span style="font-weight:bold;">Is the system completely offline/broken?: </span> {{ Offline }} </p>
-        <p> <span style="font-weight:bold;">Description: </span> {{ Description }} </p>
-        <p> <span style="font-weight:bold;">Category: </span> {{ Category }} </p>
-        <p> <span style="font-weight:bold;">CallStatus: </span> {{ CallStatus }} </p>
-        <p> <span style="font-weight:bold;">Priority: </span> {{ Priority }} </p>
+        <p> <span style="font-weight:bold;">Which system?: </span> 
+        <br>{{ System }} </p>
+        <p> <span style="font-weight:bold;">Is the system completely offline/broken?: </span>
+        <br>{{ Offline }} </p>     
+    {% endif %}
+    
+    {% if Category == "Service" %}
+        <p>Category details currently not implemented!</p>
+    {% endif %}
+    
+    {% if Category == "Password" %}
+        <p>Category details currently not implemented!</p>
+    {% endif %}
+    
+    {% if Category == "General" %}
+        <p>Category details currently not implemented!</p>
     {% endif %}
 
+    <P> <span style="font-weight:bold;">Further details: </span> 
+    <br>{{ Description }} </p>
 </body>
 </html>
 
