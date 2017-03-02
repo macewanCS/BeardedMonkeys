@@ -119,20 +119,38 @@ def detail(request, id):
     
     temp = parsing(ticket.Symptoms, "`")
     
-    context = {
-        "CallID" : ticket.CallID,
-        "CustID" : ticket.CustID,
-        "Symptoms" : ticket.Symptoms,
-        "RecvdDate" : recvdDate,
-        "EquipType" : temp[0],
-        "AssetTag" : temp[1],
-        "DeviceName" : temp[2],
-        "Description" : temp[3],
-        "ErrorMsg" : temp[4],
-        "Category" : ticket.Category,
-        "CallStatus" : ticket.CallStatus,
-        "Priority" : ticket.Priority
-    }
+    if ( ticket.Category == "Hardware" ):
+        context = {
+            "CallID" : ticket.CallID,
+            "CustID" : ticket.CustID,
+            "Symptoms" : ticket.Symptoms,
+            "RecvdDate" : recvdDate,
+            "EquipType" : temp[0],
+            "AssetTag" : temp[1],
+            "DeviceName" : temp[2],
+            "Description" : temp[3],
+            "ErrorMsg" : temp[4],
+            "Category" : ticket.Category,
+            "CallStatus" : ticket.CallStatus,
+            "Priority" : ticket.Priority
+        }
+        
+    elif ( ticket.Category == "Software" ):
+        context = {
+            "CallID" : ticket.CallID,
+            "CustID" : ticket.CustID,
+            "RecvdDate" : recvdDate,
+            "System" : temp[0],
+            "Offline" : temp[1],
+            "Description" : temp[2],
+            "Category" : ticket.Category,
+            "CallStatus" : ticket.CallStatus,
+            "Priority" : ticket.Priority
+        }
+        
+    else:
+        context = {}
+        
     return render(request, 'epl/view-ticket.html', context)
 
 #---------------------------------
@@ -358,10 +376,11 @@ def soft_database_saved(form, username):
         asgnmnt_Status = "Unacknowledged"
 
         # current timestamp
-        callLog_RecvdDate = str(datetime.now())
-        callLog_RecvdTime = callLog_RecvdDate
-        asgnmnt_DateAssign = callLog_RecvdDate
-        asgnmnt_TimeAssign = callLog_RecvdDate
+        temp = parsing(str(datetime.now()), " ")
+        callLog_RecvdDate = temp[0][2:]
+        callLog_RecvdTime = temp[1]
+        asgnmnt_DateAssign = temp[0][2:]
+        asgnmnt_TimeAssign = temp[1]
 
         # user ID
         callLog_CustID = username
@@ -381,7 +400,8 @@ def soft_database_saved(form, username):
             RecvdTime = callLog_RecvdTime,
             CustID = callLog_CustID,
             Tracker = callLog_Tracker,
-            CallStatus = callLog_Status
+            CallStatus = callLog_Status,
+            Category = "Software"
         )
         
 
