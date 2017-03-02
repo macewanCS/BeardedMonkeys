@@ -21,18 +21,21 @@
 	        <th>Options</th>
 	    </tr>
 	    {% for callLog in callLogs %}
-	    <tr>
-	        <td> {{ callLog.CallID }} </td>
-	        <td> {{ callLog.CustID }} </td>
-	        <td> 20{{ callLog.RecvdDate }} </td>
-	        <td> {{ callLog.Category }} </td>
-	        <td> {{ callLog.CallStatus }} </td>
-	        <td> {{ callLog.Priority }} </td>
-	        <td>
-	            <a class="button" href="{% url 'detail' id=callLog.CallID %}">View</a>
-                <a class="button" href="edit.asp">Edit</a>
-                <a class="button" href="resolved.asp">Resolved</a>
-            </td>
+	        {% if callLog.Category in available %}
+                <tr>
+                    <td> {{ callLog.CallID }} </td>
+                    <td> {{ callLog.CustID }} </td>
+                    <td> 20{{ callLog.RecvdDate }} </td>
+                    <td> {{ callLog.Category }} </td>
+                    <td> {{ callLog.CallStatus }} </td>
+                    <td> {{ callLog.Priority }} </td>
+                    <td>
+                        <a class="button" href="{% url 'detail' id=callLog.CallID %}">View</a>
+                        <a class="button" href="edit.asp">Edit</a>
+                        <a class="button" href="resolved.asp">Resolved</a>
+                    </td>
+                </tr>
+            {% endif %}
 	    {% endfor %}
 </body>
 </html>

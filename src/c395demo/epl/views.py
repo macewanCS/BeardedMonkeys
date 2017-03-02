@@ -107,7 +107,8 @@ def manage(request):
     context = { 
         "callLogs" : callLogs,
         "asgnmnts" : asgnmnts,
-        "probTypes" : probTypes
+        "probTypes" : probTypes,
+        "available" : ["Hardware", "Software", "Service", "Other", "Password"]
         }
     return render(request, 'epl/manage-tickets.html', context)
     
@@ -195,7 +196,7 @@ def parsing(string, parse):
 # data saving for hardware tickets
 #------------------------------------
 
-# saving data into database
+# saving hardware data into database
 def database_saved(form, username):
     try:
         # getting data from the form
@@ -232,6 +233,10 @@ def database_saved(form, username):
         # error messages
         callLog_Symptoms += "`"
         asgnmnt_Description += "`"
+        
+        if ( error_messages == "" or error_messages == " " ):
+            error_messages = "NULL"
+        
         callLog_Symptoms += error_messages
         asgnmnt_Description += error_messages
 
