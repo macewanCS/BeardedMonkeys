@@ -8,14 +8,9 @@
 	
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-	
-	<script>
-	    $(document).ready(function(){
-	        $("#add").click(function(){
-	            $("#sub").toggle();
-	        });
-	    });
-	</script>
+    
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
+
 </head>
 <body>
 	<header>
@@ -27,14 +22,6 @@
 			        <a href="{% url 'manage' %}"><li>Manage/View Tickets</li></a>
 			        <a href="/logout"><li>Logout</li></a>
 		        </ul>
-			    
-			    <ul id="sub">
-                    <a href="{% url 'hardware' %}"><li>Hardware Tickets</li></a>
-                    <a href="{% url 'software' %}"><li>Software Tickets</li></a>
-                    <a href="{% url 'service' %}"><li>Service Request Tickets</li></a>
-                    <a href="{% url 'general' %}"><li>General/Other Tickets</li></a>
-                    <a href="{% url 'password' %}"><li>Password Recovery Tickets</li></a>
-			    </ul>
 		    </nav>
 		    
 		    <nav>
