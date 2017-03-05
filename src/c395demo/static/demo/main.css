@@ -103,7 +103,7 @@ table{
 .button{
     padding: 5px 7px;
     background-color: #4E4E4E;
-    border-radius: 10px;
+    border-radius: 5px;
     color: #fff;
     margin-right: 3px;
     transition: background-color 0.4s;

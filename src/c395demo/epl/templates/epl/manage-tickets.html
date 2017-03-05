@@ -8,8 +8,9 @@
 	{% load static %}
 	<script src="{% static '/demo/sorttable.js' %}"></script>
 </head>
-	<h1>Manage Tickets Page</h1>
 <body>
+    <h1>Manage Tickets Page</h1>
+    </div>
 	<table class="sortable">
 	    <tr>
 	        <th>ID</th>
@@ -18,6 +19,7 @@
 	        <th>Category</th>
 	        <th>Status</th>
 	        <th>Priority</th>
+	        <th>Description</th>
 	        <th>Options</th>
 	    </tr>
 	    {% for callLog in callLogs %}
@@ -29,6 +31,7 @@
                     <td> {{ callLog.Category }} </td>
                     <td> {{ callLog.CallStatus }} </td>
                     <td> {{ callLog.Priority }} </td>
+                    <td> Description goes here </td>
                     <td>
                         <a class="button" href="{% url 'detail' id=callLog.CallID %}">
                             <i class="fa fa-folder-open-o" aria-hidden="true"></i> View
