@@ -18,24 +18,50 @@ header img{
 }
 
 nav{
-	float: right;
-	margin: 20px;
+    position: absolute;
+    bottom: 0%;
 }
 
 li{
 	list-style-type: none;
 	display: inline;
 	padding: 10px;
-	border: 1px solid #ccc;
 }
 
-li:hover{
-	background-color: #ccc;
+#add{
+    transition: background-color 0.3s;
+}
+
+#add:hover{
+    color: #fff;
+    background-color: #006A2C;
+}
+
+#manage{
+    transition: background-color 0.3s;
+}
+
+#manage:hover{
+    color: #fff;
+    background-color: #182A76;
 }
 
 .row{
     width: 90%;
     margin: 0 auto;
+}
+
+#logout{
+    padding: 10px 25px 10px 22px;
+    float: right;
+    background-color: #E60E64;
+    color: white;
+    font-weight: bold;
+    transition: background-color 1s;
+}
+
+#logout:hover{
+    background-color: #F92479;
 }
 
 a{
@@ -89,10 +115,6 @@ table{
     display: block;
 }
 
-#add{
-    cursor: pointer;
-}
-
 /* Sortable tables */
 table.sortable thead {
     background-color:#eee;
@@ -101,58 +123,4 @@ table.sortable thead {
     cursor: default;
 }
 
-/*
-.title {
-    height: 50px;
-    text-align: centre;
-    padding-left: 20px;
-}
 
-.child {
-	background: #ffdb4c;
-    font-weight: bold;
-	position: relative;
-	top: 50%;
-	transform: translateY(-50%);
-}
-
-#nav {
-	height: 34px;
-	background: #000000;
-}
-
-#nav ul {
-	list-style: none;
-	margin: 0 0 0 30px;
-	padding: 0;
-}
-
-	#nav ul li {
-		list-style: none;
-		float: left;
-		padding: 0 15px;
-		margin: 8px 0;
-		border-left: 1px solid #ffffff;
-		color: #781d2e;
-	}
-
-	#nav ul li:first-child {
-		padding-left: 0;
-		border-left: 0;
-	}
-
-	#nav ul li a, #nav ul li a:link, #nav ul li a:visited {
-		color: #ffffff;
-		text-decoration: none;
-	}
-
-	#nav ul li a:hover {
-		color: #9b4048; /* Lighter red
-	}
-
-	#nav ul li a.selected {
-		color: #781d2e; /* Raspberry
-		font-weight: bold;
-	}
-
-*/

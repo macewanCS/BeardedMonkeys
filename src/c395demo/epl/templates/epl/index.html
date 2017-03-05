@@ -10,24 +10,39 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
+    
+    <link rel="stylesheet" href="{% static '/demo/font-awesome.min.css' %}">
+    <link href="https://fortawesome.github.io/Font-Awesome/assets/font-awesome/css/font-awesome.css" rel="stylesheet">
 
 </head>
 <body>
-	<header>
-		<a href="{% url 'index' %}"><img src="{% static 'demo/epl-logo.png' %}" alt="epl logo"></a>
-		{% if user.is_authenticated %}
-		    <nav>
-		        <ul id="main-nav">
-			        <a id="add"><li>Add Tickets</li></a>
-			        <a href="{% url 'manage' %}"><li>Manage/View Tickets</li></a>
-			        <a href="/logout"><li>Logout</li></a>
-		        </ul>
-		    </nav>
-		    
-		    <nav>
-                
-		    </nav>
-	    {% endif %}
+	<header style="position: relative">
+	    <div class="row">
+	        <div class="col span_1_of_3">
+		        <a href="{% url 'index' %}"><img src="{% static 'demo/epl-logo.png' %}" alt="epl logo"></a>
+	        </div>
+		    {% if user.is_authenticated %}
+		        <div class="col span_1_of_3">
+		            <nav>
+		                <ul id="main-nav">
+			                <a href="{% url 'manage' %}">
+			                    <li id="add">
+			                        <i class="fa fa-plus" aria-hidden="true"></i> Add Tickets
+		                        </li>
+			                </a>
+			                <span style="font-size: 30px;">|</span>
+			                <a href="{% url 'manage' %}">
+			                    <li id="manage">
+			                        <i class="fa fa-eye" aria-hidden="true"></i> Manage/View Tickets
+		                        </li>
+	                        </a>
+		                </ul>
+		            </nav>
+		        </div>
+		        <a href="/logout" id="logout">
+		            <i class="fa fa-sign-out" aria-hidden="true"></i> Logout
+	            </a>
+	        {% endif %}
 	</header>
 	<div class="row">
 	    {% block content %}
