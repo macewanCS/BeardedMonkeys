@@ -117,6 +117,10 @@ table{
     display: block;
 }
 
+ul#main-nav{
+    padding:0;
+}
+
 /* Sortable tables */
 table.sortable thead {
     background-color:#eee;
