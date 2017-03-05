@@ -28,6 +28,11 @@ def index(request):
     #return HttpResponse("Hello, world. You're at the demo index!!!!1")
     context = { 'diceroll': str(random.randint(1,6)) }
     return render(request, 'epl/index.html', context)
+    
+# add ticket page
+def add(request):
+    context = {}
+    return render(request, 'epl/add-ticket.html', context)
 
 # harware tickets page view
 def hardware(request):

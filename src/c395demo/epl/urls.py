@@ -13,6 +13,8 @@ urlpatterns = [
     url(r'^password-recovery/', views.password, name='password'),
     url(r'^service-request/', views.service, name='service'),
     
+    url(r'^add-ticket/', views.add, name='add'),
+    
     url(r'^view-ticket/(?P<id>[0-9]+)/$', views.detail, name='detail'),
     
     url(r'^login/', views.login_view, name='login'),
