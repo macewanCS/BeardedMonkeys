@@ -198,6 +198,21 @@ ul#main-nav{
     padding:0;
 }
 
+#create{
+    margin-bottom: 50px;
+}
+
+#create button{
+    padding: 20px 0;
+    width: 220px;
+    text-align: center;
+}
+
+hr{
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
 /* Sortable tables */
 table.sortable thead {
     background-color:#eee;
