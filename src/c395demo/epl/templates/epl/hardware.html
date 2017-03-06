@@ -11,25 +11,23 @@
 	<h1>Hardware Tickets</h1>
 	<form role="form" action="" method="post">
     {% csrf_token %}
-    <P>Asset Tag (<a href="javascript:alert('An asset tag is ....');">What is an Asset ID?</a>)</P>
+    <P>Asset Tag (<a href="javascript:alert('An asset tag is ....');">What is an Asset ID?</a>) <span class="required">*</span></P>
     {{form.asset_tag}}
-    <div class="required">*</div>
     <P></P> 
     <DIV>
         <TABLE WIDTH="100%">
             <TR>
-                <TD WIDTH="30%"><P>Equipment Type:</P></TD>
-                <TD style="text-align: center;"><P>Computer/Device Name</P></TD>
+                <TD WIDTH="30%"><P>Equipment Type: <span class="required">*</span></P></TD>
+                <TD class="device" style="text-align: center;"><P>Computer/Device Name</P></TD>
             </TR>
             <TR>
-                <TD>{{form.equipment_type}} <div class="required">*</div></TD>
-                <TD style="text-align: center;">{{form.device_name}}</TD>
+                <TD>{{form.equipment_type}}</TD>
+                <TD class="device" style="text-align: center;">{{form.device_name}}</TD>
             </TR>
         </TABLE>
     <DIV>
-    <P>Problem Description: </P>
+    <P>Problem Description: <span class="required">*</span></P>
     {{form.problem_description}}
-    <div class="required">*</div>
     <P>Share Any Error Messages</P>
     {{form.error_messages}}
     <P></P>

@@ -184,6 +184,17 @@ textarea{
     width: 98%;
 }
 
+select:required{
+    padding: 3px 0px 3px 3px;
+    margin: 5px 1px 3px 0px;
+    border: 2px solid #C1C1C1;
+}
+
+select:required:focus{
+    box-shadow: 0 0 5px #FF8C8C;
+    border: 2px solid #FF8C8C;
+}
+
 input[type="text"]:required:focus,
 input[type="password"]:required:focus,
 textarea:required:focus {
