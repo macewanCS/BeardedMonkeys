@@ -194,8 +194,22 @@ def logout_view(request):
     context = {}
     return render(request, 'epl/logout.html', context)
 
+# function parse a string
 def parsing(string, parse):
     return string.split(parse)
+    
+# resolved ticket status
+def resolved(ticket_id):
+    ticket = CallLog.objects.get(CallID=ticket_id)
+    
+    if ( ticket.CallStatus == "Open" ):
+        ticket.CallStatus = "Resolved"
+    else:
+        ticket.CallStatus = "Open"
+        
+    ticket.save()
+    context = {}
+    return render(request, 'epl/manage-tickets.html', context)
     
 #------------------------------------
 # data saving for hardware tickets
