@@ -22,6 +22,7 @@
 	        <th class= "sorttable_nosort">Description</th>
 	        <th class= "sorttable_nosort">Options</th>
 	    </tr>
+	    {% load descGet %}
 	    {% for callLog in callLogs %}
 	        {% if callLog.Category in available %}
                 <tr>
@@ -31,7 +32,7 @@
                     <td> {{ callLog.Category }} </td>
                     <td> {{ callLog.CallStatus }} </td>
                     <td> {{ callLog.Priority }} </td>
-                    <td> Description goes here </td>
+                    <td> {% descGet callLog.CallID %} </td>
                     <td>
                         <a class="button" href="{% url 'detail' id=callLog.CallID %}">
                             <i class="fa fa-folder-open-o" aria-hidden="true"></i> View
