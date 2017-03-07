@@ -6,6 +6,10 @@ body {
 	padding: 0;
 }
 
+h1{
+    color: #347D00;
+}
+
 header{
 	background-color: #fff;
 	width: 100%;
