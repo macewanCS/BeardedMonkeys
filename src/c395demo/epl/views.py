@@ -23,11 +23,17 @@ from django.contrib.auth import (
 def index(request):
     # user must need to login to view pages
     if (not request.user.is_authenticated()):
-        return redirect('/login')    
+        return redirect('/login')
+        
+    username = get_username(request)
     
-    #return HttpResponse("Hello, world. You're at the demo index!!!!1")
-    context = { 'diceroll': str(random.randint(1,6)) }
+    context = { 'username': username }
     return render(request, 'epl/index.html', context)
+    
+# add ticket page
+def add(request):
+    context = {}
+    return render(request, 'epl/add-ticket.html', context)
 
 # harware tickets page view
 def hardware(request):
@@ -118,7 +124,10 @@ def detail(request, id):
     recvdDate = "20"
     recvdDate += ticket.RecvdDate
     
-    temp = parsing(ticket.Symptoms, "`")
+    temp = parsing(ticket.Symptoms, "|")
+    
+    if ( len(temp) <= 1 ):
+        temp = parsing(ticket.Symptoms, "`")
     
     if ( ticket.Category == "Hardware" ):
         context = {
@@ -153,6 +162,14 @@ def detail(request, id):
         context = {}
         
     return render(request, 'epl/view-ticket.html', context)
+
+# return the active username
+def get_username(request):
+    username = None
+    if request.user.is_authenticated():
+        username = request.user.username
+        
+    return username
 
 #---------------------------------
 # login and user authentication
@@ -189,8 +206,22 @@ def logout_view(request):
     context = {}
     return render(request, 'epl/logout.html', context)
 
+# function parse a string
 def parsing(string, parse):
     return string.split(parse)
+    
+# resolved ticket status
+def resolved(ticket_id):
+    ticket = CallLog.objects.get(CallID=ticket_id)
+    
+    if ( ticket.CallStatus == "Open" ):
+        ticket.CallStatus = "Resolved"
+    else:
+        ticket.CallStatus = "Open"
+        
+    ticket.save()
+    context = {}
+    return render(request, 'epl/manage-tickets.html', context)
     
 #------------------------------------
 # data saving for hardware tickets
@@ -213,26 +244,26 @@ def database_saved(form, username):
         asgnmnt_Description = equipment_type
 
         # asset tag
-        callLog_Symptoms += "`"
-        asgnmnt_Description += "`"
+        callLog_Symptoms += "|"
+        asgnmnt_Description += "|"
         callLog_Symptoms += asset_tag
         asgnmnt_Description += asset_tag
 
         # device name
-        callLog_Symptoms += "`"
-        asgnmnt_Description += "`"
+        callLog_Symptoms += "|"
+        asgnmnt_Description += "|"
         callLog_Symptoms += device_name
         asgnmnt_Description += device_name
 
         # description of the problem
-        callLog_Symptoms += "`"
-        asgnmnt_Description += "`"
+        callLog_Symptoms += "|"
+        asgnmnt_Description += "|"
         callLog_Symptoms += problem_description
         asgnmnt_Description += problem_description
 
         # error messages
-        callLog_Symptoms += "`"
-        asgnmnt_Description += "`"
+        callLog_Symptoms += "|"
+        asgnmnt_Description += "|"
         
         if ( error_messages == "" or error_messages == " " ):
             error_messages = "NULL"
@@ -271,9 +302,9 @@ def database_saved(form, username):
         # current timestamp
         temp = parsing(str(datetime.now()), " ")
         callLog_RecvdDate = temp[0][2:]
-        callLog_RecvdTime = callLog_RecvdDate
-        asgnmnt_DateAssign = callLog_RecvdDate
-        asgnmnt_TimeAssign = callLog_RecvdDate
+        callLog_RecvdTime = temp[1][:8]
+        asgnmnt_DateAssign = temp[0][2:]
+        asgnmnt_TimeAssign = temp[1][:8]
 
         # user ID
         callLog_CustID = username
@@ -339,15 +370,15 @@ def soft_database_saved(form, username):
         
 
         # offline/broken
-        callLog_Symptoms += "`"
-        asgnmnt_Description += "`"
+        callLog_Symptoms += "|"
+        asgnmnt_Description += "|"
         callLog_Symptoms += system_offline
         asgnmnt_Description += system_offline
         
 
         # description of problem
-        callLog_Symptoms += "`"
-        asgnmnt_Description += "`"
+        callLog_Symptoms += "|"
+        asgnmnt_Description += "|"
         callLog_Symptoms += problem_description
         asgnmnt_Description += problem_description
         
@@ -383,9 +414,9 @@ def soft_database_saved(form, username):
         # current timestamp
         temp = parsing(str(datetime.now()), " ")
         callLog_RecvdDate = temp[0][2:]
-        callLog_RecvdTime = temp[1]
+        callLog_RecvdTime = temp[1][:8]
         asgnmnt_DateAssign = temp[0][2:]
-        asgnmnt_TimeAssign = temp[1]
+        asgnmnt_TimeAssign = temp[1][:8]
 
         # user ID
         callLog_CustID = username

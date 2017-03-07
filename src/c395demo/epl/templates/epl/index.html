@@ -24,9 +24,15 @@
 		        <div class="col span_1_of_3">
 		            <nav>
 		                <ul id="main-nav">
-			                <a href="{% url 'manage' %}">
+		                    <a href="{% url 'index' %}">
+			                    <li style="color:#009DDC;">
+			                        <i class="fa fa-home fa-2x" aria-hidden="true"></i>
+		                        </li>
+			                </a>
+			                <span style="font-size: 30px;">|</span>
+			                <a href="{% url 'add' %}">
 			                    <li id="add">
-			                        <i class="fa fa-plus" aria-hidden="true"></i> Add Tickets
+			                        <i class="fa fa-plus" aria-hidden="true"></i> Create Tickets
 		                        </li>
 			                </a>
 			                <span style="font-size: 30px;">|</span>
@@ -39,12 +45,14 @@
 		            </nav>
 		        </div>
 		        <a href="/logout" id="logout">
-		            <i class="fa fa-sign-out" aria-hidden="true"></i> Logout
+		            <i class="fa fa-sign-out" aria-hidden="true"></i> Logout, {{ user.get_username }}
 	            </a>
 	        {% endif %}
 	</header>
 	<div class="row">
 	    {% block content %}
+	        <h1>Documentation/Tutorial:</h1>
+	        <title>Home</title>
         {% endblock %}
     </div>
 </body>

@@ -48,11 +48,11 @@ class HardwareTicketForm(forms.Form):
 class SoftwareTicketForm(forms.Form):
 	system = forms.ChoiceField(choices=SOFTWARE_CHOICES,
 		label='Which system?')
-	system_offline = forms.ChoiceField(widget=forms.RadioSelect, choices=YES_NO_CHOICE, required=False,
+	system_offline = forms.ChoiceField(widget=forms.RadioSelect, choices=YES_NO_CHOICE,
 		label='Is the system completely offline/broken?')
 	problem_description = forms.CharField(widget=forms.Textarea,
 		label='Description of the Problem')
-	steps_replicate_problem = forms.CharField(widget=forms.Textarea,
+	steps_replicate_problem = forms.CharField(widget=forms.Textarea, required=False,
 		label='Share any steps to replicate the problem')
 	file_upload = forms.FileField(required=False)
 	
