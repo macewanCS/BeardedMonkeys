@@ -5,10 +5,41 @@
 
 <html>
 <head>
-	<title>Add Tickets Page</title>
+	<title>Create Tickets Page</title>
 </head>
 <body>
-	<h1>Add Tickets Page</h1>
+	<h1>Create Tickets Page</h1>
+	
+	<div id="create">
+	    <!-- Hardware Ticket -->
+	    <h2>Hardware Tickets:</h2>
+	    <p>Description for hardware ticket goes here</p>
+	    <button onclick="location.href='{% url 'hardware' %}'" value="hardware" >Create Hardware Ticket</button>
+	    <hr>
+	
+	    <!-- Software Ticket -->
+	    <h2>Software Tickets:</h2>
+	    <p>Description for software ticket goes here</p>
+	    <button onclick="location.href='{% url 'software' %}'" value="software" >Create Software Ticket</button>
+	    <hr>
+	
+	    <!-- Service Ticket -->
+	    <h2>Service Tickets:</h2>
+	    <p>Description for service ticket goes here</p>
+	    <button onclick="location.href='{% url 'service' %}'" value="service" >Create Service Ticket</button>
+	    <hr>
+	
+	    <!-- General Ticket -->
+	    <h2>General/Other Tickets:</h2>
+	    <p>Description for general/other ticket goes here</p>
+	    <button onclick="location.href='{% url 'general' %}'" value="general" >Create General/Other Ticket</button>
+	    <hr>
+	
+	    <!-- Password Ticket -->
+	    <h2>Password Tickets:</h2>
+	    <p>Description for password ticket goes here</p>
+	    <button onclick="location.href='{% url 'password' %}'" value="password" >Create Password Ticket</button>
+    </div>
 </body>
 </html>
 
