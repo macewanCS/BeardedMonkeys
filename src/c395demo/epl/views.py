@@ -25,9 +25,7 @@ def index(request):
     if (not request.user.is_authenticated()):
         return redirect('/login')
         
-    username = None
-    if request.user.is_authenticated():
-        username = request.user.username
+    username = get_username(request)
     
     context = { 'username': username }
     return render(request, 'epl/index.html', context)
@@ -164,6 +162,14 @@ def detail(request, id):
         context = {}
         
     return render(request, 'epl/view-ticket.html', context)
+
+# return the active username
+def get_username(request):
+    username = None
+    if request.user.is_authenticated():
+        username = request.user.username
+        
+    return username
 
 #---------------------------------
 # login and user authentication
