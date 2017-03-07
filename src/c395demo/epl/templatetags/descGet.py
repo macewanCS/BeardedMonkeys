@@ -9,5 +9,5 @@ def descGet(id):
     temp = ticket.Symptoms.split("`")
     if (ticket.Category == "Hardware"):
         return temp[3][:15]
-    elif (ticke.Category == "Software"):
+    elif (ticket.Category == "Software"):
         return temp[2][:15]
