@@ -11,20 +11,18 @@
 	<h1>Software Tickets</h1>
 	<form role="form" action="" method="post">
     {% csrf_token %}
-    <P>Which system?</P>
+    <P>Which system? <span class="required">*</span></P>
     {{form.system}}
-    <div class="required">*</div>
-    <P>Is the system completely offline/broken?</P>
+    <P>Is the system completely offline/broken? <span class="required">*</span></P>
     {{form.system_offline}}
-    <P>Description of the Problem</P>
+    <P>Description of the Problem <span class="required">*</span></P>
     {{form.problem_description}}
-    <div class="required">*</div>
     <P>Share any steps to replicate the problem</P>
     {{form.steps_replicate_problem}}
-    <P />
+    </P>
     {{form.file_upload}}
-    <P />
-    <button type="submit">Submit</button>
+    </P>
+    <button type="submit" id="submit"><i class="fa fa-play-circle-o" aria-hidden="true"></i> Submit</button>
     </form>
 </body>
 </html>

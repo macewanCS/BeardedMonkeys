@@ -5,20 +5,54 @@
 	<link rel="stylesheet" type="text/css" href="{% static '/demo/grid.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static '/demo/normalize.css' %}">
 	<link rel="icon" href="{% static '/demo/favicon.png' %}" sizes="16x16 32x32" type="image/png">
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
+    
+    <link href="https://fortawesome.github.io/Font-Awesome/assets/font-awesome/css/font-awesome.css" rel="stylesheet">
+
 </head>
 <body>
-	<header>
-		<a href="{% url 'index' %}"><img src="{% static 'demo/epl-logo.png' %}" alt="epl logo"></a>
-		{% if user.is_authenticated %}
-		    <nav>
-			    <a href="#"><li>Add Tickets</li></a>
-			    <a href="{% url 'manage' %}"><li>Manage/View Tickets</li></a>
-			    <a href="/logout"><li>Logout</li></a>
-		    </nav>
-	    {% endif %}
+	<header style="position: relative">
+	    <div class="row">
+	        <div class="col span_1_of_3">
+		        <a href="{% url 'index' %}"><img src="{% static 'demo/epl-logo.png' %}" alt="epl logo"></a>
+	        </div>
+		    {% if user.is_authenticated %}
+		        <div class="col span_1_of_3">
+		            <nav>
+		                <ul id="main-nav">
+		                    <a href="{% url 'index' %}">
+			                    <li style="color:#009DDC;">
+			                        <i class="fa fa-home fa-2x" aria-hidden="true"></i>
+		                        </li>
+			                </a>
+			                <span style="font-size: 30px;">|</span>
+			                <a href="{% url 'add' %}">
+			                    <li id="add">
+			                        <i class="fa fa-plus" aria-hidden="true"></i> Create Tickets
+		                        </li>
+			                </a>
+			                <span style="font-size: 30px;">|</span>
+			                <a href="{% url 'manage' %}">
+			                    <li id="manage">
+			                        <i class="fa fa-eye" aria-hidden="true"></i> Manage/View Tickets
+		                        </li>
+	                        </a>
+		                </ul>
+		            </nav>
+		        </div>
+		        <a href="/logout" id="logout">
+		            <i class="fa fa-sign-out" aria-hidden="true"></i> Logout, {{ user.get_username }}
+	            </a>
+	        {% endif %}
 	</header>
 	<div class="row">
 	    {% block content %}
+	        <h1>Documentation/Tutorial:</h1>
+	        <title>Home</title>
         {% endblock %}
     </div>
 </body>

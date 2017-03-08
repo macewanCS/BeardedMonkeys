@@ -1,25 +1,42 @@
-LAPTOP = 'LT'
-TABLET = 'TAB'
-MOBILE = 'PH'
-NONE = ''
 EQUIPMENT_TYPE_CHOICES = (
-	(LAPTOP, 'Laptop'),
-	(TABLET, 'Tablet'),
-	(MOBILE, 'Mobile Phone'),
-	(NONE, ''),
+	('AWE', 'AWE'),
+    ('Barcode scanner', 'Barcode scanner'),
+    ('Cell phone', 'Cell phone'),
+    ('Gate', 'Gate'),
+    ('Hotspot', 'Hotspot'),
+    ('iPad', 'iPad'),
+    ('Laptop', 'Laptop'),
+    ('Laser printer', 'Laser printer'),
+    ('Monitor / LCD', 'Monitor / LCD'),
+    ('Receipt printer', 'Receipt printer'),
+    ('PC', 'PC'),
+    ('Projector', 'Projector'),
+    ('RFID pad', 'RFID pad'),
+    ('Self-checkout', 'Self-checkout'),
+    ('Smart Chute', 'Smart Chute'),
+    ('Sorter', 'Sorter'),
+    ('Other', 'Other')
 )
 
-INOVAH = 'iNovah'
-WEBSITE = 'Website'
 SOFTWARE_CHOICES = (
-	(INOVAH, 'iNovah'),
-	(WEBSITE, 'EPL Website'),
-	(NONE, '')
+	('Apps.epl.ca', 'Apps.epl.ca'),
+    ('Bibliocommons', 'Bibliocommons'),
+    ('Dayforce', 'Dayforce'),
+    ('iNovah', 'iNovah'),
+    ('Internet/network access', 'Internet/network access'),
+    ('LibraryOnline', 'LibraryOnline'),
+    ('Peoplesoft', 'Peoplesoft'),
+    ('Public website / www.epl.ca', 'Public website / www.epl.ca'),
+    ('SAP', 'SAP'),
+    ('S:/ drive / file share', 'S:/ drive / file share'),
+    ('StaffWeb/Active Directory', 'StaffWeb/Active Directory'),
+    ('VPN', 'VPN'),
+    ('Workflows', 'Workflows'),
+    ('Other', 'Other')
 )
 
-YES = 'Y'
-NO = 'N'
 YES_NO_CHOICE = (
-	(YES, 'Yes'),
-	(NO, 'No')
+	('YES', 'Yes'),
+	('NO', 'No'),
+	("I am not sure", "I am not sure")
 )

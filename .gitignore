@@ -1,5 +1,7 @@
 src/c395demo/db.sqlite3
 src/venv/*
+src/aa/*
+aa/*
 src/c395demo/epl/*.pyc
 src/c395demo/c395demo/*.pyc
 src/c395demo/demo/*.pyc
