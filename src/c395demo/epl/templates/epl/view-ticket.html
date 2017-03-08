@@ -6,20 +6,24 @@
 <head>
 	<title>View Ticket Page</title>
 </head>
-	<h1>View Ticket Page</h1>
 <body>
+	<h1>View Ticket Page</h1>
+	
+    <div class="right">
+        <p>
+            <a class="button" href="{% url 'manage' %}"><i class="fa fa-chevron-circle-left" aria-hidden="true"></i> Back</a>
+            <a class="button" href="edit.asp"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</a> 
+            <a class="button" href="resolve.asp"><i class="fa fa-check" aria-hidden="true"></i> Resolved</a>
+        </p>
+        <p><span style="font-weight:bold;">Posted by</span> {{ CustID }}</p>
+    </div>
 
-    <P><span style="font-weight:bold;">Ticket ID:</span> {{ CallID }}</P> 
-    
-    <P><span style="font-weight:bold;">Posted on</span> {{ RecvdDate }} 
-       <span style="font-weight:bold;">Category:</span> {{ Category }} 
-       <span style="font-weight:bold;">Status:</span> {{ CallStatus }}
-       <a class="button" href="{% url 'manage' %}"><i class="fa fa-chevron-circle-left" aria-hidden="true"></i> Back</a>
-       <a class="button" href="edit.asp"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</a> 
-       <a class="button" href="resolve.asp"><i class="fa fa-check" aria-hidden="true"></i> Resolved</a></P>
+    <H2><span style="font-weight:bold;">Ticket ID:</span> {{ CallID }}</H2> 
+   
+    <P><span style="font-weight:bold;">Posted on</span> {{ RecvdDate }} </P>
+    <P><span style="font-weight:bold;">Category:</span> {{ Category }} </P>
+    <P><span style="font-weight:bold;">Status:</span> {{ CallStatus }}</P>
      
-	<P><span style="font-weight:bold;">Posted by</span> {{ CustID }}</P>
-
     {% if Category == "Hardware" %}
         <p> <span style="font-weight:bold;">What kind of device is having the problem? </span> 
         <br>{{ EquipType }} </p>
@@ -50,7 +54,7 @@
         <p>Category details currently not implemented!</p>
     {% endif %}
 
-    <P> <span style="font-weight:bold;">What are the specific details of the problem? </span> 
+    <p> <span style="font-weight:bold;">What are the specific details of the problem? </span> 
     <br>{{ Description }} </p>
 </body>
 </html>
