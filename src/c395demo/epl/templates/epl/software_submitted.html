@@ -1,0 +1,43 @@
+{% extends 'epl/index.html' %}
+
+{% block content %}
+
+<html>
+<head>
+	<title>Software Ticket Submitted</title>
+</head>
+<body>
+	<h1>Software Ticket Successfully Submitted</h1>
+	
+	<div class="right">
+        <p>
+        <a class="button" href="{% url 'detail' id=CallID %}"><i class="fa fa-folder-open-o" aria-hidden="true"></i> View This Ticket</a>
+        <a class="button" href="/"><i class="fa fa-home" aria-hidden="true"></i> Home</a>
+        <a class="button" href="{% url 'manage' %}"><i class="fa fa-eye" aria-hidden="true"></i> Manage/View All Tickets</a>
+        </p>
+    </div>
+    
+    <p><span style="font-weight:bold;">Below are the details of your recent ticket</span></p>
+
+    <P><span style="font-weight:bold;">Ticket ID:</span> {{ CallID }}</P> 
+    
+    <P><span style="font-weight:bold;">Posted on</span> {{ RecvdDate }} </P>
+    <P><span style="font-weight:bold;">Category:</span> {{ Category }} </P>
+    <P><span style="font-weight:bold;">Status:</span> {{ CallStatus }}</P>
+     
+	<P><span style="font-weight:bold;">Posted by</span> {{ CustID }}</P>
+
+    {% if Category == "Software" %}
+        <p> <span style="font-weight:bold;">Which system?: </span> 
+        <br>{{ System }} </p>
+        <p> <span style="font-weight:bold;">Is the system completely offline/broken?: </span>
+        <br>{{ Offline }} </p>     
+    {% endif %}
+    
+    <P> <span style="font-weight:bold;">Further details: </span> 
+    <br>{{ Description }} </p>
+
+</body>
+</html>
+
+{% endblock %}

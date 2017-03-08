@@ -235,6 +235,10 @@ hr{
     margin-bottom: 50px;
 }
 
+.right{
+    float: right;
+}
+
 /* Sortable tables */
 table.sortable thead {
     background-color:#eee;
