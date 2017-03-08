@@ -24,12 +24,12 @@ def index(request):
     # user must need to login to view pages
     if (not request.user.is_authenticated()):
         return redirect('/login')
-        
+
     username = get_username(request)
-    
+
     context = { 'username': username }
     return render(request, 'epl/index.html', context)
-    
+
 # add ticket page
 def add(request):
     context = {}
@@ -40,12 +40,18 @@ def hardware(request):
     # user must need to login to view pages
     if (not request.user.is_authenticated()):
         return redirect('/login')
-        
+
     form = HardwareTicketForm(request.POST or None)
     if form.is_valid():
         # saving data into the database
         msg = database_saved(form, request.user.username)
-    
+
+        # Get the hardware ticket Id and redirect to the successful
+        # submission page with the hardware ticket info
+        ticketId = getTicketId("Hardware", request.user.username)
+        context = successTicketSummary(request, ticketId)
+        return render(request, "epl/hardware_submitted.html", context)
+
     context = {}
     #return render(request, 'epl/hardware.html', context)
     form_class = HardwareTicketForm
@@ -58,26 +64,32 @@ def software(request):
     # user must need to login to view pages
     if (not request.user.is_authenticated()):
         return redirect('/login')
-        
+
     form = SoftwareTicketForm(request.POST or None)
     if form.is_valid():
         # saving data into the database
         msg = soft_database_saved(form, request.user.username)
-        
+
+        # Get the software ticket Id and redirect to the successful
+        # submission page with the software ticket info
+        ticketId = getTicketId("Software", request.user.username)
+        context = successTicketSummary(request, ticketId)
+        return render(request, "epl/software_submitted.html", context)
+
     context = {}
     #return render(request, 'epl/software.html', context)
     form_class = SoftwareTicketForm
     return render(request, 'epl/software.html', {
         'form': form_class,
     })
-    
+
 
 # service tickets page view
 def service(request):
     # user must need to login to view pages
     if (not request.user.is_authenticated()):
         return redirect('/login')
-    
+
     context = {}
     return render(request, 'epl/service.html', context)
 
@@ -86,7 +98,7 @@ def general(request):
     # user must need to login to view pages
     if (not request.user.is_authenticated()):
         return redirect('/login')
-        
+
     context = {}
     return render(request, 'epl/general.html', context)
 
@@ -95,7 +107,7 @@ def password(request):
     # user must need to login to view pages
     if (not request.user.is_authenticated()):
         return redirect('/login')
-        
+
     context = {}
     return render(request, 'epl/password.html', context)
 
@@ -104,31 +116,31 @@ def manage(request):
     # user must need to login to view pages
     if (not request.user.is_authenticated()):
         return redirect('/login')
-        
+
     # retriving all the data
     callLogs = CallLog.objects.all()
     asgnmnts = Asgnmnt.objects.all()
     probTypes = ProbType.objects.all()
-    
-    context = { 
+
+    context = {
         "callLogs" : callLogs,
         "asgnmnts" : asgnmnts,
         "probTypes" : probTypes,
         "available" : ["Hardware", "Software", "Service", "Other", "Password"]
         }
     return render(request, 'epl/manage-tickets.html', context)
-    
+
 def detail(request, id):
     ticket = CallLog.objects.get(CallID = id)
-    
+
     recvdDate = "20"
     recvdDate += ticket.RecvdDate
-    
+
     temp = parsing(ticket.Symptoms, "|")
-    
+
     if ( len(temp) <= 1 ):
         temp = parsing(ticket.Symptoms, "`")
-    
+
     if ( ticket.Category == "Hardware" ):
         context = {
             "CallID" : ticket.CallID,
@@ -144,7 +156,7 @@ def detail(request, id):
             "CallStatus" : ticket.CallStatus,
             "Priority" : ticket.Priority
         }
-        
+
     elif ( ticket.Category == "Software" ):
         context = {
             "CallID" : ticket.CallID,
@@ -157,10 +169,10 @@ def detail(request, id):
             "CallStatus" : ticket.CallStatus,
             "Priority" : ticket.Priority
         }
-        
+
     else:
         context = {}
-        
+
     return render(request, 'epl/view-ticket.html', context)
 
 # return the active username
@@ -168,7 +180,7 @@ def get_username(request):
     username = None
     if request.user.is_authenticated():
         username = request.user.username
-        
+
     return username
 
 #---------------------------------
@@ -178,21 +190,21 @@ def get_username(request):
 # login page view
 def login_view(request):
     form = UserLogin(request.POST or None)
-    
+
     if (request.user.is_authenticated()):
         return redirect('/')
-    
+
     # check if the input is valid
     if (form.is_valid()):
         username = form.cleaned_data.get("username")
         password = form.cleaned_data.get("password")
-        
+
         user = authenticate(username=username, password=password)
-        
+
         login(request, user)
-        
+
         return redirect('/')
-        
+
     context = { "form" : form, "name" : "Login" }
     return render(request, 'epl/login.html', context)
 
@@ -201,7 +213,7 @@ def logout_view(request):
     # user must need to login to view pages
     if (not request.user.is_authenticated()):
         return redirect('/login')
-    
+
     logout(request)
     context = {}
     return render(request, 'epl/logout.html', context)
@@ -209,20 +221,77 @@ def logout_view(request):
 # function parse a string
 def parsing(string, parse):
     return string.split(parse)
-    
+
 # resolved ticket status
 def resolved(ticket_id):
     ticket = CallLog.objects.get(CallID=ticket_id)
-    
+
     if ( ticket.CallStatus == "Open" ):
         ticket.CallStatus = "Resolved"
     else:
         ticket.CallStatus = "Open"
-        
+
     ticket.save()
     context = {}
     return render(request, 'epl/manage-tickets.html', context)
-    
+
+#-----------------------------------
+# Functions to get the ticket Ids
+#-----------------------------------
+def getTicketId(ticketCategory, username):
+    callLogs = CallLog.objects.all()
+    callLogId = 0
+    for callLog in callLogs:
+        if (callLog.CustID == username):
+            if (callLog.Category == ticketCategory):
+                callLogId = callLog.CallID
+    return callLogId
+
+def successTicketSummary(request, id):
+    ticket = CallLog.objects.get(CallID = id)
+
+    recvdDate = "20"
+    recvdDate += ticket.RecvdDate
+
+    temp = parsing(ticket.Symptoms, "|")
+
+    if ( len(temp) <= 1 ):
+        temp = parsing(ticket.Symptoms, "`")
+
+    if ( ticket.Category == "Hardware" ):
+        context = {
+            "CallID" : ticket.CallID,
+            "CustID" : ticket.CustID,
+            "Symptoms" : ticket.Symptoms,
+            "RecvdDate" : recvdDate,
+            "EquipType" : temp[0],
+            "AssetTag" : temp[1],
+            "DeviceName" : temp[2],
+            "Description" : temp[3],
+            "ErrorMsg" : temp[4],
+            "Category" : ticket.Category,
+            "CallStatus" : ticket.CallStatus,
+            "Priority" : ticket.Priority
+        }
+
+    elif ( ticket.Category == "Software" ):
+        context = {
+            "CallID" : ticket.CallID,
+            "CustID" : ticket.CustID,
+            "RecvdDate" : recvdDate,
+            "System" : temp[0],
+            "Offline" : temp[1],
+            "Description" : temp[2],
+            "Category" : ticket.Category,
+            "CallStatus" : ticket.CallStatus,
+            "Priority" : ticket.Priority
+        }
+
+    else:
+        context = {}
+
+    return context
+
 #------------------------------------
 # data saving for hardware tickets
 #------------------------------------
@@ -264,21 +333,21 @@ def database_saved(form, username):
         # error messages
         callLog_Symptoms += "|"
         asgnmnt_Description += "|"
-        
+
         if ( error_messages == "" or error_messages == " " ):
             error_messages = "NULL"
-        
+
         callLog_Symptoms += error_messages
         asgnmnt_Description += error_messages
 
         # priority
         if ( equipment_type == "Sorter" ):
             callLog_Priority = "1"
-            
-        elif( equipment_type == "Smart Chute" or 
+
+        elif( equipment_type == "Smart Chute" or
             equipment_type == "Self-checkout" ):
             callLog_Priority = "2"
-            
+
         else:
             callLog_Priority = "3"
 
@@ -286,10 +355,10 @@ def database_saved(form, username):
         callLog_CallSource = "Web"
 
         # assigned team name
-        if( equipment_type == "PC" or 
+        if( equipment_type == "PC" or
             equipment_type == "Laptop" ):
             asgnmnt_TeamName = "Help Desk Team"
-            
+
         else:
             asgnmnt_TeamName = "Project Team"
 
@@ -347,9 +416,9 @@ def database_saved(form, username):
         callLog_table.save()
         asgnmnt_table.save()
         probType_table.save()
-            
+
         return "Ticket added sucessfully"
-        
+
     except:
         return "Something went wrong"
 
@@ -367,21 +436,21 @@ def soft_database_saved(form, username):
         probType_ProbType = system
         callLog_Symptoms = system
         asgnmnt_Description = system
-        
+
 
         # offline/broken
         callLog_Symptoms += "|"
         asgnmnt_Description += "|"
         callLog_Symptoms += system_offline
         asgnmnt_Description += system_offline
-        
+
 
         # description of problem
         callLog_Symptoms += "|"
         asgnmnt_Description += "|"
         callLog_Symptoms += problem_description
         asgnmnt_Description += problem_description
-        
+
         # priority
         if ( system_offline == "Yes" ):
             callLog_Priority = "1"
@@ -391,22 +460,22 @@ def soft_database_saved(form, username):
         # call source
         callLog_CallSource = "Web"
 
-        
+
         # assigned team name
         if( probType_ProbType == "Internet/Network" or probType_ProbType=="S:/ drive"):
             asgnmnt_TeamName = "Netwrok Team"
-            
-        
+
+
         elif( probType_ProbType == "Workflows"):
             asgnmnt_TeamName = "ILS Team"
-            
+
         else:
             asgnmnt_TeamName = "Help Desk Team"
-        
+
 
         # assigned by
         asgnmnt_AssignedBy = "Selfserve"
-        
+
 
         # assignment status
         asgnmnt_Status = "Unacknowledged"
@@ -426,7 +495,7 @@ def soft_database_saved(form, username):
 
         # call log status
         callLog_Status = "Open"
-        
+
         # CallLog Table
         callLog_table = CallLog(
             Symptoms = callLog_Symptoms,
@@ -439,7 +508,7 @@ def soft_database_saved(form, username):
             CallStatus = callLog_Status,
             Category = "Software"
         )
-        
+
 
         # Asgnmnt Table
         asgnmnt_table = Asgnmnt(
@@ -460,10 +529,10 @@ def soft_database_saved(form, username):
         callLog_table.save()
         asgnmnt_table.save()
         probType_table.save()
-        
-            
+
+
         return "Ticket added sucessfully"
-        
+
     except:
         return "Something went wrong"
 
