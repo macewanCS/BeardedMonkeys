@@ -11,14 +11,14 @@
 	<h1>Hardware Tickets</h1>
 	<form role="form" action="" method="post">
     {% csrf_token %}
-    <P>Asset Tag (<a href="javascript:alert('An asset tag is ....');">What is an Asset ID?</a>) <span class="required">*</span></P>
+    <P>What is the device's asset ID number? (<a style="color:grey;" href="javascript:alert('An asset tag is ....');">What is an Asset ID?</a>) <span class="required">*</span></P>
     {{form.asset_tag}}
     <P></P> 
     <DIV>
         <TABLE WIDTH="100%">
             <TR>
-                <TD WIDTH="30%"><P>Equipment Type: <span class="required">*</span></P></TD>
-                <TD class="device" style="text-align: center;"><P>Computer/Device Name</P></TD>
+                <TD WIDTH="30%"><P>What type of device is having the problem? <span class="required">*</span></P></TD>
+                <TD class="device" style="text-align: center;"><P>What is the specific device's name?</P></TD>
             </TR>
             <TR>
                 <TD>{{form.equipment_type}}</TD>
@@ -26,11 +26,11 @@
             </TR>
         </TABLE>
     <DIV>
-    <P>Problem Description: <span class="required">*</span></P>
+    <P>Please describe the problem as best you can: <span class="required">*</span></P>
     {{form.problem_description}}
-    <P>Share Any Error Messages</P>
+    <P>Please share any error messages that the device may be displaying:</P>
     {{form.error_messages}}
-    <P></P>
+    <P>You may also provide an image of the problem if you so choose:</P>
     {{form.file_upload}}
     <P></P>
     <button type="submit" id="submit"><i class="fa fa-play-circle-o" aria-hidden="true"></i> Submit</button>
