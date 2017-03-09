@@ -7,7 +7,17 @@ register = template.Library()
 def descGet(id):
     ticket = CallLog.objects.get(CallID = id)
     temp = ticket.Symptoms.split("|")
+    
+    string = ""
     if (ticket.Category == "Hardware"):
-        return temp[3][:15]
+        string += temp[3]
+        if (len(string) > 15):
+            string = temp[3][:20]
+            string += "..."
+        return string
     elif (ticket.Category == "Software"):
-        return temp[2][:15]
+        string += temp[2]
+        if (len(string) > 15):
+            string = temp[2][:20]
+            string += "..."
+        return string
