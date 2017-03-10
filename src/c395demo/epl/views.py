@@ -302,8 +302,8 @@ def successTicketSummary(request, id):
             "CallID" : ticket.CallID,
             "CustID" : ticket.CustID,
             "RecvdDate" : recvdDate,
-            "System" : temp[0],
-            "User System" : temp[1],
+            "system_type" : temp[0],
+            "sys_user" : temp[1],
             "Category" : ticket.Category,
             "CallStatus" : ticket.CallStatus,
             "Priority" : ticket.Priority

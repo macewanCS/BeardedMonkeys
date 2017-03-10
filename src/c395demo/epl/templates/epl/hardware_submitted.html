@@ -36,10 +36,18 @@
         <br>{{ DeviceName }} </p>
         <p> <span style="font-weight:bold;">Error message displayed: </span> 
         <br>{{ ErrorMsg }} </p>
+        <P> <span style="font-weight:bold;">Further details: </span> 
+        <br>{{ Description }} </p>
+    {% endif %}
+    
+    {% if Category == "Password" %}
+        <p> <span style="font-weight:bold;">Which system? </span>
+        {{ system_type }}
+        <p> <span style="font-weight:bold;">Which account/username? </span>
+        {{ sys_user }}
     {% endif %}
 
-    <P> <span style="font-weight:bold;">Further details: </span> 
-    <br>{{ Description }} </p>
+    
 
 </body>
 </html>
