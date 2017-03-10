@@ -124,6 +124,22 @@ def password(request):
     context = {'form': PasswordTicketForm}
     return render(request, 'epl/password.html', context)
 
+# my all tickets page view
+def tickets(request):
+    # user must need to login to view pages
+    if (not request.user.is_authenticated()):
+        return redirect('/login')
+
+    # retriving all the data
+    username = request.user.username
+    callLogs = CallLog.objects.filter(CustID=username)
+
+    context = {
+        "callLogs" : callLogs,
+        "available" : ["Hardware", "Software", "Service", "Other", "Password"]
+        }
+    return render(request, 'epl/my-tickets.html', context)
+
 # manage all tickets page view
 def manage(request):
     # user must need to login to view pages
