@@ -43,7 +43,11 @@
                         </a>
 
                         <a id="myBtn_{{ callLog.CallID }}" class="button" href="#">
-                            <i class="fa fa-check" aria-hidden="true"></i> Resolved </a>
+                            {% if callLog.CallStatus == "Open" %}
+                                <i class="fa fa-check" aria-hidden="true"></i> Resolved </a>
+                            {% else %}
+                                <i class="fa fa-check" aria-hidden="true"></i> Re-open </a>
+                            {% endif %}
                     </td>
                 </tr>
             {% endif %}
@@ -75,14 +79,14 @@ $(document).ready(function(){
                 $("#modalText").html("Are you sure that you want to re-open the ticket?");
         }
         yBtn.onclick = function() {
-           console.log($("#status_"+id).text())
            modal.style.display = "none";
            if ($("#status_"+id).text().indexOf("Open")>=0){
-            $("#status_"+id).html("Resolved");
+            alterData(id, "Resolved")
+            //$("#status_"+id).html("Resolved");
             $("#myBtn_"+id).html('<i class="fa fa-check" aria-hidden="true"></i>Re-open');
            }
            else {
-            $("#status_"+id).html("Open");
+            alterData(id, "Open")
             $("#myBtn_"+id).html('<i class="fa fa-check" aria-hidden="true"></i>Resolved');
            }
         }
@@ -102,6 +106,28 @@ window.onclick = function(event) {
         modal.style.display = "none";
     };
 };
+
+function alterData(id, status){
+    $.ajax({
+        url : "../alter-status/", // the endpoint
+        type : "POST", // http method
+        data : { status : status, id: id }, // data sent with the post request
+
+        // handle a successful response
+        success : function(json) {
+            $('#status_'+id).html(status); // remove the value from the input
+            console.log(json); // log the returned json to the console
+            console.log("success"); // another sanity check
+        },
+
+        // handle a non-successful response
+        error : function(xhr,errmsg,err) {
+            $('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
+                " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
+            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+        }
+    });
+}
 </script>
 </body>
 </html>
