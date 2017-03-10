@@ -6,6 +6,7 @@
 <head>
 	<title>Manage Tickets Page</title>
 	{% load static %}
+
 	<script src="{% static '/demo/sorttable.js' %}"></script>
 </head>
 <body>
@@ -30,7 +31,7 @@
                     <td> {{ callLog.CustID }} </td>
                     <td> 20{{ callLog.RecvdDate }} </td>
                     <td> {{ callLog.Category }} </td>
-                    <td> {{ callLog.CallStatus }} </td>
+                    <td id="status_{{ callLog.CallID }}"> {{ callLog.CallStatus }} </td>
                     <td> {{ callLog.Priority }} </td>
                     <td> {% descGet callLog.CallID %} </td>
                     <td>
@@ -40,13 +41,94 @@
                         <a class="button" href="edit.asp">
                             <i class="fa fa-pencil" aria-hidden="true"></i> Edit
                         </a>
-                        <a class="button" href="resolved.asp">
-                            <i class="fa fa-check" aria-hidden="true"></i> Resolved
-                        </a>
+
+                        <a id="myBtn_{{ callLog.CallID }}" class="button" href="#">
+                            {% if callLog.CallStatus == "Open" %}
+                                <i class="fa fa-check" aria-hidden="true"></i> Resolved </a>
+                            {% else %}
+                                <i class="fa fa-check" aria-hidden="true"></i> Re-open </a>
+                            {% endif %}
                     </td>
                 </tr>
             {% endif %}
 	    {% endfor %}
+    </table>
+      <div id="myModal" class="modal">
+      <!-- Modal content -->
+      <div class="modal-content">
+          <span class="close">&times;</span>
+          <p id="modalText">Are you sure the ticket has been resolved?</p>
+          <a id="nButton" class="button modalButton" href="#" style="float:right">No</a>
+          <a class="button modalButton" style="visibility:hidden;"></a>
+          <a id="yButton" class="button modalButton" href="#" style="float:right; margin-right:20px;">Yes</a>
+      </div>
+    </div>
+<script>
+var modal = document.getElementById('myModal');
+var span = document.getElementsByClassName("close")[0];
+var yBtn = document.getElementById("yButton");
+var nBtn = document.getElementById("nButton");
+
+$(document).ready(function(){
+    $( "a[id*='myBtn']" ).click(function(){
+        id = $(this).attr('id').replace("myBtn_", "")
+        $("#myModal").css("display", "block")
+        if ($("#status_"+id).text().indexOf("Open")>=0){
+            $("#modalText").html("Are you sure the ticket has been resolved?");
+        } else {
+                $("#modalText").html("Are you sure that you want to re-open the ticket?");
+        }
+        yBtn.onclick = function() {
+           modal.style.display = "none";
+           if ($("#status_"+id).text().indexOf("Open")>=0){
+            alterData(id, "Resolved")
+            //$("#status_"+id).html("Resolved");
+            $("#myBtn_"+id).html('<i class="fa fa-check" aria-hidden="true"></i>Re-open');
+           }
+           else {
+            alterData(id, "Open")
+            $("#myBtn_"+id).html('<i class="fa fa-check" aria-hidden="true"></i>Resolved');
+           }
+        }
+    });
+
+})
+
+nBtn.onclick = function() {
+    modal.style.display = "none";
+}
+
+span.onclick = function() {
+    modal.style.display = "none";
+}
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    };
+};
+
+function alterData(id, status){
+    $.ajax({
+        url : "../alter-status/", // the endpoint
+        type : "POST", // http method
+        data : { status : status, id: id }, // data sent with the post request
+
+        // handle a successful response
+        success : function(json) {
+            $('#status_'+id).html(status); // remove the value from the input
+            console.log(json); // log the returned json to the console
+            console.log("success"); // another sanity check
+        },
+
+        // handle a non-successful response
+        error : function(xhr,errmsg,err) {
+            $('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
+                " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
+            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+        }
+    });
+}
+</script>
 </body>
 </html>
 

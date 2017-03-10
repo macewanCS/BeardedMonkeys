@@ -1,8 +1,10 @@
+import json
 from datetime import datetime
 from django.shortcuts import render
 import random
 
 from django.shortcuts import redirect
+from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 from django.http import HttpResponse
@@ -223,9 +225,10 @@ def parsing(string, parse):
     return string.split(parse)
 
 # resolved ticket status
+
 def resolved(ticket_id):
     ticket = CallLog.objects.get(CallID=ticket_id)
-
+    
     if ( ticket.CallStatus == "Open" ):
         ticket.CallStatus = "Resolved"
     else:
@@ -536,4 +539,29 @@ def soft_database_saved(form, username):
     except:
         return "Something went wrong"
 
+@csrf_exempt
+def alter_status(request):
+    if request.method == 'POST':
+        status = request.POST.get('status')
+        id = request.POST.get('id')
+
+        print (id, status)
+
+        response_data = {}
+
+        calllog = CallLog.objects.get(CallID=id)
+        calllog.CallStatus = status
+        calllog.save()
+
+        response_data['result'] = 'Create post successful!'
+
+        return HttpResponse(
+            json.dumps(response_data),
+            content_type="application/json"
+        )
+    else:
+        return HttpResponse(
+            json.dumps({"nothing to see": "this isn't happening"}),
+            content_type="application/json"
+        )
 
