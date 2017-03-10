@@ -223,9 +223,10 @@ def parsing(string, parse):
     return string.split(parse)
 
 # resolved ticket status
+
 def resolved(ticket_id):
     ticket = CallLog.objects.get(CallID=ticket_id)
-
+    
     if ( ticket.CallStatus == "Open" ):
         ticket.CallStatus = "Resolved"
     else:
