@@ -86,7 +86,7 @@ table, th, td {
 
 .sortable th, .sortable td {
     text-align: center;
-    border-bottom: 2px solid #ccc;
+    border: 2px solid #ccc;
     padding: 10px !important;
 }
 
@@ -96,7 +96,7 @@ table, th, td {
 
 th {
     padding: 15px !important;
-    background-color: #4CAF50;
+    background-color: #4E4E4E;
     color: white;
 }
 

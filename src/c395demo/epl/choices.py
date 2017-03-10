@@ -35,6 +35,17 @@ SOFTWARE_CHOICES = (
     ('Other', 'Other')
 )
 
+SYSTEM_CHOICES = (
+	('Dayforce', 'Dayforce'),
+    ('iNovah', 'iNovah'),
+    ('LibraryOnline', 'LibraryOnline'),
+    ('Peoplesoft', 'Peoplesoft'),
+    ('SAP', 'SAP'),
+    ('StaffWeb/Active Directory', 'StaffWeb/Active Directory'),
+    ('Workflows', 'Workflows'),
+    ('Other', 'Other')
+)
+
 YES_NO_CHOICE = (
 	('YES', 'Yes'),
 	('NO', 'No'),

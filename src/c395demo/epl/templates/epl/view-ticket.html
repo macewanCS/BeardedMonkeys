@@ -33,13 +33,17 @@
         <br>{{ DeviceName }} </p>
         <p> <span style="font-weight:bold;">What (if any) error message(s) is the device diplaying? </span> 
         <br>{{ ErrorMsg }} </p>
+        <p> <span style="font-weight:bold;">What are the specific details of the problem? </span> 
+        <br>{{ Description }} </p>
     {% endif %}
     
     {% if Category == "Software" %}
         <p> <span style="font-weight:bold;">Which system?: </span> 
         <br>{{ System }} </p>
         <p> <span style="font-weight:bold;">Is the system completely offline/broken?: </span>
-        <br>{{ Offline }} </p>     
+        <br>{{ Offline }} </p>
+        <p> <span style="font-weight:bold;">What are the specific details of the problem? </span> 
+        <br>{{ Description }} </p>
     {% endif %}
     
     {% if Category == "Service" %}
@@ -47,15 +51,16 @@
     {% endif %}
     
     {% if Category == "Password" %}
-        <p>Category details currently not implemented!</p>
+        <p> <span style="font-weight:bold;">Which system?</span> 
+        <br>{{ System_type }} </p>
+        <p> <span style="font-weight:bold;">Which account/username</span> 
+        <br>{{ Sys_user }} </p>
     {% endif %}
     
     {% if Category == "General" %}
         <p>Category details currently not implemented!</p>
     {% endif %}
 
-    <p> <span style="font-weight:bold;">What are the specific details of the problem? </span> 
-    <br>{{ Description }} </p>
 </body>
 </html>
 

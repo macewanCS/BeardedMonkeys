@@ -14,6 +14,7 @@ urlpatterns = [
     url(r'^service-request/', views.service, name='service'),
     
     url(r'^add-ticket/', views.add, name='add'),
+    url(r'^my-tickets/', views.tickets, name='tickets'),
     
     url(r'^view-ticket/(?P<id>[0-9]+)/$', views.detail, name='detail'),
     
