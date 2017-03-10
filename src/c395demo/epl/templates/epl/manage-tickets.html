@@ -33,6 +33,7 @@
                     <td> {{ callLog.CallStatus }} </td>
                     <td> {{ callLog.Priority }} </td>
                     <td> {% descGet callLog.CallID %} </td>
+                    
                     <td>
                         <a class="button" href="{% url 'detail' id=callLog.CallID %}">
                             <i class="fa fa-folder-open-o" aria-hidden="true"></i> View

@@ -6,9 +6,9 @@ from django.shortcuts import redirect
 
 # Create your views here.
 from django.http import HttpResponse
-from .forms import HardwareTicketForm, SoftwareTicketForm
+from .forms import *
 # import models
-from epl.models import CallLog, Asgnmnt, ProbType
+from epl.models import *
 
 # import for user authentication
 from .forms import UserLogin
@@ -107,8 +107,19 @@ def password(request):
     # user must need to login to view pages
     if (not request.user.is_authenticated()):
         return redirect('/login')
+    
+    form = PasswordTicketForm(request.POST or None)
+    if form.is_valid():
+        # saving data into the database
+        msg = pass_database_saved(form, request.user.username)
 
-    context = {}
+        # Get the hardware ticket Id and redirect to the successful
+        # submission page with the hardware ticket info
+        ticketId = getTicketId("Password", request.user.username)
+        context = successTicketSummary(request, ticketId)
+        return render(request, "epl/hardware_submitted.html", context)
+    
+    context = {'form': PasswordTicketForm}
     return render(request, 'epl/password.html', context)
 
 # manage all tickets page view
@@ -165,6 +176,18 @@ def detail(request, id):
             "System" : temp[0],
             "Offline" : temp[1],
             "Description" : temp[2],
+            "Category" : ticket.Category,
+            "CallStatus" : ticket.CallStatus,
+            "Priority" : ticket.Priority
+        }
+        
+    elif ( ticket.Category == "Password" ):
+        context = {
+            "CallID" : ticket.CallID,
+            "CustID" : ticket.CustID,
+            "RecvdDate" : recvdDate,
+            "System_type" : temp[0],
+            "Sys_user" : temp[1],
             "Category" : ticket.Category,
             "CallStatus" : ticket.CallStatus,
             "Priority" : ticket.Priority
@@ -273,6 +296,18 @@ def successTicketSummary(request, id):
             "CallStatus" : ticket.CallStatus,
             "Priority" : ticket.Priority
         }
+        
+    elif ( ticket.Category == "Password" ):
+        context = {
+            "CallID" : ticket.CallID,
+            "CustID" : ticket.CustID,
+            "RecvdDate" : recvdDate,
+            "System" : temp[0],
+            "User System" : temp[1],
+            "Category" : ticket.Category,
+            "CallStatus" : ticket.CallStatus,
+            "Priority" : ticket.Priority
+        }
 
     elif ( ticket.Category == "Software" ):
         context = {
@@ -295,6 +330,98 @@ def successTicketSummary(request, id):
 #------------------------------------
 # data saving for hardware tickets
 #------------------------------------
+
+# saving password data into database
+def pass_database_saved(form, username):
+    try:
+        # getting data from the form
+        system_type = form.cleaned_data.get("system_type")
+        sys_user = form.cleaned_data.get("sys_user")
+
+        # system type
+        probType_ProbType = system_type
+        callLog_Symptoms = system_type
+        asgnmnt_Description = system_type
+
+        # system user
+        callLog_Symptoms += "|"
+        asgnmnt_Description += "|"
+        callLog_Symptoms += sys_user
+        asgnmnt_Description += sys_user
+
+        # priority
+        if ( system_type == "StaffWeb/Active Directory"
+            or system_type == "Dayforce" ):
+            callLog_Priority = "2"
+
+        else:
+            callLog_Priority = "3"
+
+        # call source
+        callLog_CallSource = "Web"
+
+        # assigned team name
+        asgnmnt_TeamName = "Help Desk Team"
+
+        # assigned by
+        asgnmnt_AssignedBy = "Selfserve"
+
+        # assignment status
+        asgnmnt_Status = "Unacknowledged"
+
+        # current timestamp
+        temp = parsing(str(datetime.now()), " ")
+        callLog_RecvdDate = temp[0][2:]
+        callLog_RecvdTime = temp[1][:8]
+        asgnmnt_DateAssign = temp[0][2:]
+        asgnmnt_TimeAssign = temp[1][:8]
+        
+        # user ID
+        callLog_CustID = username
+
+        # tracker
+        callLog_Tracker = "selfserve"
+
+        # call log status
+        callLog_Status = "Open"
+
+        # CallLog Table
+        callLog_table = CallLog(
+            Symptoms = callLog_Symptoms,
+            Priority = callLog_Priority,
+            CallSource = callLog_CallSource,
+            RecvdDate = callLog_RecvdDate,
+            RecvdTime = callLog_RecvdTime,
+            CustID = callLog_CustID,
+            Tracker = callLog_Tracker,
+            CallStatus = callLog_Status,
+            Category = "Password"
+        )
+
+        # Asgnmnt Table
+        asgnmnt_table = Asgnmnt(
+            Description = asgnmnt_Description,
+            TeamName = asgnmnt_TeamName,
+            AssignedBy = asgnmnt_AssignedBy,
+            Status = asgnmnt_Status,
+            DateAssign = asgnmnt_DateAssign,
+            TimeAssign = asgnmnt_TimeAssign
+        )
+
+        # ProbType Table
+        probType_table = ProbType(
+            ProbType = probType_ProbType
+        )
+
+        # Saving data into the database
+        callLog_table.save()
+        asgnmnt_table.save()
+        probType_table.save()
+
+        return "Ticket added sucessfully"
+
+    except:
+        return "Something went wrong"
 
 # saving hardware data into database
 def database_saved(form, username):
