@@ -32,6 +32,49 @@ li{
 	padding: 10px;
 }
 
+.cat{
+    padding: 10px;
+    border: 2px solid #ccc;
+    position: relative;
+    margin-bottom: 50px;
+    transition: background-color 0.3s;
+}
+
+.cat:hover{
+    background-color: #007FFF;
+    color: white;
+}
+
+.cat button{
+    padding: 20px 0;
+    width: 220px;
+    bottom:0;
+}
+
+.add{
+    font-size: 50px;
+    text-align: center;
+    margin: 0;
+    margin-bottom: 5px;
+    position: absolute;
+    bottom: 10%;
+    left: 42%;
+}
+
+.add span{
+    padding: 1px 16px;
+    border: 2px solid;
+    border-radius: 100%;
+}
+
+.clearfix{zoom:1;}
+.clearfix:after{
+    content: '.';
+    clear: both;
+    display: block;
+    visibility: hidden;
+}
+
 #add{
     transition: background-color 0.3s;
 }
@@ -228,16 +271,6 @@ button#submit {
 
 ul#main-nav{
     padding:0;
-}
-
-#create{
-    margin-bottom: 50px;
-}
-
-#create button{
-    padding: 20px 0;
-    width: 220px;
-    text-align: center;
 }
 
 hr{
