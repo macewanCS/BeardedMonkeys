@@ -5,10 +5,11 @@
 	<link rel="stylesheet" type="text/css" href="{% static '/demo/grid.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static '/demo/normalize.css' %}">
 	<link rel="icon" href="{% static '/demo/favicon.png' %}" sizes="16x16 32x32" type="image/png">
-	
+
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    
+	<script src="{% static '/demo/main.js' %}"></script>
+
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
     
     <link href="https://fortawesome.github.io/Font-Awesome/assets/font-awesome/css/font-awesome.css" rel="stylesheet">
@@ -29,13 +30,13 @@
 			                        <i class="fa fa-home fa-2x" aria-hidden="true"></i>
 		                        </li>
 			                </a>
-			                <span style="font-size: 30px; color:#ccc;">|</span>
+			                <span style="font-size: 30px;">|</span>
 			                <a href="{% url 'add' %}">
 			                    <li id="add">
 			                        <i class="fa fa-plus" aria-hidden="true"></i> Create Tickets
 		                        </li>
 			                </a>
-			                <span style="font-size: 30px; color:#ccc;">|</span>
+			                <span style="font-size: 30px;">|</span>
 			                <a href="{% url 'manage' %}">
 			                    <li id="manage">
 			                        <i class="fa fa-eye" aria-hidden="true"></i> Manage/View Tickets
@@ -48,6 +49,7 @@
 		            <i class="fa fa-sign-out" aria-hidden="true"></i> Logout, {{ user.get_username }}
 	            </a>
 	        {% endif %}
+
 	</header>
 	<div class="row">
 	    {% block content %}
