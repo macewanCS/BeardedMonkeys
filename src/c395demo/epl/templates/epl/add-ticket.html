@@ -1,4 +1,3 @@
-
 {% extends 'epl/index.html' %}
 
 {% block content %}
@@ -9,44 +8,60 @@
 </head>
 <body>
 	<h1>Create Tickets Page</h1>
-	
-	<div id="create">
-	    <!-- Hardware Ticket -->
-	    <h2>Hardware Tickets:</h2>
-	    <p>Do you have a hardware problem? (for
-	       example, a computer not turning on or a tablet's screen being unresponsive).</p>
-	    <button onclick="location.href='{% url 'hardware' %}'" value="hardware" >Create Hardware Ticket</button>
-	    <hr>
-	
-	    <!-- Software Ticket -->
-	    <h2>Software Tickets:</h2>
-	    <p>Do you have a software issue? (for example, a program causing your computer to 
-	       crash or an app displaying improper data).</p>
-	    <button onclick="location.href='{% url 'software' %}'" value="software" >Create Software Ticket</button>
-	    <hr>
-	
-	    <!-- Service Ticket -->
-	    <h2>Service Tickets:</h2>
-	    <p>Create one of these tickets if you want to request a certain service
-	       such as moving equipment, gaining access to a new system, or obtaining
-	       new equipment or software.</p>
-	    <button onclick="location.href='{% url 'service' %}'" value="service" >Create Service Ticket</button>
-	    <hr>
-	
-		<!-- Password Ticket -->
-	    <h2>Password Tickets:</h2>
-	    <p>Create one of these tickets if you need to reset your password for one
-	    of the systems of the Edmonton Public Library.</p>
-	    <button onclick="location.href='{% url 'password' %}'" value="password" >Create Password Ticket</button>
-	    <hr>
 	    
-	    <!-- General Ticket -->
-	    <h2>General/Other Tickets:</h2>
-	    <p>Create one of these tickets if your problem doesn't seem to fall into
-	       any of the other categories.</p>
-	    <button onclick="location.href='{% url 'general' %}'" value="general" >Create General/Other Ticket</button>
+	    <a href="{% url 'hardware' %}">
+	        <div class="col span_1_of_3 cat">
+	            <!-- Hardware Ticket -->
+	            <h2>Hardware Tickets:</h2>
+	            <p>Create one of these tickets if the problem is with a device (for
+	               example, a computer not turning on or a tablet's screen being unresponsive).</p>
+	            <p class="add"><span>+</span></p>
+            </div>
+        </a>
+        
+        <a href="{% url 'software' %}">
+            <div class="col span_1_of_3 cat">
+	            <!-- Software Ticket -->
+	            <h2>Software Tickets:</h2>
+	            <p>Create one of these tickets if the problem is with an application,
+	               program, or system (for example, a program causing your computer to 
+	               crash or an app displaying improper data).</p>
+	            <p class="add"><span>+</span></p>
+	        </div>
+	    </a>
 	    
-    </div>
+	    <a href="{% url 'service' %}">
+	        <div class="col span_1_of_3 cat">
+	            <!-- Service Ticket -->
+	            <h2>Service Tickets:</h2>
+	            <p>Create one of these tickets if you want to request a certain service
+	               such as moving equipment, gaining access to a new system, or obtaining
+	               new equipment or software.</p>
+	            <p class="add"><span>+</span></p>
+	        </div>
+	    </a>
+	    
+	    <a href="{% url 'password' %}">
+	        <div class="col span_1_of_3 cat">
+		        <!-- Password Ticket -->
+	            <h2>Password Tickets:</h2>
+	            <p>Create one of these tickets if you need to reset your password for one
+	            of the systems of the Edmonton Public Library.</p>
+	            <p class="add"><span>+</span></p>
+	        </div>
+	    </a>
+	    
+	    <a href="{% url 'general' %}">
+	        <div class="col span_1_of_3 cat">
+	            <!-- General Ticket -->
+	            <h2>General/Other Tickets:</h2>
+	            <p>Create one of these tickets if your problem doesn't seem to fall into
+	               any of the other categories.</p>
+	            <p class="add"><span>+</span></p>
+	        </div>
+	    </a>
+	    
+    <div class="clearfix"></div>
 </body>
 </html>
 
