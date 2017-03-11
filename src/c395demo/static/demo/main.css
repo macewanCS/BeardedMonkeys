@@ -29,7 +29,17 @@ nav{
 li{
 	list-style-type: none;
 	display: inline;
-	padding: 10px;
+	padding: 10px 15px;
+    margin: 0 5px;
+}
+
+#home{
+    color: #009DDC;
+    transition: color 0.4s ease-in-out;
+}
+
+#home:hover{
+    color: #0088BF;
 }
 
 .cat{
