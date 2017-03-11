@@ -9,8 +9,13 @@
 .col {
 	display: block;
 	float:left;
-	/*margin: 1% 0 1% 3%;*/
 }
+
+.row .cat{
+    margin: 1% 10px 2%;
+    height: 250px;
+}
+
 .col:first-child { margin-left: 0; }
 
 /*  GROUPING  */
