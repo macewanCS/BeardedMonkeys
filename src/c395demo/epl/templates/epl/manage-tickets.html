@@ -11,7 +11,6 @@
 </head>
 <body>
     <h1>Manage Tickets Page</h1>
-    </div>
 	<table class="sortable">
 	    <tr>
 	        <th>ID</th>
@@ -33,7 +32,7 @@
                     <td> {{ callLog.Category }} </td>
                      <td id="status_{{ callLog.CallID }}"> {{ callLog.CallStatus }} </td>
                     <td> {{ callLog.Priority }} </td>
-                    <td> {% descGet callLog.CallID %} </td>
+                    <td style="text-align:left;"> {% descGet callLog.CallID %} </td>
                     <td>
                         <a class="button" href="{% url 'detail' id=callLog.CallID %}">
                             <i class="fa fa-folder-open-o" aria-hidden="true"></i> View

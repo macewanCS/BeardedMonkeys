@@ -29,7 +29,17 @@ nav{
 li{
 	list-style-type: none;
 	display: inline;
-	padding: 10px;
+	padding: 10px 15px;
+    margin: 0 5px;
+}
+
+#home{
+    color: #009DDC;
+    transition: color 0.4s ease-in-out;
+}
+
+#home:hover{
+    color: #0088BF;
 }
 
 .cat{
@@ -41,7 +51,7 @@ li{
 }
 
 .cat:hover{
-    background-color: #007FFF;
+    background-color: #E60E64;
     color: white;
 }
 
@@ -49,6 +59,14 @@ li{
     padding: 20px 0;
     width: 220px;
     bottom:0;
+}
+
+.cat h2 {
+    color: #E60E64;
+}
+
+.cat:hover h2 {
+    color: #fff;
 }
 
 .add{
