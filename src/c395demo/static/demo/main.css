@@ -352,3 +352,103 @@ table.sortable th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):not(.sor
     text-decoration: none;
     cursor: pointer;
 }
+
+/*From here to the end, the css for dropdown menu*/
+@import url(http://fonts.googleapis.com/css?family=Open+Sans);
+@import url(http://fonts.googleapis.com/css?family=Bree+Serif);
+
+.toggle,
+[id^=drop] {
+	display: none;
+}
+/* Giving a background-color to the nav container. */
+nav {
+    position: absolute;
+    bottom: 0%;
+
+	}
+
+/* Since we'll have the "ul li" "float:left"
+ * we need to add a clear after the container. */
+
+nav:after {
+	content:"";
+	display:table;
+	clear:both;
+}
+
+/* Removing padding, margin and "list-style" from the "ul",
+ * and adding "position:reltive" */
+nav ul {
+	padding:0px 6px;
+	margin: 0px
+	}
+
+/* Positioning the navigation items inline */
+nav ul li {
+    display:inline-block;
+    position: relative;
+	margin: 0px;
+	padding:10px;
+	border-radius:10px 10px 0px 0px;
+	bottom: -4px
+	}
+
+/* Styling the links */
+
+nav ul li ul li:hover { color: #A4A4A4; }
+
+/* Background color change on Hover */
+nav a:hover {
+//	background-color: #006A2C;
+}
+
+nav a {
+    padding: 10px;
+    white-space:nowrap;
+}
+nav ul li.create:hover {
+    background-color:#006A2C;
+    color: #fff;
+}
+
+nav ul li.view:hover {
+    background-color:#182A76;
+    color: #fff;
+}
+
+/* Hide Dropdowns by Default
+ * and giving it a position of absolute */
+nav ul ul {
+	display: none;
+	position: absolute;
+	/* has to be the same number as the "line-height" of "nav a" */
+	top: 39px;
+	left: 0px;
+	padding: 10px;
+	margin: 0;
+	color: #fff;
+	border-radius:0px 0px 10px 10px;
+}
+
+nav ul li.create ul{
+    background-color: #006A2C;
+}
+
+nav ul li.view ul {
+    background-color: #182A76;
+}
+
+
+/* Display Dropdowns on Hover */
+nav ul li:hover > ul {
+	display:inherit;
+}
+
+/* Fisrt Tier Dropdown */
+nav ul ul li {
+	//float:none;
+	display:list-item;
+	position: relative;
+}
+
