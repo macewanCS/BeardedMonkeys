@@ -23,37 +23,35 @@
 	        </div>
 		    {% if user.is_authenticated %}
 		        <div class="col span_1_of_3">
+
 		            <nav>
-		                <ul id="main-nav">
-		                    <a href="{% url 'index' %}">
-			                    <li id="home">
-			                        <i class="fa fa-home fa-2x" aria-hidden="true"></i>
-		                        </li>
-			                </a>
-			                <span style="font-size: 30px;">|</span>
-			                <a href="{% url 'add' %}">
-			                    <li id="add">
-			                        <i class="fa fa-plus" aria-hidden="true"></i> Create Tickets
-		                        </li>
-			                </a>
-			                <span style="font-size: 30px;">|</span>
-			                
-			                <!-- Here is the dropdown menu of manage/view Tickets-->
+                        <label for="drop" class="toggle">Menu</label>
+                        <input type="checkbox" id="drop" />
+                        <ul class="menu">
+                            <li style="color:#009DDC;"><a href="{% url 'index' %}"><i class="fa fa-home fa-2x" aria-hidden="true"></i></a></li>
+                            <li style="font-size: 30px;">|</li>
+                            <li class="create">
+                                <a href="{% url 'add'%}"><i class="fa fa-plus" aria-hidden="true"></i> Create Tickets</a>
+
+                            </li>
+                            <li style="font-size: 30px;">|</li>
+
+                            <!-- Here is the dropdown menu of manage/view Tickets-->
                             <li class="view">
                                 <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> Manage/View Tickets</a>
                                 <ul style="width:250px">
-                                    <li><a href="http://localhost:8000/my-tickets/">Manage My Tickets</a></li>
-                                    <li><a href="http://localhost:8000/manage-tickets/">Manage Branch Tickets</a></li>
+                                    <li><a href="{% url 'tickets' %}">Manage My Tickets</a></li>
+                                    <li><a href="{% url 'manage' %}">Manage Branch Tickets</a></li>
                                 </ul>
-                             </li>
-	                        </a>
-		                </ul>
-		            </nav>
+                            </li>
+                        </ul>
+                    </nav>
 		        </div>
 		        <a href="/logout" id="logout">
 		            <i class="fa fa-sign-out" aria-hidden="true"></i> Logout, {{ user.get_username }}
 	            </a>
 	        {% endif %}
+		</div>
 
 	</header>
 	<div class="row">

@@ -13,7 +13,7 @@
         <p>
             <a class="button" href="{% url 'manage' %}"><i class="fa fa-chevron-circle-left" aria-hidden="true"></i> Back</a>
             <a class="button" href="edit.asp"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</a>
-            
+
             <!--check if the user is owner of the ticket. And if he is ownere, he can click resolve button; if not, he can't-->
             {% if user.username == CustID %}
                 <a id="myBtn_{{ CallID }}" class="button" href="#">
@@ -23,8 +23,15 @@
                         <i class="fa fa-check" aria-hidden="true"></i> Re-open
                     {% endif %}
                 </a>
+            {% else %}
+                <a class="button disabled" href="#" style="background-color:grey;">
+                    {% if CallStatus == "Open" %}
+                        <i class="fa fa-check" aria-hidden="true"></i> Resolved
+                    {% else %}
+                        <i class="fa fa-check" aria-hidden="true"></i> Re-open
+                    {% endif %}
+                </a>
             {% endif %}
-            
             <!--<a class="button" href="resolve.asp"><i class="fa fa-check" aria-hidden="true"></i> Resolved</a>-->
         </p>
         <p><span style="font-weight:bold;">Posted by</span> {{ CustID }}</p>
@@ -34,28 +41,24 @@
    
     <P><span style="font-weight:bold;">Posted on</span> {{ RecvdDate }} </P>
     <P><span style="font-weight:bold;">Category:</span> {{ Category }} </P>
-    <P><span style="font-weight:bold;">Status:</span> <span id="status_{{ CallID }}">{{ CallStatus }}</span></P>
+    <P><span style="font-weight:bold;">Status:</span> <span id="status_{{ CallID }}">{{ CallStatus }}</span></span></P>
      
     {% if Category == "Hardware" %}
-        <p> <span style="font-weight:bold;">What kind of device is having the problem? </span> 
-        <br>{{ EquipType }} </p>
-        <p> <span style="font-weight:bold;">What is the device's asset ID? </span> 
-        <br>{{ AssetTag }} </p>
-        <p> <span style="font-weight:bold;">What is the device's name? </span> 
-        <br>{{ DeviceName }} </p>
-        <p> <span style="font-weight:bold;">What (if any) error message(s) is the device diplaying? </span> 
+        <p> <span style="font-weight:bold;">Type of equipment: </span> 
+        {{ EquipType }} </p>
+        <p> <span style="font-weight:bold;">Asset tag: </span> 
+        {{ AssetTag }} </p>
+        <p> <span style="font-weight:bold;">Name of device: </span> 
+        {{ DeviceName }} </p>
+        <p> <span style="font-weight:bold;">Error message displayed: </span> 
         <br>{{ ErrorMsg }} </p>
-        <p> <span style="font-weight:bold;">What are the specific details of the problem? </span> 
-        <br>{{ Description }} </p>
     {% endif %}
     
     {% if Category == "Software" %}
         <p> <span style="font-weight:bold;">Which system?: </span> 
         <br>{{ System }} </p>
         <p> <span style="font-weight:bold;">Is the system completely offline/broken?: </span>
-        <br>{{ Offline }} </p>
-        <p> <span style="font-weight:bold;">What are the specific details of the problem? </span> 
-        <br>{{ Description }} </p>
+        <br>{{ Offline }} </p>     
     {% endif %}
     
     {% if Category == "Service" %}
@@ -63,17 +66,14 @@
     {% endif %}
     
     {% if Category == "Password" %}
-        <p> <span style="font-weight:bold;">Which system?</span> 
-        <br>{{ System_type }} </p>
-        <p> <span style="font-weight:bold;">Which account/username</span> 
-        <br>{{ Sys_user }} </p>
+        <p>Category details currently not implemented!</p>
     {% endif %}
     
     {% if Category == "General" %}
         <p>Category details currently not implemented!</p>
     {% endif %}
-    
-     <p><span style="font-weight:bold;">Further details: </span> 
+
+    <p><span style="font-weight:bold;">Further details: </span> 
     <br>
     {{ Description }} </p>
 
@@ -88,7 +88,10 @@
       </div>
     </div>
 
+    
 </body>
+
+
 </html>
 
 {% endblock %}

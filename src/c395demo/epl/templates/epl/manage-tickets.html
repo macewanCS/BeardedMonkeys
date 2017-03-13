@@ -11,6 +11,7 @@
 </head>
 <body>
     <h1>Manage Tickets Page</h1>
+    </div>
 	<table class="sortable">
 	    <tr>
 	        <th>ID</th>
@@ -30,9 +31,9 @@
                     <td> {{ callLog.CustID }} </td>
                     <td> 20{{ callLog.RecvdDate }} </td>
                     <td> {{ callLog.Category }} </td>
-                     <td id="status_{{ callLog.CallID }}"> {{ callLog.CallStatus }} </td>
+                    <td id="status_{{ callLog.CallID }}"> {{ callLog.CallStatus }} </td>
                     <td> {{ callLog.Priority }} </td>
-                    <td style="text-align:left;"> {% descGet callLog.CallID %} </td>
+                    <td> {% descGet callLog.CallID %} </td>
                     <td>
                         <a class="button" href="{% url 'detail' id=callLog.CallID %}">
                             <i class="fa fa-folder-open-o" aria-hidden="true"></i> View
@@ -40,7 +41,8 @@
                         <a class="button" href="edit.asp">
                             <i class="fa fa-pencil" aria-hidden="true"></i> Edit
                         </a>
-                        <!--check if the user is owner of the ticket. And if he is ownere, he can click resolve button; if not, he can't-->
+
+                         <!--check if the user is owner of the ticket. And if he is ownere, he can click resolve button; if not, he can't-->
                          {% if user.username == callLog.CustID %}
                             <a id="myBtn_{{ callLog.CallID }}" class="button" href="#">
                                 {% if callLog.CallStatus == "Open" %}
@@ -49,14 +51,25 @@
                                     <i class="fa fa-check" aria-hidden="true"></i> Re-open
                                 {% endif %}
                             </a>
+                         {% else %}
+                            <a href="#" class="button disabled" href="#" style="background-color:grey">
+                                {% if callLog.CallStatus == "Open" %}
+                                    <i class="fa fa-check" aria-hidden="true"></i> Resolved
+                                {% else %}
+                                    <i class="fa fa-check" aria-hidden="true"></i> Re-open
+                                {% endif %}
+                            </a>
                          {% endif %}
+
                     </td>
                 </tr>
             {% endif %}
 	    {% endfor %}
     </table>
     <div id="myModal" class="modal">
+    
       <!-- Modal content -->
+      
       <div class="modal-content">
           <span class="close">&times;</span>
           <p id="modalText">Are you sure the ticket has been resolved?</p>
@@ -64,6 +77,7 @@
           <a class="button modalButton" style="visibility:hidden;"></a>
           <a id="yButton" class="button modalButton" href="#" style="float:right; margin-right:20px;">Yes</a>
       </div>
+      
     </div>
 </body>
 </html>

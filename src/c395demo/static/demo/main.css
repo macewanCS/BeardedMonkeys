@@ -21,76 +21,10 @@ header img{
 	margin-left: 20px;
 }
 
-nav{
-    position: absolute;
-    bottom: 0%;
-}
-
 li{
 	list-style-type: none;
 	display: inline;
-	padding: 10px 15px;
-    margin: 0 5px;
-}
-
-#home{
-    color: #009DDC;
-    transition: color 0.4s ease-in-out;
-}
-
-#home:hover{
-    color: #0088BF;
-}
-
-.cat{
-    padding: 10px;
-    border: 2px solid #ccc;
-    position: relative;
-    margin-bottom: 50px;
-    transition: background-color 0.3s;
-}
-
-.cat:hover{
-    background-color: #E60E64;
-    color: white;
-}
-
-.cat button{
-    padding: 20px 0;
-    width: 220px;
-    bottom:0;
-}
-
-.cat h2 {
-    color: #E60E64;
-}
-
-.cat:hover h2 {
-    color: #fff;
-}
-
-.add{
-    font-size: 50px;
-    text-align: center;
-    margin: 0;
-    margin-bottom: 5px;
-    position: absolute;
-    bottom: 10%;
-    left: 42%;
-}
-
-.add span{
-    padding: 1px 16px;
-    border: 2px solid;
-    border-radius: 100%;
-}
-
-.clearfix{zoom:1;}
-.clearfix:after{
-    content: '.';
-    clear: both;
-    display: block;
-    visibility: hidden;
+	padding: 10px;
 }
 
 #add{
@@ -147,7 +81,7 @@ table, th, td {
 
 .sortable th, .sortable td {
     text-align: center;
-    border: 2px solid #ccc;
+    border-bottom: 2px solid #ccc;
     padding: 10px !important;
 }
 
@@ -157,7 +91,7 @@ table, th, td {
 
 th {
     padding: 15px !important;
-    background-color: #4E4E4E;
+    background-color: #4CAF50;
     color: white;
 }
 
@@ -199,7 +133,7 @@ button:hover{
     text-align:center;
 }
 
-.disalbed {
+.disabled {
     pointer-events: none;
     cursor: default;
 }
@@ -240,7 +174,7 @@ input[type="text"], input[type="password"], textarea {
     border-radius: 8px;
     padding-left: 8px;
 }
- 
+
 input[type="text"]:focus, input[type="password"]:focus, textarea:focus {
     box-shadow: 0 0 5px rgba(81, 203, 238, 1);
     padding: 3px 0px 3px 3px;
@@ -291,6 +225,16 @@ ul#main-nav{
     padding:0;
 }
 
+#create{
+    margin-bottom: 50px;
+}
+
+#create button{
+    padding: 20px 0;
+    width: 220px;
+    text-align: center;
+}
+
 hr{
     margin-top: 50px;
     margin-bottom: 50px;
@@ -310,8 +254,8 @@ table.sortable thead {
 
 
 /* visible sort symbol*/
-table.sortable th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):not(.sorttable_nosort):after { 
-    content: " \25B4\25BE" 
+table.sortable th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):not(.sorttable_nosort):after {
+    content: " \25B4\25BE"
 }
 
 /* The Modal (background) */
@@ -353,6 +297,8 @@ table.sortable th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):not(.sor
     cursor: pointer;
 }
 
+
+
 /*From here to the end, the css for dropdown menu*/
 @import url(http://fonts.googleapis.com/css?family=Open+Sans);
 @import url(http://fonts.googleapis.com/css?family=Bree+Serif);
@@ -391,7 +337,8 @@ nav ul li {
 	margin: 0px;
 	padding:10px;
 	border-radius:10px 10px 0px 0px;
-	bottom: -4px
+	bottom: -10px;
+	vertical-align: middle;
 	}
 
 /* Styling the links */
