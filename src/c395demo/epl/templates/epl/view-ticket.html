@@ -62,15 +62,27 @@
     {% endif %}
     
     {% if Category == "Service" %}
-        <p>Category details currently not implemented!</p>
+        <p> <span style="font-weight:bold;">Request type: </span> 
+        {{ request_type }} </p>
+        <p> <span style="font-weight:bold;">Which system?: </span> 
+        {{ System_type }} </p>
+        <p> <span style="font-weight:bold;">Asset ID: </span> 
+        {{ asset_tag }} </p>
+        <p> <span style="font-weight:bold;">Move location: </span> 
+        {{ move_location }} </p>
+        <p> <span style="font-weight:bold;">Software: </span> 
+        {{ software }} </p>
+        <p> <span style="font-weight:bold;">PC: </span> 
+        {{ pc }} </p>
     {% endif %}
     
     {% if Category == "Password" %}
         <p>Category details currently not implemented!</p>
     {% endif %}
     
-    {% if Category == "General" %}
-        <p>Category details currently not implemented!</p>
+    {% if Category == "Other" %}
+        <p> <span style="font-weight:bold;"></span> 
+        <br>{{ problem }} </p>
     {% endif %}
 
     <p><span style="font-weight:bold;">Further details: </span> 
