@@ -51,3 +51,11 @@ YES_NO_CHOICE = (
 	('NO', 'No'),
 	("I am not sure", "I am not sure")
 )
+
+REQUEST_TYPE_CHOICE = (
+        ('System access request', 'System access request'),
+        ('Move equipment request', 'Move equipment request'),
+        ('New software request', 'New software request'),
+        ('New equipment request', 'New equipment request'),
+        ('Surplus equipment request', 'Surplus equipment request')
+)
