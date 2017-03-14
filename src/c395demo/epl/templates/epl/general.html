@@ -5,10 +5,20 @@
 
 <html>
 <head>
-	<title>General Question Tickets</title>
+	<title>Other Tickets</title>
 </head>
 <body>
-	<h1>General Question Tickets</h1>
+	<h1>Other Tickets</h1>
+	<form role="form" action="" method="post">
+    {% csrf_token %}
+    <TABLE WIDTH="80">
+    <TR><TD>
+    <P>What can we help you with today?: <span class="required">*</span></P>
+    {{form.problem}}
+</TD></TR></TABLE>
+    <BR>
+    <button type="submit" id="submit"><i class="fa fa-play-circle-o" aria-hidden="true"></i> Submit</button>
+    </form>
 </body>
 </html>
 

@@ -5,10 +5,27 @@
 
 <html>
 <head>
-	<title>Service Request Tickets</title>
+	<title>Service Tickets</title>
 </head>
 <body>
-	<h1>Service Request Tickets</h1>
+	<h1>Service Tickets</h1>
+	<form role="form" action="" method="post">
+    {% csrf_token %}
+    <P>Request type: <span class="required">*</span></P>
+    {{form.request_type}}
+    <P>Which system? <span class="required">*</span></P>
+    {{form.system}}
+    <P>Please provide the asset tag(s) of the equipment you want moved or surplused: (<a style="color:grey;"            href="javascript:alert('An asset tag is ....');">What is an Asset ID?</a>)      <span class="required">*</span></P>
+    {{form.asset_tag}}
+    <P>Where would you like the equipment moved to?: <span class="required">*</span></P>
+    {{form.move_location}}
+    <P>What software are you looking for? <span class="required">*</span></P>
+    {{form.software}}
+    <P>Which PC do you want this software installed on? <span class="required">*</span></P>
+    {{form.pc}}
+    <BR>
+    <button type="submit" id="submit"><i class="fa fa-play-circle-o" aria-hidden="true"></i> Submit</button>
+    </form>
 </body>
 </html>
 
