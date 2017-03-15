@@ -32,7 +32,6 @@
                     {% endif %}
                 </a>
             {% endif %}
-            <!--<a class="button" href="resolve.asp"><i class="fa fa-check" aria-hidden="true"></i> Resolved</a>-->
         </p>
         <p><span style="font-weight:bold;">Posted by</span> {{ CustID }}</p>
     </div>
@@ -41,42 +40,57 @@
    
     <P><span style="font-weight:bold;">Posted on</span> {{ RecvdDate }} </P>
     <P><span style="font-weight:bold;">Category:</span> {{ Category }} </P>
-    <P><span style="font-weight:bold;">Status:</span> <span id="status_{{ CallID }}">{{ CallStatus }}</span></span></P>
+    <P><span style="font-weight:bold;">Status:</span> <span id="status_{{ CallID }}">{{ CallStatus }}</span></P>
      
     {% if Category == "Hardware" %}
-        <p> <span style="font-weight:bold;">Type of equipment: </span> 
-        {{ EquipType }} </p>
-        <p> <span style="font-weight:bold;">Asset tag: </span> 
-        {{ AssetTag }} </p>
-        <p> <span style="font-weight:bold;">Name of device: </span> 
-        {{ DeviceName }} </p>
-        <p> <span style="font-weight:bold;">Error message displayed: </span> 
+        <p> <span style="font-weight:bold;">What kind of device is having the problem? </span> 
+        <br>{{ EquipType }} </p>
+        <p> <span style="font-weight:bold;">What is the device's asset ID? </span> 
+        <br>{{ AssetTag }} </p>
+        <p> <span style="font-weight:bold;">What is the device's name? </span> 
+        <br>{{ DeviceName }} </p>
+        <p> <span style="font-weight:bold;">What (if any) error message(s) is the device diplaying? </span> 
         <br>{{ ErrorMsg }} </p>
+        <p> <span style="font-weight:bold;">What are the specific details of the problem? </span> 
+        <br>{{ Description }} </p>
     {% endif %}
     
     {% if Category == "Software" %}
         <p> <span style="font-weight:bold;">Which system?: </span> 
         <br>{{ System }} </p>
         <p> <span style="font-weight:bold;">Is the system completely offline/broken?: </span>
-        <br>{{ Offline }} </p>     
+        <br>{{ Offline }} </p>
+        <p> <span style="font-weight:bold;">What are the specific details of the problem? </span> 
+        <br>{{ Description }} </p>
     {% endif %}
     
     {% if Category == "Service" %}
-        <p>Category details currently not implemented!</p>
+        <p> <span style="font-weight:bold;">Request type: </span> 
+        {{ request_type }} </p>
+        <p> <span style="font-weight:bold;">Which system?: </span> 
+        {{ System_type }} </p>
+        <p> <span style="font-weight:bold;">Asset ID: </span> 
+        {{ asset_tag }} </p>
+        <p> <span style="font-weight:bold;">Move location: </span> 
+        {{ move_location }} </p>
+        <p> <span style="font-weight:bold;">Software: </span> 
+        {{ software }} </p>
+        <p> <span style="font-weight:bold;">PC: </span> 
+        {{ pc }} </p>
     {% endif %}
     
     {% if Category == "Password" %}
-        <p>Category details currently not implemented!</p>
+        <p> <span style="font-weight:bold;">Which system?</span> 
+        <br>{{ System_type }} </p>
+        <p> <span style="font-weight:bold;">Which account/username</span> 
+        <br>{{ Sys_user }} </p>
     {% endif %}
     
-    {% if Category == "General" %}
-        <p>Category details currently not implemented!</p>
+    {% if Category == "Other" %}
+        <p> <span style="font-weight:bold;"></span> 
+        <br>{{ problem }} </p>
     {% endif %}
-
-    <p><span style="font-weight:bold;">Further details: </span> 
-    <br>
-    {{ Description }} </p>
-
+    
     <div id="myModal" class="modal">
       <!-- Modal content -->
       <div class="modal-content">
@@ -88,10 +102,7 @@
       </div>
     </div>
 
-    
 </body>
-
-
 </html>
 
 {% endblock %}

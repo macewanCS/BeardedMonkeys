@@ -92,7 +92,18 @@ def service(request):
     if (not request.user.is_authenticated()):
         return redirect('/login')
 
-    context = {}
+    form = ServiceTicketForm(request.POST or None)
+    if form.is_valid():
+        #saving data into the database
+        msg = service_database_saved(form, request.user.username)
+
+        # Get the service ticket Id and redirect to the successful
+        # submission page with the service ticket info
+        ticketId = getTicketId("Service", request.user.username)
+        context = successTicketSummary(request, ticketId)
+        return render(request, "epl/service_submitted.html", context)
+
+    context = {'form': ServiceTicketForm}
     return render(request, 'epl/service.html', context)
 
 # general tickets page view
@@ -101,7 +112,18 @@ def general(request):
     if (not request.user.is_authenticated()):
         return redirect('/login')
 
-    context = {}
+    form = GeneralTicketForm(request.POST or None)
+    if form.is_valid():
+        #saving data into the database
+        msg = general_database_saved(form, request.user.username)
+
+        # Get the general ticket Id and redirect to the successful
+        # submission page with the general ticket info
+        ticketId = getTicketId("Other", request.user.username)
+        context = successTicketSummary(request, ticketId)
+        return render(request, "epl/general_submitted.html", context)
+
+    context = {'form': GeneralTicketForm}
     return render(request, 'epl/general.html', context)
 
 # password recovery tickets page view
@@ -109,7 +131,7 @@ def password(request):
     # user must need to login to view pages
     if (not request.user.is_authenticated()):
         return redirect('/login')
-    
+
     form = PasswordTicketForm(request.POST or None)
     if form.is_valid():
         # saving data into the database
@@ -119,8 +141,8 @@ def password(request):
         # submission page with the hardware ticket info
         ticketId = getTicketId("Password", request.user.username)
         context = successTicketSummary(request, ticketId)
-        return render(request, "epl/hardware_submitted.html", context)
-    
+        return render(request, "epl/password_submitted.html", context)
+
     context = {'form': PasswordTicketForm}
     return render(request, 'epl/password.html', context)
 
@@ -198,7 +220,7 @@ def detail(request, id):
             "CallStatus" : ticket.CallStatus,
             "Priority" : ticket.Priority
         }
-        
+
     elif ( ticket.Category == "Password" ):
         context = {
             "CallID" : ticket.CallID,
@@ -206,6 +228,32 @@ def detail(request, id):
             "RecvdDate" : recvdDate,
             "System_type" : temp[0],
             "Sys_user" : temp[1],
+            "Category" : ticket.Category,
+            "CallStatus" : ticket.CallStatus,
+            "Priority" : ticket.Priority
+        }
+    elif ( ticket.Category == "Service" ):
+        context = {
+            "CallID" : ticket.CallID,
+            "CustID" : ticket.CustID,
+            "RecvdDate" : recvdDate,
+            "request_type" : temp[0],
+            "System_type" : temp[1],
+            "asset_tag" : temp[2],
+            "move_location" : temp[3],
+            "software" : temp[4],
+            "pc" : temp[5],
+            "Category" : ticket.Category,
+            "CallStatus" : ticket.CallStatus,
+            "Priority" : ticket.Priority
+        }
+    elif ( ticket.Category == "Other" ):
+        context = {
+            "CallID" : ticket.CallID,
+            "CustID" : ticket.CustID,
+            "RecvdDate" : recvdDate,
+            "System_type" : "NULL",
+            "problem" : temp[0],
             "Category" : ticket.Category,
             "CallStatus" : ticket.CallStatus,
             "Priority" : ticket.Priority
@@ -267,7 +315,7 @@ def parsing(string, parse):
 
 def resolved(ticket_id):
     ticket = CallLog.objects.get(CallID=ticket_id)
-    
+
     if ( ticket.CallStatus == "Open" ):
         ticket.CallStatus = "Resolved"
     else:
@@ -315,7 +363,7 @@ def successTicketSummary(request, id):
             "CallStatus" : ticket.CallStatus,
             "Priority" : ticket.Priority
         }
-        
+
     elif ( ticket.Category == "Password" ):
         context = {
             "CallID" : ticket.CallID,
@@ -340,6 +388,28 @@ def successTicketSummary(request, id):
             "CallStatus" : ticket.CallStatus,
             "Priority" : ticket.Priority
         }
+    elif ( ticket.Category == "Service" ):
+        context = {
+            "CallID" : ticket.CallID,
+            "CustID" : ticket.CustID,
+            "RecvdDate" : recvdDate,
+            "System" : temp[0],
+            "Offline" : temp[1],
+            "Description" : temp[2],
+            "Category" : ticket.Category,
+            "CallStatus" : ticket.CallStatus,
+            "Priority" : ticket.Priority
+        }
+    elif ( ticket.Category == "Other" ):
+        context = {
+            "CallID" : ticket.CallID,
+            "CustID" : ticket.CustID,
+            "RecvdDate" : recvdDate,
+            "problem" : temp[0],
+            "Category" : ticket.Category,
+            "CallStatus" : ticket.CallStatus,
+            "Priority" : ticket.Priority
+            }
 
     else:
         context = {}
@@ -394,7 +464,7 @@ def pass_database_saved(form, username):
         callLog_RecvdTime = temp[1][:8]
         asgnmnt_DateAssign = temp[0][2:]
         asgnmnt_TimeAssign = temp[1][:8]
-        
+
         # user ID
         callLog_CustID = username
 
@@ -682,6 +752,216 @@ def soft_database_saved(form, username):
     except:
         return "Something went wrong"
 
+# Save a service ticket
+def service_database_saved(form, username):
+    try:
+        # getting data from the form
+        request_type = form.cleaned_data.get("request_type")
+        system = form.cleaned_data.get("system")
+        asset_tag = form.cleaned_data.get("asset_tag")
+        move_location = form.cleaned_data.get("move_location")
+        software = form.cleaned_data.get("software")
+        pc = form.cleaned_data.get("pc")
+
+        # request type
+        probType_ProbType = request_type
+        callLog_Symptoms = request_type
+        asgnmnt_Description = request_type
+
+        # system type
+        callLog_Symptoms += "|"
+        asgnmnt_Description += "|"
+        callLog_Symptoms += system
+        asgnmnt_Description += system
+
+
+        # asset tag
+        callLog_Symptoms += "|"
+        asgnmnt_Description += "|"
+        callLog_Symptoms += asset_tag
+        asgnmnt_Description += asset_tag
+
+
+        # move location
+        callLog_Symptoms += "|"
+        asgnmnt_Description += "|"
+        callLog_Symptoms += move_location
+        asgnmnt_Description += move_location
+
+        # software
+        callLog_Symptoms += "|"
+        asgnmnt_Description += "|"
+        callLog_Symptoms += software
+        asgnmnt_Description += software
+
+        # pc
+        callLog_Symptoms += "|"
+        asgnmnt_Description += "|"
+        callLog_Symptoms += pc
+        asgnmnt_Description += pc
+
+        # priority
+        callLog_Priority = "3"
+
+        # call source
+        callLog_CallSource = "Web"
+
+
+        # assigned team name
+        if( request_type == "Move equipment request"):
+            asgnmnt_TeamName = "Project Team"
+        else:
+            asgnmnt_TeamName = "Administrative Team"
+
+
+        # assigned by
+        asgnmnt_AssignedBy = "Selfserve"
+
+
+        # assignment status
+        asgnmnt_Status = "Unacknowledged"
+
+        # current timestamp
+        temp = parsing(str(datetime.now()), " ")
+        callLog_RecvdDate = temp[0][2:]
+        callLog_RecvdTime = temp[1][:8]
+        asgnmnt_DateAssign = temp[0][2:]
+        asgnmnt_TimeAssign = temp[1][:8]
+
+        # user ID
+        callLog_CustID = username
+
+        # tracker
+        callLog_Tracker = "selfserve"
+
+        # call log status
+        callLog_Status = "Open"
+
+        # CallLog Table
+        callLog_table = CallLog(
+            Symptoms = callLog_Symptoms,
+            Priority = callLog_Priority,
+            CallSource = callLog_CallSource,
+            RecvdDate = callLog_RecvdDate,
+            RecvdTime = callLog_RecvdTime,
+            CustID = callLog_CustID,
+            Tracker = callLog_Tracker,
+            CallStatus = callLog_Status,
+            Category = "Service"
+        )
+
+
+        # Asgnmnt Table
+        asgnmnt_table = Asgnmnt(
+            Description = asgnmnt_Description,
+            TeamName = asgnmnt_TeamName,
+            AssignedBy = asgnmnt_AssignedBy,
+            Status = asgnmnt_Status,
+            DateAssign = asgnmnt_DateAssign,
+            TimeAssign = asgnmnt_TimeAssign
+        )
+
+        # ProbType Table
+        probType_table = ProbType(
+            ProbType = probType_ProbType
+        )
+
+        # Saving data into the database
+        callLog_table.save()
+        asgnmnt_table.save()
+        probType_table.save()
+
+
+        return "Ticket added sucessfully"
+
+    except:
+        return "Something went wrong"
+
+# Save a general ticket
+def general_database_saved(form, username):
+    try:
+        # getting data from the form
+        problem = form.cleaned_data.get("problem")
+
+        # problem
+        probType_ProbType = problem
+        callLog_Symptoms = problem
+        asgnmnt_Description = problem
+
+        # priority
+        callLog_Priority = "4"
+
+        # call source
+        callLog_CallSource = "Web"
+
+
+        # assigned team name
+        asgnmnt_TeamName = "NULL"
+
+
+        # assigned by
+        asgnmnt_AssignedBy = "Selfserve"
+
+
+        # assignment status
+        asgnmnt_Status = "Unacknowledged"
+
+        # current timestamp
+        temp = parsing(str(datetime.now()), " ")
+        callLog_RecvdDate = temp[0][2:]
+        callLog_RecvdTime = temp[1][:8]
+        asgnmnt_DateAssign = temp[0][2:]
+        asgnmnt_TimeAssign = temp[1][:8]
+
+        # user ID
+        callLog_CustID = username
+
+        # tracker
+        callLog_Tracker = "selfserve"
+
+        # call log status
+        callLog_Status = "Open"
+
+        # CallLog Table
+        callLog_table = CallLog(
+            Symptoms = callLog_Symptoms,
+            Priority = callLog_Priority,
+            CallSource = callLog_CallSource,
+            RecvdDate = callLog_RecvdDate,
+            RecvdTime = callLog_RecvdTime,
+            CustID = callLog_CustID,
+            Tracker = callLog_Tracker,
+            CallStatus = callLog_Status,
+            Category = "Other"
+        )
+
+
+        # Asgnmnt Table
+        asgnmnt_table = Asgnmnt(
+            Description = asgnmnt_Description,
+            TeamName = asgnmnt_TeamName,
+            AssignedBy = asgnmnt_AssignedBy,
+            Status = asgnmnt_Status,
+            DateAssign = asgnmnt_DateAssign,
+            TimeAssign = asgnmnt_TimeAssign
+        )
+
+        # ProbType Table
+        probType_table = ProbType(
+            ProbType = probType_ProbType
+        )
+
+        # Saving data into the database
+        callLog_table.save()
+        asgnmnt_table.save()
+        probType_table.save()
+
+
+        return "Ticket added sucessfully"
+
+    except:
+        return "Something went wrong"
+
 @csrf_exempt
 def alter_status(request):
     if request.method == 'POST':
@@ -707,4 +987,5 @@ def alter_status(request):
             json.dumps({"nothing to see": "this isn't happening"}),
             content_type="application/json"
         )
+
 
