@@ -13,14 +13,25 @@
         <p>
             <a class="button" href="{% url 'manage' %}"><i class="fa fa-chevron-circle-left" aria-hidden="true"></i> Back</a>
             <a class="button" href="edit.asp"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</a>
-            <a id="myBtn_{{ CallID }}" class="button" href="#">
-                {% if CallStatus == "Open" %}
-                    <i class="fa fa-check" aria-hidden="true"></i> Resolved
-                {% else %}
-                    <i class="fa fa-check" aria-hidden="true"></i> Re-open
-                {% endif %}
-            </a>
-            <!--<a class="button" href="resolve.asp"><i class="fa fa-check" aria-hidden="true"></i> Resolved</a>-->
+
+            <!--check if the user is owner of the ticket. And if he is ownere, he can click resolve button; if not, he can't-->
+            {% if user.username == CustID %}
+                <a id="myBtn_{{ CallID }}" class="button" href="#">
+                    {% if CallStatus == "Open" %}
+                        <i class="fa fa-check" aria-hidden="true"></i> Resolved
+                    {% else %}
+                        <i class="fa fa-check" aria-hidden="true"></i> Re-open
+                    {% endif %}
+                </a>
+            {% else %}
+                <a class="button disabled" href="#" style="background-color:grey;">
+                    {% if CallStatus == "Open" %}
+                        <i class="fa fa-check" aria-hidden="true"></i> Resolved
+                    {% else %}
+                        <i class="fa fa-check" aria-hidden="true"></i> Re-open
+                    {% endif %}
+                </a>
+            {% endif %}
         </p>
         <p><span style="font-weight:bold;">Posted by</span> {{ CustID }}</p>
     </div>
@@ -80,6 +91,10 @@
         <br>{{ problem }} </p>
     {% endif %}
     
+    <p><span style="font-weight:bold;">Further details: </span> 
+    <br>
+    {{ Description }} </p>
+
     <div id="myModal" class="modal">
       <!-- Modal content -->
       <div class="modal-content">
