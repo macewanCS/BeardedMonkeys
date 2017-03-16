@@ -41,13 +41,24 @@
                             <i class="fa fa-pencil" aria-hidden="true"></i> Edit
                         </a>
 
-                        <a id="myBtn_{{ callLog.CallID }}" class="button" href="#">
-                            {% if callLog.CallStatus == "Open" %}
-                                <i class="fa fa-check" aria-hidden="true"></i> Resolved
-                            {% else %}
-                                <i class="fa fa-check" aria-hidden="true"></i> Re-open
-                            {% endif %}
-                        </a>
+                        <!--check if the user is owner of the ticket. And if he is ownere, he can click resolve button; if not, he can't-->
+                        {% if user.username == callLog.CustID %}
+                            <a id="myBtn_{{ callLog.CallID }}" class="button" href="#">
+                                {% if callLog.CallStatus == "Open" %}
+                                    <i class="fa fa-check" aria-hidden="true"></i> Resolved
+                                {% else %}
+                                    <i class="fa fa-check" aria-hidden="true"></i> Re-open
+                                {% endif %}
+                            </a>
+                        {% else %}
+                            <a href="#" class="button disabled" href="#" style="background-color:grey">
+                                {% if callLog.CallStatus == "Open" %}
+                                    <i class="fa fa-check" aria-hidden="true"></i> Resolved
+                                {% else %}
+                                    <i class="fa fa-check" aria-hidden="true"></i> Re-open
+                                {% endif %}
+                            </a>
+                        {% endif %}
                     </td>
                 </tr>
             {% endif %}
