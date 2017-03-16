@@ -1,23 +1,37 @@
 
-{% extends 'epl/index.html' %}
-
-{% block content %}
 
 <html>
 <head>
+<style>
+body {background-color: #ddeeee;}
+div {margin:auto;}
+head {background-color:#ddeeee; box-shadow: 0px 0px 0px #ccc;}
+</style>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static '/demo/main.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static '/demo/grid.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static '/demo/normalize.css' %}">
+	<link rel="icon" href="{% static '/demo/favicon.png' %}" sizes="16x16 32x32" type="image/png">
+
 	<title>Login Page</title>
 </head>
 <body>
-    <div id="center" align="center">
-        <BR><BR><BR>
-	<h1>Login Page</h1>
-	<form action='' method='POST' >
-	    {% csrf_token %}
-	    {{ form.as_p }}
-	    <button type="submit" value="{{ name }}" >{{ name }}</button>
-	</form>
+    <div id="outer" style="background-color:white; box-shadow: 0px 3px 10px #ccc; width: 550px; height: 340px; margin-top:100px" >
+        <div id="upper" align="left" style="border-bottom: 2px solid lightgrey; width:100%;">
+            <h1 style="margin-bottom:0; margin-top:0;margin-left:25px"><img src="{% static 'demo/epl-logo.png' %}" style="height:84px;width:152px;" alt="epl logo"></h1>
+        </div>
+        <div id="center" align="left" style="width:100%; padding: 0 25px 25px; color:grey" >
+	        <form action='' method='POST' >
+	        {% csrf_token %}
+	        <P style="margin-bottom:0;">Username / Email Address</P>
+	        {{ form.username }}
+	        <P style="margin-bottom:0;">Password</P>
+	        {{ form.password }}
+	        <BR><BR><BR>
+	        <button type="submit" align="left" style="border-radius: 0; padding: 8px 12px; background-color:#cc0033; box-shadow: 0px 3px 10px grey;" value="{{ name }}">{{ name }}</button>
+	    </form>
+    </div>
 </div>
 </body>
 </html>
 
-{% endblock %}

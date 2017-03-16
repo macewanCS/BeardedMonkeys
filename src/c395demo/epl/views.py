@@ -294,7 +294,7 @@ def login_view(request):
 
         return redirect('/')
 
-    context = { "form" : form, "name" : "Login" }
+    context = { "form" : form, "name" : "Sign In" }
     return render(request, 'epl/login.html', context)
 
 # logout page view
