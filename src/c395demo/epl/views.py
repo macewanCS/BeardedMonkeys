@@ -666,6 +666,16 @@ def soft_database_saved(form, username):
         asgnmnt_Description += "|"
         callLog_Symptoms += problem_description
         asgnmnt_Description += problem_description
+        
+        #image link
+        callLog_Symptoms += "|"
+        asgnmnt_Description += "|"
+
+        if ( file_upload == "" or file_upload == " " ):
+            file_upload = "NULL"
+            
+        callLog_Symptoms += file_upload
+        asgnmnt_Description += file_upload
 
         # priority
         if ( system_offline == "Yes" ):
