@@ -680,7 +680,7 @@ def soft_database_saved(form, username):
 
         # assigned team name
         if( probType_ProbType == "Internet/Network" or probType_ProbType=="S:/ drive"):
-            asgnmnt_TeamName = "Netwrok Team"
+            asgnmnt_TeamName = "Network Team"
 
 
         elif( probType_ProbType == "Workflows"):
