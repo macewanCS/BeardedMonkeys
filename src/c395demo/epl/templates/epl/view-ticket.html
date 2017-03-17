@@ -77,6 +77,8 @@
         {{ software }} </p>
         <p> <span style="font-weight:bold;">PC: </span> 
         {{ pc }} </p>
+        <p> <span style="font-weight:bold;">Description: </span> 
+        {{ description }} </p>
     {% endif %}
     
     {% if Category == "Password" %}
@@ -91,10 +93,6 @@
         <br>{{ problem }} </p>
     {% endif %}
     
-    <p><span style="font-weight:bold;">Further details: </span> 
-    <br>
-    {{ Description }} </p>
-
     <div id="myModal" class="modal">
       <!-- Modal content -->
       <div class="modal-content">

@@ -3,6 +3,95 @@
 
 {% block content %}
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+<script>
+   $(document).ready(function() {
+      $('#id_system_label').hide();
+      $('#id_system').hide();
+      $('#id_asset_tag_label').hide();
+      $('#id_asset_tag').hide();
+      $('#id_move_location_label').hide();
+      $('#id_move_location').hide();
+      $('#id_software_label').hide();
+      $('#id_software').hide();
+      $('#id_pc_label').hide();
+      $('#id_pc').hide();
+      $('#id_description_label').hide();
+      $('#id_description').hide();
+      $('#id_request_type').on('change', function () {
+          if ($(this).val() === 'Move equipment request') {
+              $('#id_system_label').show();
+              $('#id_system').show();
+              $('#id_asset_tag_label').show();
+              $('#id_asset_tag').show();
+              $('#id_move_location_label').show();
+              $('#id_move_location').show();
+              $('#id_software_label').hide();
+              $('#id_software').hide();
+              $('#id_pc_label').hide();
+              $('#id_pc').hide();
+              $('#id_description_label').hide();
+              $('#id_description').hide();
+          }
+          else if ($(this).val() === 'Surplus equipment request') {
+              $('#id_system_label').show();
+              $('#id_system').show();
+              $('#id_asset_tag_label').show();
+              $('#id_asset_tag').show();
+              $('#id_move_location_label').hide();
+              $('#id_move_location').hide();
+              $('#id_software_label').hide();
+              $('#id_software').hide();
+              $('#id_pc_label').hide();
+              $('#id_pc').hide();
+              $('#id_description_label').hide();
+              $('#id_description').hide();
+          } 
+          else if ($(this).val() === 'New software request') {
+              $('#id_system_label').hide();
+              $('#id_system').hide();
+              $('#id_asset_tag_label').hide();
+              $('#id_asset_tag').hide();
+              $('#id_move_location_label').hide();
+              $('#id_move_location').hide();
+              $('#id_software_label').show();
+              $('#id_software').show();
+              $('#id_pc_label').show();
+              $('#id_pc').show();
+              $('#id_description_label').hide();
+              $('#id_description').hide();
+          } 
+          else if ($(this).val() === 'New equipment request') {
+              $('#id_system_label').hide();
+              $('#id_system').hide();
+              $('#id_asset_tag_label').hide();
+              $('#id_asset_tag').hide();
+              $('#id_move_location_label').hide();
+              $('#id_move_location').hide();
+              $('#id_software_label').hide();
+              $('#id_software').hide();
+              $('#id_description_label').show();
+              $('#id_description').show();
+          } 
+          else {
+              $('#id_system_label').hide();
+              $('#id_system').hide();
+              $('#id_asset_tag_label').hide();
+              $('#id_asset_tag').hide();
+              $('#id_move_location_label').hide();
+              $('#id_move_location').hide();
+              $('#id_software_label').hide();
+              $('#id_software').hide();
+              $('#id_pc_label').hide();
+              $('#id_pc').hide();
+              $('#id_description_label').show();
+              $('#id_description').show();
+          }
+      });
+   });
+</script>
 <html>
 <head>
 	<title>Service Tickets</title>
@@ -13,16 +102,18 @@
     {% csrf_token %}
     <P>Request type: <span class="required">*</span></P>
     {{form.request_type}}
-    <P>Which system? <span class="required">*</span></P>
+    <P id="id_system_label">Which system? <span class="required">*</span></P>
     {{form.system}}
-    <P>Please provide the asset tag(s) of the equipment you want moved or surplused: (<a style="color:grey;"            href="javascript:alert('An asset tag is ....');">What is an Asset ID?</a>)      <span class="required">*</span></P>
+    <P id="id_asset_tag_label">Please provide the asset tag(s) of the equipment you want moved or surplused: (<a style="color:grey;"            href="javascript:alert('An asset tag is ....');">What is an Asset ID?</a>)      <span class="required">*</span></P>
     {{form.asset_tag}}
-    <P>Where would you like the equipment moved to?: <span class="required">*</span></P>
+    <P id="id_move_location_label">Where would you like the equipment moved to?: <span class="required">*</span></P>
     {{form.move_location}}
-    <P>What software are you looking for? <span class="required">*</span></P>
+    <P id="id_software_label">What software are you looking for? <span class="required">*</span></P>
     {{form.software}}
-    <P>Which PC do you want this software installed on? <span class="required">*</span></P>
+    <P id="id_pc_label">Which PC do you want this software installed on? <span class="required">*</span></P>
     {{form.pc}}
+    <P id="id_description_label">Description of the problem: <span class="required">*</span></P>
+    {{form.description}}
     <BR>
     <button type="submit" id="submit"><i class="fa fa-play-circle-o" aria-hidden="true"></i> Submit</button>
     </form>
