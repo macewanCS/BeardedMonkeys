@@ -23,6 +23,11 @@ head {background-color:#ddeeee; box-shadow: 0px 0px 0px #ccc;}
         <div id="center" align="left" style="width:100%; padding: 0 25px 25px; color:grey" >
 	        <form action='' method='POST' >
 	        {% csrf_token %}
+		{% if form.non_field_errors %}
+	            <P style="margin-bottom:0; color:grey">{{ form.non_field_errors|striptags }}</P>
+	        {% else %}
+	            <BR><BR>   
+	        {% endif %}
 	        <P style="margin-bottom:0;">Username / Email Address</P>
 	        {{ form.username }}
 	        <P style="margin-bottom:0;">Password</P>
