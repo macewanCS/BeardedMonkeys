@@ -227,6 +227,13 @@ select{
 
 input[type="text"], input[type="password"], button, submit { border:none; }
 
+input[type="radio"]{
+    margin: 1px;
+    width: 20px;
+    height: 20px;
+    line-height: normal;
+}
+
 input[type="text"], input[type="password"], textarea {
     -webkit-transition: all 0.30s ease-in-out;
     -moz-transition: all 0.30s ease-in-out;
