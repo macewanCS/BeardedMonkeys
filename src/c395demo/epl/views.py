@@ -647,7 +647,7 @@ def soft_database_saved(form, username):
         system_offline = form.cleaned_data.get("system_offline")
         problem_description = form.cleaned_data.get("problem_description")
         steps_replicate_problem = form.cleaned_data.get("steps_replicate_problem")
-        file_upload = form.cleaned_data.get("file_upload")
+        file_upload = form.cleaned_data.get("image_url")
 
         # system type
         probType_ProbType = system
