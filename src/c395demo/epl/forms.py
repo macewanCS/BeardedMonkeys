@@ -42,7 +42,7 @@ class HardwareTicketForm(forms.Form):
 	equipment_type = forms.ChoiceField(choices=EQUIPMENT_TYPE_CHOICES)
 	problem_description = forms.CharField(widget=forms.Textarea)
 	error_messages = forms.CharField(widget=forms.Textarea, required=False)
-	file_upload = forms.FileField(required=False)
+	image_url = forms.CharField(max_length=100, required=False) # change the field type from file to text.
 	device_name = forms.CharField(max_length=200, required=False)
 
 class SoftwareTicketForm(forms.Form):

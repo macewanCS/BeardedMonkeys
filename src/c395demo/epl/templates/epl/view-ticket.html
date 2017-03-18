@@ -82,12 +82,12 @@
     {% if Category == "Password" %}
         <p> <span style="font-weight:bold;">Which system?</span> 
         <br>{{ System_type }} </p>
-        <p> <span style="font-weight:bold;">Which account/username</span> 
+        <p> <span style="font-weight:bold;">Which account/username?</span> 
         <br>{{ Sys_user }} </p>
     {% endif %}
     
     {% if Category == "Other" %}
-        <p> <span style="font-weight:bold;"></span> 
+        <p> <span style="font-weight:bold;">What is your question/comment?</span> 
         <br>{{ problem }} </p>
     {% endif %}
     
@@ -100,7 +100,7 @@
       <div class="modal-content">
           <span class="close">&times;</span>
           <p id="modalText">Are you sure the ticket has been resolved?</p>
-          <a id="nButton" class="button modalButton" href="#" style="float:right">No</a>
+          <a class="button modalButton nButton" href="#" style="float:right">No</a> <!-- add class and remove id-->
           <a class="button modalButton" style="visibility:hidden;"></a>
           <a id="yButton" class="button modalButton" href="#" style="float:right; margin-right:20px;">Yes</a>
       </div>

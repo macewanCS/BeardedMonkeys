@@ -522,7 +522,7 @@ def database_saved(form, username):
         error_messages = form.cleaned_data.get("error_messages")
         file_upload = form.cleaned_data.get("file_upload")
         device_name = form.cleaned_data.get("device_name")
-
+        image_url = form.cleaned_data.get("image_url")
         # equipment type
         probType_ProbType = equipment_type
         callLog_Symptoms = equipment_type
@@ -602,7 +602,7 @@ def database_saved(form, username):
 
         # CallLog Table
         callLog_table = CallLog(
-            Symptoms = callLog_Symptoms,
+            Symptoms = "|".join([callLog_Symptoms, image_url]), # Abdullah adding the url of the image
             Priority = callLog_Priority,
             CallSource = callLog_CallSource,
             RecvdDate = callLog_RecvdDate,
@@ -611,11 +611,12 @@ def database_saved(form, username):
             Tracker = callLog_Tracker,
             CallStatus = callLog_Status,
             Category = "Hardware"
+            #get the value of image filed in hardware form and insert the the value to Image filed of CallLog model.
         )
 
         # Asgnmnt Table
         asgnmnt_table = Asgnmnt(
-            Description = asgnmnt_Description,
+            Description = "|".join([asgnmnt_Description, image_url]), # Abdullah adding the url of the image
             TeamName = asgnmnt_TeamName,
             AssignedBy = asgnmnt_AssignedBy,
             Status = asgnmnt_Status,
@@ -679,7 +680,7 @@ def soft_database_saved(form, username):
 
         # assigned team name
         if( probType_ProbType == "Internet/Network" or probType_ProbType=="S:/ drive"):
-            asgnmnt_TeamName = "Netwrok Team"
+            asgnmnt_TeamName = "Network Team"
 
 
         elif( probType_ProbType == "Workflows"):
