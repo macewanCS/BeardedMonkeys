@@ -54,7 +54,7 @@ class SoftwareTicketForm(forms.Form):
 		label='Description of the Problem')
 	steps_replicate_problem = forms.CharField(widget=forms.Textarea, required=False,
 		label='Share any steps to replicate the problem')
-	file_upload = forms.FileField(required=False)
+	image_url = forms.CharField(max_length=200,required=False)
 
 class PasswordTicketForm(forms.Form):
     system_type = forms.ChoiceField(choices=SYSTEM_CHOICES)
