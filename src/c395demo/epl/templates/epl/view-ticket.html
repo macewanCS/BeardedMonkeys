@@ -5,96 +5,131 @@
 <html>
 <head>
 	<title>View Ticket Page</title>
+	<style>
+	    p{
+	        font-size: 20px;
+	        margin:0;
+	    }
+	</style>
 </head>
 <body>
 	<h1>View Ticket Page</h1>
 	
-    <div class="right">
-        <p>
-            <a class="button" href="{% url 'manage' %}"><i class="fa fa-chevron-circle-left" aria-hidden="true"></i> Back</a>
-            <a class="button" href="edit.asp"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</a>
-
-            <!--check if the user is owner of the ticket. And if he is ownere, he can click resolve button; if not, he can't-->
-            {% if user.username == CustID %}
-                <a id="myBtn_{{ CallID }}" class="button" href="#">
-                    {% if CallStatus == "Open" %}
-                        <i class="fa fa-check" aria-hidden="true"></i> Resolved
-                    {% else %}
-                        <i class="fa fa-check" aria-hidden="true"></i> Re-open
-                    {% endif %}
-                </a>
-            {% else %}
-                <a class="button disabled" href="#" style="background-color:grey;">
-                    {% if CallStatus == "Open" %}
-                        <i class="fa fa-check" aria-hidden="true"></i> Resolved
-                    {% else %}
-                        <i class="fa fa-check" aria-hidden="true"></i> Re-open
-                    {% endif %}
-                </a>
+    <div class="right" style="text-align:right;">
+        {% load static %}
+        <div style="margin: 0 -3px 7px 0;">
+            {% if CallStatus == "Open" %}
+                <img src="{% static 'demo/view-ticket/open-bar.jpg' %}">
+            {% elif CallStatus == "InProgress" %}
+                <img src="{% static 'demo/view-ticket/progress-bar.jpg' %}">
+            {% elif CallStatus == "Resolved" %}
+                <img src="{% static 'demo/view-ticket/resolved-bar.jpg' %}">
+            {% elif CallStatus == "Closed" %}
+                <img src="{% static 'demo/view-ticket/finished-bar.jpg' %}">
             {% endif %}
-        </p>
-        <p><span style="font-weight:bold;">Posted by</span> {{ CustID }}</p>
+        </div>
+        
+        <a class="button" href="{% url 'manage' %}"><i class="fa fa-chevron-circle-left" aria-hidden="true"></i> Back</a>
+        <a class="button" href="edit.asp"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</a>
+
+        <!--check if the user is owner of the ticket. And if he is ownere, he can click resolve button; if not, he can't-->
+        {% if user.username == CustID %}
+            <a id="myBtn_{{ CallID }}" class="button" href="#">
+                {% if CallStatus == "Open" %}
+                    <i class="fa fa-check" aria-hidden="true"></i> Resolved
+                {% else %}
+                    <i class="fa fa-check" aria-hidden="true"></i> Re-open
+                {% endif %}
+            </a>
+        {% else %}
+            <a class="button disabled" href="#" style="background-color:grey;">
+                {% if CallStatus == "Open" %}
+                    <i class="fa fa-check" aria-hidden="true"></i> Resolved
+                {% else %}
+                    <i class="fa fa-check" aria-hidden="true"></i> Re-open
+                {% endif %}
+            </a>
+        {% endif %}
+
+        <p style="margin-top: 10px;">Posted by {{ CustID }}</p>
     </div>
 
-    <H2><span style="font-weight:bold;">Ticket ID:</span> {{ CallID }}</H2> 
-   
-    <P><span style="font-weight:bold;">Posted on</span> {{ RecvdDate }} </P>
-    <P><span style="font-weight:bold;">Category:</span> {{ Category }} </P>
-    <P><span style="font-weight:bold;">Status:</span> <span id="status_{{ CallID }}">{{ CallStatus }}</span></P>
+    <H2>Ticket ID: {{ CallID }}</H2> 
+
+    <p style="margin-top:0;">
+        Posted on {{ RecvdDate }}&ensp;
+        {% if Category == "Hardware" %}
+            <img src="{% static 'demo/view-ticket/hardware-tag.jpg' %}">
+        {% elif Category == "Software" %}
+            <img src="{% static 'demo/view-ticket/software-tag.jpg' %}">
+        {% elif Category == "Service" %}
+            <img src="{% static 'demo/view-ticket/service-tag.jpg' %}">
+        {% elif Category == "Other" %}
+            <img src="{% static 'demo/view-ticket/others-tag.jpg' %}">
+        {% elif Category == "Password" %}
+            <img src="{% static 'demo/view-ticket/password-tag.jpg' %}">
+        {% endif %}
+    </p>
+
+    <h5>Status:</h5>
+    <p><span id="status_{{ CallID }}">{{ CallStatus }}</span></p>
      
     {% if Category == "Hardware" %}
-        <p> <span style="font-weight:bold;">What kind of device is having the problem? </span> 
-        <br>{{ EquipType }} </p>
-        <p> <span style="font-weight:bold;">What is the device's asset ID? </span> 
-        <br>{{ AssetTag }} </p>
-        <p> <span style="font-weight:bold;">What is the device's name? </span> 
-        <br>{{ DeviceName }} </p>
-        <p> <span style="font-weight:bold;">What (if any) error message(s) is the device diplaying? </span> 
-        <br>{{ ErrorMsg }} </p>
-        <p> <span style="font-weight:bold;">What are the specific details of the problem? </span> 
-        <br>{{ Description }} </p>
+        <h5>What kind of device is having the problem?</h5> 
+        <p>{{ EquipType }}</p>
+        <h5>What is the device's asset ID?</h5> 
+        <p>{{ AssetTag }}</p>
+        <h5>What is the device's name?</h5> 
+        <p>{{ DeviceName }}</p>
+        <h5>What (if any) error message(s) is the device diplaying?</h5> 
+        <p>{{ ErrorMsg }}</p>
+        <h5>What are the specific details of the problem?</h5> 
+        <p>{{ Description }}</p>
     {% endif %}
     
     {% if Category == "Software" %}
-        <p> <span style="font-weight:bold;">Which system?: </span> 
-        <br>{{ System }} </p>
-        <p> <span style="font-weight:bold;">Is the system completely offline/broken?: </span>
-        <br>{{ Offline }} </p>
-        <p> <span style="font-weight:bold;">What are the specific details of the problem? </span> 
-        <br>{{ Description }} </p>
+        <h5>Which system?</h5> 
+        <p>{{ System }}</p>
+        <h5>Is the system completely offline/broken?</h5>
+        <p>{{ Offline }}</p>
+        <h5>What are the specific details of the problem?</h5> 
+        <p>{{ Description }}</p>
     {% endif %}
     
     {% if Category == "Service" %}
-        <p> <span style="font-weight:bold;">Request type: </span> 
-        {{ request_type }} </p>
-        <p> <span style="font-weight:bold;">Which system?: </span> 
-        {{ System_type }} </p>
-        <p> <span style="font-weight:bold;">Asset ID: </span> 
-        {{ asset_tag }} </p>
-        <p> <span style="font-weight:bold;">Move location: </span> 
-        {{ move_location }} </p>
-        <p> <span style="font-weight:bold;">Software: </span> 
-        {{ software }} </p>
-        <p> <span style="font-weight:bold;">PC: </span> 
-        {{ pc }} </p>
+        <h5>Request type:</h5> 
+        <p>{{ request_type }}</p>
+        <h5>Which system?</h5> 
+        <p>{{ System_type }}</p>
+        <h5>Asset ID:</h5> 
+        <p>{{ asset_tag }}</p>
+        <h5>Move location:</h5> 
+        <p>{{ move_location }}</p>
+        <h5>Software:</h5> 
+        <p>{{ software }}</p>
+        <h5>PC:</h5> 
+        <p>{{ pc }}</p>
     {% endif %}
     
     {% if Category == "Password" %}
-        <p> <span style="font-weight:bold;">Which system?</span> 
-        <br>{{ System_type }} </p>
-        <p> <span style="font-weight:bold;">Which account/username?</span> 
-        <br>{{ Sys_user }} </p>
+        <h5>Which system?</h5> 
+        <p>{{ System_type }}</p>
+        <h5>Which account/username?</h5> 
+        <p>{{ Sys_user }}</p>
     {% endif %}
     
     {% if Category == "Other" %}
-        <p> <span style="font-weight:bold;">What is your question/comment?</span> 
-        <br>{{ problem }} </p>
+        <h5>What is your question/comment?</h5> 
+        <p>{{ problem }}</p>
     {% endif %}
     
-    <p><span style="font-weight:bold;">Further details: </span> 
-    <br>
-    {{ Description }} </p>
-
+    {% if Description|length > 0 %}
+        <h5>Further details:</h5>    
+        <p>{{ Description }}</p>
+    {% endif %}
+    
+    <br><br><br>
+    
     <div id="myModal" class="modal">
       <!-- Modal content -->
       <div class="modal-content">
