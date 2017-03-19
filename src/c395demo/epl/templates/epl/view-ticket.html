@@ -9,7 +9,17 @@
 <body>
 	<h1>View Ticket Page</h1>
 	
-    <div class="right">
+    <div class="right" style="text-align:right;">
+        {% load static %}
+        {% if CallStatus == "Open" %}
+            <img src="{% static 'demo/view-ticket/open-bar.jpg' %}">
+        {% elif CallStatus == "InProgress" %}
+            <img src="{% static 'demo/view-ticket/progress-bar.jpg' %}">
+        {% elif CallStatus == "Resolved" %}
+            <img src="{% static 'demo/view-ticket/resolved-bar.jpg' %}">
+        {% elif CallStatus == "Closed" %}
+            <img src="{% static 'demo/view-ticket/finished-bar.jpg' %}">
+        {% endif %}
         <p>
             <a class="button" href="{% url 'manage' %}"><i class="fa fa-chevron-circle-left" aria-hidden="true"></i> Back</a>
             <a class="button" href="edit.asp"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</a>
@@ -33,66 +43,80 @@
                 </a>
             {% endif %}
         </p>
-        <p><span style="font-weight:bold;">Posted by</span> {{ CustID }}</p>
+        <h5>Posted by</h5> {{ CustID }}</p>
     </div>
 
     <H2><span style="font-weight:bold;">Ticket ID:</span> {{ CallID }}</H2> 
    
-    <P><span style="font-weight:bold;">Posted on</span> {{ RecvdDate }} </P>
-    <P><span style="font-weight:bold;">Category:</span> {{ Category }} </P>
-    <P><span style="font-weight:bold;">Status:</span> <span id="status_{{ CallID }}">{{ CallStatus }}</span></P>
+    <P>
+        <h5>Posted on {{ RecvdDate }}&ensp;
+        {% if Category == "Hardware" %}
+            <img src="{% static 'demo/view-ticket/hardware-tag.jpg' %}">
+        {% elif Category == "Software" %}
+            <img src="{% static 'demo/view-ticket/software-tag.jpg' %}">
+        {% elif Category == "Service" %}
+            <img src="{% static 'demo/view-ticket/service-tag.jpg' %}">
+        {% elif Category == "Other" %}
+            <img src="{% static 'demo/view-ticket/others-tag.jpg' %}">
+        {% elif Category == "Password" %}
+            <img src="{% static 'demo/view-ticket/password-tag.jpg' %}">
+        {% endif %}
+        </h5>
+    </P>
+    <h5>Category:</h5> {{ Category }} </P>
+    <h5>Status:</h5> <span id="status_{{ CallID }}">{{ CallStatus }}</span></P>
      
     {% if Category == "Hardware" %}
-        <p> <span style="font-weight:bold;">What kind of device is having the problem? </span> 
-        <br>{{ EquipType }} </p>
-        <p> <span style="font-weight:bold;">What is the device's asset ID? </span> 
-        <br>{{ AssetTag }} </p>
-        <p> <span style="font-weight:bold;">What is the device's name? </span> 
-        <br>{{ DeviceName }} </p>
-        <p> <span style="font-weight:bold;">What (if any) error message(s) is the device diplaying? </span> 
-        <br>{{ ErrorMsg }} </p>
-        <p> <span style="font-weight:bold;">What are the specific details of the problem? </span> 
-        <br>{{ Description }} </p>
+        <h5>What kind of device is having the problem? </h5> 
+        {{ EquipType }} </p>
+        <h5>What is the device's asset ID? </h5> 
+        {{ AssetTag }} </p>
+        <h5>What is the device's name? </h5> 
+        {{ DeviceName }} </p>
+        <h5>What (if any) error message(s) is the device diplaying? </h5> 
+        {{ ErrorMsg }} </p>
+        <h5>What are the specific details of the problem? </h5> 
+        {{ Description }} </p>
     {% endif %}
     
     {% if Category == "Software" %}
-        <p> <span style="font-weight:bold;">Which system?: </span> 
-        <br>{{ System }} </p>
-        <p> <span style="font-weight:bold;">Is the system completely offline/broken?: </span>
-        <br>{{ Offline }} </p>
-        <p> <span style="font-weight:bold;">What are the specific details of the problem? </span> 
-        <br>{{ Description }} </p>
+        <h5>Which system?: </h5> 
+        {{ System }} </p>
+        <h5>Is the system completely offline/broken?: </h5>
+        {{ Offline }} </p>
+        <h5>What are the specific details of the problem? </h5> 
+        {{ Description }} </p>
     {% endif %}
     
     {% if Category == "Service" %}
-        <p> <span style="font-weight:bold;">Request type: </span> 
+        <h5>Request type: </h5> 
         {{ request_type }} </p>
-        <p> <span style="font-weight:bold;">Which system?: </span> 
+        <h5>Which system?: </h5> 
         {{ System_type }} </p>
-        <p> <span style="font-weight:bold;">Asset ID: </span> 
+        <h5>Asset ID: </h5> 
         {{ asset_tag }} </p>
-        <p> <span style="font-weight:bold;">Move location: </span> 
+        <h5>Move location: </h5> 
         {{ move_location }} </p>
-        <p> <span style="font-weight:bold;">Software: </span> 
+        <h5>Software: </h5> 
         {{ software }} </p>
-        <p> <span style="font-weight:bold;">PC: </span> 
+        <h5>PC: </h5> 
         {{ pc }} </p>
     {% endif %}
     
     {% if Category == "Password" %}
-        <p> <span style="font-weight:bold;">Which system?</span> 
-        <br>{{ System_type }} </p>
-        <p> <span style="font-weight:bold;">Which account/username?</span> 
-        <br>{{ Sys_user }} </p>
+        <h5>Which system?</h5> 
+        {{ System_type }} </p>
+        <h5>Which account/username?</h5> 
+        {{ Sys_user }} </p>
     {% endif %}
     
     {% if Category == "Other" %}
-        <p> <span style="font-weight:bold;">What is your question/comment?</span> 
-        <br>{{ problem }} </p>
+        <h5>What is your question/comment?</h5> 
+        {{ problem }} </p>
     {% endif %}
     
-    <p><span style="font-weight:bold;">Further details: </span> 
-    <br>
+    <h5>Further details: </h5> 
+    
     {{ Description }} </p>
 
     <div id="myModal" class="modal">
