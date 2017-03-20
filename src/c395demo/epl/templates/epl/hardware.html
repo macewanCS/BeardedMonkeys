@@ -34,8 +34,26 @@
     {{form.image_url}} <!-- change field name of hardware form-->
     <P></P>
     <button type="submit" id="submit"><i class="fa fa-play-circle-o" aria-hidden="true"></i> Submit</button>
-</form>	
+</form>
+
+<!--device name action-->
+<script>
+    $(document).ready(function() {
+        var devices = ["ipad", "laptop", "pc", "self-checkout"]
+        $(".device").css('display', 'none');
+        $('#id_equipment_type').change(function(){
+            if ($.inArray($('#id_equipment_type').val().toLowerCase(), devices)!=-1) {
+                $(".device").css('display', 'block');
+            } else {
+                $(".device").css('display', 'none');
+            }
+        });
+
+    })
+</script>
+
 </body>
+
 </html>
 
 {% endblock %}
