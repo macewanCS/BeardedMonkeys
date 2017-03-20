@@ -35,18 +35,18 @@
                     <td style="text-align:left;"> {% descGet callLog.CallID %} </span></td>
                     
                     <td>
-                        <a class="button" href="{% url 'detail' id=callLog.CallID %}">
-                            <i class="fa fa-folder-open-o" aria-hidden="true"></i> View
+                        <a href="{% url 'detail' id=callLog.CallID %}" style="display:inline-block;">
+                            <div class="button"><i class="fa fa-folder-open-o" aria-hidden="true"></i> View</div>
                         </a>
-                        <a class="button" href="edit.asp">
-                            <i class="fa fa-pencil" aria-hidden="true"></i> Edit
+                        <a href="edit.asp" style="display:inline-block;">
+                            <div class="button"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</div>
                         </a>
 
-                        <a id="myBtn_{{ callLog.CallID }}" class="button" href="#">
+                        <a  href="#" style="display:inline-block;"><div id="myBtn_{{ callLog.CallID }}" class="button">
                             {% if callLog.CallStatus == "Open" %}
-                                <i class="fa fa-check" aria-hidden="true"></i> Resolved </a>
+                                <i class="fa fa-check" aria-hidden="true"></i> Resolved </div></a>
                             {% else %}
-                                <i class="fa fa-check" aria-hidden="true"></i> Re-open </a>
+                                <i class="fa fa-check" aria-hidden="true"></i> Re-open </div></a>
                             {% endif %}
                     </td>
                 </tr>
