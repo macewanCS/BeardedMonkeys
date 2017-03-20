@@ -1,4 +1,3 @@
-
 {% extends 'epl/index.html' %}
 
 {% block content %}
@@ -11,18 +10,22 @@
 	<h1>Software Tickets</h1>
 	<form role="form" action="" method="post">
     {% csrf_token %}
-    <P>Which system? <span class="required">*</span></P>
-    {{form.system}}
-    <P>Is the system completely offline/broken? <span class="required">*</span></P>
-    {{form.system_offline}}
-    <P>Please describe the problem as best you can: <span class="required">*</span></P>
-    {{form.problem_description}}
-    <P>Please share any steps you can to allow us to replicate the problem:</P>
-    {{form.steps_replicate_problem}}
-    <p>You may also provide a link to an image of the problem if you so choose:</p>
-    {{form.image_url}}
-    </P>
-    <button type="submit" id="submit"><i class="fa fa-play-circle-o" aria-hidden="true"></i> Submit</button>
+        <!--Abdulah-->
+        <P>Which system?</P>
+        {{form.system}}<span class="required"> *</span>
+        <P>Is the system completely offline/broken?
+        {{form.system_offline}}
+        <P>Please describe the problem as best you can:</P>
+        {{form.problem_description}} <span class="required" style="position:relative; bottom:130px"> *</span>
+        <P>Please share any steps you can to allow us to replicate the problem:</P>
+        {{form.steps_replicate_problem}}
+        <p>You may also provide a link to an image of the problem if you so choose:</p>
+        {{form.image_url}}
+        <p></p>
+        <button type="submit" id="submit" style="background-color: #E60E64; width:100px; padding: 7px 10px; font-size:20px; border-radius:0px;">
+            <!--<i class="fa fa-play-circle-o" aria-hidden="true"></i> -->
+            Submit
+        </button>
     </form>
 </body>
 </html>
