@@ -39,6 +39,26 @@ $(document).ready(function(){
        }
     });
 
+//    highlight field
+    $("#submit").click(function(){
+        $('input[required]').each(function(){
+            if (!$(this).val()) {
+               $(this).addClass("required")
+            } else {
+                $(this).removeClass("required")
+            }
+
+       });
+
+       $('textarea[required]').each(function(){
+            if (!$(this).val()) {
+               $(this).addClass("required")
+            } else {
+                $(this).removeClass("required")
+            }
+       });
+    });
+
     function alterData(id, status){
         console.log(id, status)
         console.log(window.location.host)

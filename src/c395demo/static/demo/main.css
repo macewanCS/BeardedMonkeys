@@ -151,7 +151,8 @@ a{
     text-decoration: inherit;
 }
 
-.required {
+// add span tag
+span.required {
     font-weight: bold;
     color: #e32;
     display: inline;
@@ -180,7 +181,6 @@ th {
 
 table{
     width: 100%;
-    min-width:700px;
     margin-bottom: 50px;
 }
 
@@ -303,10 +303,12 @@ select:required{
     border: 2px solid #C1C1C1;
 }
 
-select:required:focus{
+
+select.required:focus{
     box-shadow: 0 0 5px #FF8C8C;
     border: 2px solid #FF8C8C;
 }
+
 
 input[type="text"]:required:focus,
 input[type="url"]:required:focus,
