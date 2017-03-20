@@ -28,20 +28,29 @@
 	<P><span style="font-weight:bold;">Posted by</span> {{ CustID }}</P>
 
     {% if Category == "Service" %}
-        <p> <span style="font-weight:bold;">Request Type: </span> 
-        <br>{{ request_type }} </p>
-        <p> <span style="font-weight:bold;">System you would like access to: </span>
-        <br>{{ system }} </p>     
-        <p> <span style="font-weight:bold;">Asset tag of the equipment you want moved or surplused: </span>
-        <br>{{ asset_tag }} </p>     
-        <p> <span style="font-weight:bold;">Move location: </span>
-        <br>{{ move_location }} </p>     
-        <p> <span style="font-weight:bold;">Software you are looking for: </span>
-        <br>{{ software }} </p>     
-        <p> <span style="font-weight:bold;">PC you want this software installed on: </span>
-        <br>{{ pc }} </p>     
-        <p> <span style="font-weight:bold;">Description: </span>
-        <br>{{ description }} </p>     
+        <p> <span style="font-weight:bold;">Request Type: </span>
+        {{ request_type }} </p>
+        {% if request_type == "Move equipment request" %}
+            <p> <span style="font-weight:bold;">System you would like access to: </span>
+            {{ System_type }} </p>     
+            <p> <span style="font-weight:bold;">Asset tag of the equipment you want moved or surplused: </span>
+            {{ asset_tag }} </p>     
+            <p> <span style="font-weight:bold;">Move location: </span>
+            {{ move_location }} </p>
+        {% elif request_type == "Surplus equipment request" %}
+            <p> <span style="font-weight:bold;">System you would like access to: </span>
+            {{ System_type }} </p>     
+            <p> <span style="font-weight:bold;">Asset tag of the equipment you want moved or surplused: </span>
+            {{ asset_tag }} </p>
+        {% elif request_type == "New software request" %}
+            <p> <span style="font-weight:bold;">Software you are looking for: </span>
+            {{ software }} </p>     
+            <p> <span style="font-weight:bold;">PC you want this software installed on: </span>
+            {{ pc }} </p>
+        {% else %}
+            <p> <span style="font-weight:bold;">Description: </span>
+            <br>{{ description }} </p>
+        {% endif %}
     {% endif %}
     
 </body>

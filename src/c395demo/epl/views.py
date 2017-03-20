@@ -295,7 +295,7 @@ def login_view(request):
 
         return redirect('/')
 
-    context = { "form" : form, "name" : "Login" }
+    context = { "form" : form, "name" : "Sign In" }
     return render(request, 'epl/login.html', context)
 
 # logout page view
@@ -527,7 +527,7 @@ def database_saved(form, username):
         error_messages = form.cleaned_data.get("error_messages")
         file_upload = form.cleaned_data.get("file_upload")
         device_name = form.cleaned_data.get("device_name")
-
+        image_url = form.cleaned_data.get("image_url")
         # equipment type
         probType_ProbType = equipment_type
         callLog_Symptoms = equipment_type
@@ -607,7 +607,7 @@ def database_saved(form, username):
 
         # CallLog Table
         callLog_table = CallLog(
-            Symptoms = callLog_Symptoms,
+            Symptoms = "|".join([callLog_Symptoms, image_url]), # Abdullah adding the url of the image
             Priority = callLog_Priority,
             CallSource = callLog_CallSource,
             RecvdDate = callLog_RecvdDate,
@@ -616,11 +616,12 @@ def database_saved(form, username):
             Tracker = callLog_Tracker,
             CallStatus = callLog_Status,
             Category = "Hardware"
+            #get the value of image filed in hardware form and insert the the value to Image filed of CallLog model.
         )
 
         # Asgnmnt Table
         asgnmnt_table = Asgnmnt(
-            Description = asgnmnt_Description,
+            Description = "|".join([asgnmnt_Description, image_url]), # Abdullah adding the url of the image
             TeamName = asgnmnt_TeamName,
             AssignedBy = asgnmnt_AssignedBy,
             Status = asgnmnt_Status,
@@ -651,7 +652,7 @@ def soft_database_saved(form, username):
         system_offline = form.cleaned_data.get("system_offline")
         problem_description = form.cleaned_data.get("problem_description")
         steps_replicate_problem = form.cleaned_data.get("steps_replicate_problem")
-        file_upload = form.cleaned_data.get("file_upload")
+        file_upload = form.cleaned_data.get("image_url")
 
         # system type
         probType_ProbType = system
@@ -671,6 +672,16 @@ def soft_database_saved(form, username):
         asgnmnt_Description += "|"
         callLog_Symptoms += problem_description
         asgnmnt_Description += problem_description
+
+        #image link
+        callLog_Symptoms += "|"
+        asgnmnt_Description += "|"
+
+        if ( file_upload == "" or file_upload == " " ):
+            file_upload = "NULL"
+
+        callLog_Symptoms += file_upload
+        asgnmnt_Description += file_upload
 
         # priority
         if ( system_offline == "Yes" ):
@@ -812,7 +823,6 @@ def service_database_saved(form, username):
         callLog_Symptoms += description
         asgnmnt_Description += description
 
-
         # priority
         callLog_Priority = "3"
 
@@ -863,7 +873,6 @@ def service_database_saved(form, username):
             Category = "Service"
         )
 
-
         # Asgnmnt Table
         asgnmnt_table = Asgnmnt(
             Description = asgnmnt_Description,
@@ -883,7 +892,6 @@ def service_database_saved(form, username):
         callLog_table.save()
         asgnmnt_table.save()
         probType_table.save()
-
 
         return "Ticket added sucessfully"
 

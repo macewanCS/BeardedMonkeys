@@ -1,18 +1,17 @@
 $(document).ready(function(){
-    var modal = document.getElementById('myModal');
-    var span = document.getElementsByClassName("close")[0];
-    var yBtn = document.getElementById("yButton");
-    var nBtn = document.getElementById("nButton");
+    $( "a[id*='logout']" ).click(function(){
+        $("#logoutModal").css("display", "block")
+    });
     $( "a[id*='myBtn']" ).click(function(){
         id = $(this).attr('id').replace("myBtn_", "")
-        $("#myModal").css("display", "block")
+        $("#myModal").css("display", "block");
         if ($("#status_"+id).text().indexOf("Open")>=0){
             $("#modalText").html("Are you sure the ticket has been resolved?");
         } else {
                 $("#modalText").html("Are you sure that you want to re-open the ticket?");
         }
-        yBtn.onclick = function() {
-           modal.style.display = "none";
+        $("#yButton").click(function() {
+           $("#myModal").css("display", "none");
            if ($("#status_"+id).text().indexOf("Open")>=0){
             alterData(id, "Resolved")
             //$("#status_"+id).html("Resolved");
@@ -22,20 +21,23 @@ $(document).ready(function(){
             alterData(id, "Open")
             $("#myBtn_"+id).html('<i class="fa fa-check" aria-hidden="true"></i>Resolved');
            }
-        }
+        });
     });
-    nBtn.onclick = function() {
-        modal.style.display = "none";
-    }
 
-    span.onclick = function() {
-        modal.style.display = "none";
-    }
-    window.onclick = function(event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
-        };
-    };
+    $(".nButton").click(function () {
+        $(".modal").css("display", "none");
+    });
+
+    $(".close").click(function () {
+        $(".modal").css("display", "none");
+    });
+
+    $('html').click(function(e) {
+       if($(e.target).hasClass('modal') )
+       {
+           $(".modal").css("display", "none");
+       }
+    });
 
     function alterData(id, status){
         console.log(id, status)
