@@ -10,7 +10,7 @@ h1{
     color: #347D00;
 }
 
-h2{
+h3{
     font-weight: normal;
     font-size: 30px;
     margin-bottom: 0;
@@ -242,7 +242,11 @@ select{
     width: 300px;
 }
 
-input[type="text"], input[type="password"], button, submit { border:none; }
+input[type="text"],
+input[type="url"],
+input[type="password"],
+button,
+submit{ border:none; }
 
 input[type="radio"]{
     margin: 1px;
@@ -251,7 +255,10 @@ input[type="radio"]{
     line-height: normal;
 }
 
-input[type="text"], input[type="password"], textarea {
+input[type="text"],
+input[type="url"],
+input[type="password"],
+textarea {
     -webkit-transition: all 0.30s ease-in-out;
     -moz-transition: all 0.30s ease-in-out;
     -ms-transition: all 0.30s ease-in-out;
@@ -265,14 +272,20 @@ input[type="text"], input[type="password"], textarea {
     padding-left: 8px;
 }
  
-input[type="text"]:focus, input[type="password"]:focus, textarea:focus {
+input[type="text"]:focus,
+input[type="url"]:focus,
+input[type="password"]:focus,
+textarea:focus {
     box-shadow: 0 0 5px rgba(81, 203, 238, 1);
     padding: 3px 0px 3px 3px;
     margin: 5px 1px 3px 0px;
     border: 2px solid rgba(81, 203, 238, 1);
 }
 
-select, input[type="text"], input[type="password"]{
+select,
+input[type="text"],
+input[type="url"],
+input[type="password"]{
     width: 300px;
     height: 35px;
     font-size: 16px;
@@ -295,6 +308,7 @@ select:required:focus{
 }
 
 input[type="text"]:required:focus,
+input[type="url"]:required:focus,
 input[type="password"]:required:focus,
 textarea:required:focus {
     box-shadow: 0 0 5px #FF8C8C;
