@@ -180,6 +180,7 @@ th {
 
 table{
     width: 100%;
+    min-width:700px;
     margin-bottom: 50px;
 }
 

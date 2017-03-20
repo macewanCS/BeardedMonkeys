@@ -99,16 +99,27 @@
     {% if Category == "Service" %}
         <h5>Request type:</h5> 
         <p>{{ request_type }}</p>
+        {% if request_type == "Move equipment request" %}
         <h5>Which system?</h5> 
         <p>{{ System_type }}</p>
         <h5>Asset ID:</h5> 
         <p>{{ asset_tag }}</p>
         <h5>Move location:</h5> 
         <p>{{ move_location }}</p>
+        {% elif request_type == "Surplus equipment request" %}
+        <h5>Which system?</h5> 
+        <p>{{ System_type }}</p>
+        <h5>Asset ID:</h5> 
+        <p>{{ asset_tag }}</p>
+        {% elif request_type == "New software request" %}
         <h5>Software:</h5> 
         <p>{{ software }}</p>
         <h5>PC:</h5> 
         <p>{{ pc }}</p>
+        {% else %}
+        <h5>Description:</h5> 
+        <p>{{ description }}</p>
+        {% endif %}
     {% endif %}
     
     {% if Category == "Password" %}

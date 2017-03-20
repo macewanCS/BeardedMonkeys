@@ -4,10 +4,10 @@
 
 <html>
 <head>
-	<title>Software Ticket Submitted</title>
+	<title>Service Ticket Submitted</title>
 </head>
 <body>
-	<h1>Software Ticket Successfully Submitted</h1>
+	<h1>Service Ticket Successfully Submitted</h1>
 	
 	<div class="right">
         <p>
@@ -28,15 +28,31 @@
 	<P><span style="font-weight:bold;">Posted by</span> {{ CustID }}</P>
 
     {% if Category == "Service" %}
-        <p> <span style="font-weight:bold;">Which system?: </span> 
-        <br>{{ System }} </p>
-        <p> <span style="font-weight:bold;">Is the system completely offline/broken?: </span>
-        <br>{{ Offline }} </p>     
+        <p> <span style="font-weight:bold;">Request Type: </span> 
+        {{ request_type }} </p>
+        {% if request_type == "Move equipment request" %}
+        <p> <span style="font-weight:bold;">System you would like access to: </span>
+        {{ System_type }} </p>     
+        <p> <span style="font-weight:bold;">Asset tag of the equipment you want moved or surplused: </span>
+        {{ asset_tag }} </p>     
+        <p> <span style="font-weight:bold;">Move location: </span>
+        {{ move_location }} </p>    
+        {% elif request_type == "Surplus equipment request" %}
+        <p> <span style="font-weight:bold;">System you would like access to: </span>
+        {{ System_type }} </p>     
+        <p> <span style="font-weight:bold;">Asset tag of the equipment you want moved or surplused: </span>
+        {{ asset_tag }} </p>     
+        {% elif request_type == "New software request" %}
+        <p> <span style="font-weight:bold;">Software you are looking for: </span>
+        {{ software }} </p>     
+        <p> <span style="font-weight:bold;">PC you want this software installed on: </span>
+        {{ pc }} </p>     
+        {% else %}
+        <p> <span style="font-weight:bold;">Description: </span>
+        <br>{{ description }} </p>     
+        {% endif %}
     {% endif %}
     
-    <P> <span style="font-weight:bold;">Further details: </span> 
-    <br>{{ Description }} </p>
-
 </body>
 </html>
 

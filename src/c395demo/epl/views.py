@@ -243,6 +243,7 @@ def detail(request, id):
             "move_location" : temp[3],
             "software" : temp[4],
             "pc" : temp[5],
+            "description" : temp[6],
             "Category" : ticket.Category,
             "CallStatus" : ticket.CallStatus,
             "Priority" : ticket.Priority
@@ -393,9 +394,13 @@ def successTicketSummary(request, id):
             "CallID" : ticket.CallID,
             "CustID" : ticket.CustID,
             "RecvdDate" : recvdDate,
-            "System" : temp[0],
-            "Offline" : temp[1],
-            "Description" : temp[2],
+            "request_type" : temp[0],
+            "System_type" : temp[1],
+            "asset_tag" : temp[2],
+            "move_location" : temp[3],
+            "software" : temp[4],
+            "pc" : temp[5],
+            "description" : temp[6],
             "Category" : ticket.Category,
             "CallStatus" : ticket.CallStatus,
             "Priority" : ticket.Priority
@@ -668,7 +673,7 @@ def soft_database_saved(form, username):
         asgnmnt_Description += "|"
         callLog_Symptoms += problem_description
         asgnmnt_Description += problem_description
-        
+
         #image link
         callLog_Symptoms += "|"
         asgnmnt_Description += "|"
@@ -677,7 +682,7 @@ def soft_database_saved(form, username):
              file_upload == " " or
              file_upload == "http://" ):
             file_upload = "NULL"
-            
+
         callLog_Symptoms += file_upload
         asgnmnt_Description += file_upload
 
@@ -770,6 +775,7 @@ def service_database_saved(form, username):
         move_location = form.cleaned_data.get("move_location")
         software = form.cleaned_data.get("software")
         pc = form.cleaned_data.get("pc")
+        description = form.cleaned_data.get("description")
 
         # request type
         probType_ProbType = request_type
@@ -807,6 +813,12 @@ def service_database_saved(form, username):
         asgnmnt_Description += "|"
         callLog_Symptoms += pc
         asgnmnt_Description += pc
+
+        # description
+        callLog_Symptoms += "|"
+        asgnmnt_Description += "|"
+        callLog_Symptoms += description
+        asgnmnt_Description += description
 
         # priority
         callLog_Priority = "3"
