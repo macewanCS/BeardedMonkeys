@@ -42,7 +42,7 @@
                             <div class="button"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</div>
                         </a>
 
-                        <a  href="#" style="display:inline-block;"><div id="myBtn_{{ callLog.CallID }}" class="button">
+                        <a  href="#" style="display:inline-block;" id="myBtn_{{ callLog.CallID }}" class="button" ><div>
                             {% if callLog.CallStatus == "Open" %}
                                 <i class="fa fa-check" aria-hidden="true"></i> Resolved </div></a>
                             {% else %}
