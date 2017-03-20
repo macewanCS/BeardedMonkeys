@@ -53,6 +53,7 @@ YES_NO_CHOICE = (
 )
 
 REQUEST_TYPE_CHOICE = (
+        ('', ''),
         ('System access request', 'System access request'),
         ('Move equipment request', 'Move equipment request'),
         ('New software request', 'New software request'),
