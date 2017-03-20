@@ -42,7 +42,7 @@ class HardwareTicketForm(forms.Form):
 	equipment_type = forms.ChoiceField(choices=EQUIPMENT_TYPE_CHOICES)
 	problem_description = forms.CharField(widget=forms.Textarea)
 	error_messages = forms.CharField(widget=forms.Textarea, required=False)
-	image_url = forms.CharField(max_length=100, required=False) # change the field type from file to text.
+	image_url = forms.CharField(widget=forms.URLInput(attrs={'placeholder': 'https://'}), required=False)
 	device_name = forms.CharField(max_length=200, required=False)
 
 class SoftwareTicketForm(forms.Form):
@@ -54,7 +54,7 @@ class SoftwareTicketForm(forms.Form):
 		label='Description of the Problem')
 	steps_replicate_problem = forms.CharField(widget=forms.Textarea, required=False,
 		label='Share any steps to replicate the problem')
-	image_url = forms.CharField(max_length=200,required=False)
+	image_url = forms.CharField(widget=forms.URLInput(attrs={'placeholder': 'https://'}), required=False)
 
 class PasswordTicketForm(forms.Form):
     system_type = forms.ChoiceField(choices=SYSTEM_CHOICES)
