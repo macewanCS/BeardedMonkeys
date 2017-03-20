@@ -54,7 +54,7 @@ class SoftwareTicketForm(forms.Form):
 		label='Description of the Problem')
 	steps_replicate_problem = forms.CharField(widget=forms.Textarea, required=False,
 		label='Share any steps to replicate the problem')
-	file_upload = forms.FileField(required=False)
+	image_url = forms.CharField(max_length=200,required=False)
 
 class PasswordTicketForm(forms.Form):
     system_type = forms.ChoiceField(choices=SYSTEM_CHOICES)
@@ -62,12 +62,13 @@ class PasswordTicketForm(forms.Form):
 
 class ServiceTicketForm(forms.Form):
     request_type = forms.ChoiceField(choices=REQUEST_TYPE_CHOICE)
-    system = forms.ChoiceField(choices=SYSTEM_CHOICES)
+    system = forms.ChoiceField(choices=SYSTEM_CHOICES, required=False)
     asset_tag = forms.CharField(max_length=200,
-		label=mark_safe('Asset Tag (<a href="/questions/whyname/" target="_blank">Where to find the Asset Tag</a>?) of the equipment you want moved or surplused'))
-    move_location = forms.CharField(max_length=200, label='Where would you like this equipment moved to?')
-    software = forms.CharField(max_length=200, label='What software are you looking for?')
-    pc = forms.CharField(max_length=200, label='Which PC do you want this software installed on?')
+		label=mark_safe('Asset Tag (<a href="/questions/whyname/" target="_blank">Where to find the Asset Tag</a>?) of the equipment you want moved or surplused'), required=False)
+    move_location = forms.CharField(max_length=200, label='Where would you like this equipment moved to?', required=False)
+    software = forms.CharField(max_length=200, label='What software are you looking for?', required=False)
+    pc = forms.CharField(max_length=200, label='Which PC do you want this software installed on?', required=False)
+    description = forms.CharField(widget=forms.Textarea(attrs={'rows':10, 'cols': 10}), max_length=500, required=False)
 
 
 class GeneralTicketForm(forms.Form):
