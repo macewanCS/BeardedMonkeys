@@ -241,6 +241,8 @@ select{
     text-overflow: ellipsis;
     white-space: nowrap;
     width: 300px;
+    height: 40px;
+    width: 300px
 }
 
 input[type="text"],
@@ -268,8 +270,7 @@ textarea {
     padding: 3px 0px 3px 3px;
     margin: 5px 1px 3px 0px;
     border: 2px solid #C1C1C1;
-    background-color: #ecf0f1;
-    border-radius: 8px;
+    border-radius: 0px;
     padding-left: 8px;
 }
 
@@ -294,7 +295,9 @@ input[type="password"]{
 
 textarea{
     font-size: 16px;
-    width: 98%;
+    width:40%;
+    height: 150px;
+    background-color:#fff;
 }
 
 select:required{
@@ -321,7 +324,13 @@ textarea.required:focus {
 }
 
 button#submit {
-    margin: 25px 0;
+    width:100px;
+    padding:7px 10px;
+    border-radius: 0px;
+    background-color:#E60E64;
+    font-size:20px;
+    
+    
 }
 
 #main-nav{
@@ -494,29 +503,4 @@ nav ul ul li {
 	bottom: 1px;
 }
 
-/* the software like mockup*/
-.software {
-    border-radius: 0px;
-}
-
-/* text softwar */
-textarea.software {
-    width:40%;
-    height: 150px;
-    background-color:#fff;
-}
-
-/* select software ticket */
-select.software {
-    height: 40px;
-    width: 300px
-}
-
-/*the input for software */
-input.software {
-    height: 40px;
-    width: 300px;
-    background-color:#fff;
-    border-radius:0px;
-}
 

@@ -49,7 +49,7 @@ SYSTEM_CHOICES = (
 YES_NO_CHOICE = (
 	('YES', 'Yes'),
 	('NO', 'No'),
-	# ("I am not sure", "I am not sure")
+	("I am not sure", "I am not sure")
 )
 
 REQUEST_TYPE_CHOICE = (

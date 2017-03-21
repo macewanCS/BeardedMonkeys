@@ -10,7 +10,7 @@
 	<h1>Software Tickets</h1>
 	<form role="form" action="" method="post">
     {% csrf_token %}
-        <!--Abdulah-->
+        <!--fixing style-->
         <P>Which system?</P>
         {{form.system}}<span class="required"> *</span>
         <P>Is the system completely offline/broken?
@@ -22,6 +22,7 @@
         <p>You may also provide a link to an image of the problem if you so choose:</p>
         {{form.image_url}}
         <p></p>
+        <!-- making button-->
         <button type="submit" id="submit" style="background-color: #E60E64; width:100px; padding: 7px 10px; font-size:20px; border-radius:0px;">
             <!--<i class="fa fa-play-circle-o" aria-hidden="true"></i> -->
             Submit

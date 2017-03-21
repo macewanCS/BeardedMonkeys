@@ -54,7 +54,7 @@ class SoftwareTicketForm(forms.Form):
     steps_replicate_problem = forms.CharField(widget=forms.Textarea, required=False,
         label='Share any steps to replicate the problem')
     image_url = forms.CharField(widget=forms.URLInput(attrs={'placeholder': 'https://'}), required=False)
-    #Abdulah: apply class to all fields.
+    # apply class to all fields.
     def __init__(self, *args, **kwargs):
         super(SoftwareTicketForm, self).__init__(*args, **kwargs)
         for field in self.fields:
