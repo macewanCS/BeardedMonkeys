@@ -65,6 +65,11 @@ class PasswordTicketForm(forms.Form):
     system_type = forms.ChoiceField(choices=SYSTEM_CHOICES)
     sys_user = forms.CharField(max_length=200)
 
+class ProfileForm(forms.Form):
+    username = forms.CharField(max_length=50)
+    branch = forms.ChoiceField(choices=BRANCH_CHOICE)
+    role = forms.ChoiceField(choices=ROLE_CHOICE)
+
 class ServiceTicketForm(forms.Form):
     request_type = forms.ChoiceField(choices=REQUEST_TYPE_CHOICE)
     system = forms.ChoiceField(choices=SYSTEM_CHOICES, required=False)
