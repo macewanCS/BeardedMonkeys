@@ -10,7 +10,7 @@ h1{
     color: #347D00;
 }
 
-h2{
+h3{
     font-weight: normal;
     font-size: 30px;
     margin-bottom: 0;
@@ -121,6 +121,7 @@ li{
 
 #manage{
     transition: background-color 0.3s;
+    z-index: 1000;
 }
 
 #manage:hover{
@@ -151,7 +152,7 @@ a{
     text-decoration: inherit;
 }
 
-.required {
+span.required {
     font-weight: bold;
     color: #e32;
     display: inline;
@@ -240,9 +241,15 @@ select{
     text-overflow: ellipsis;
     white-space: nowrap;
     width: 300px;
+    height: 40px;
+    width: 300px
 }
 
-input[type="text"], input[type="password"], button, submit { border:none; }
+input[type="text"],
+input[type="url"],
+input[type="password"],
+button,
+submit{ border:none; }
 
 input[type="radio"]{
     margin: 1px;
@@ -251,7 +258,10 @@ input[type="radio"]{
     line-height: normal;
 }
 
-input[type="text"], input[type="password"], textarea {
+input[type="text"],
+input[type="url"],
+input[type="password"],
+textarea {
     -webkit-transition: all 0.30s ease-in-out;
     -moz-transition: all 0.30s ease-in-out;
     -ms-transition: all 0.30s ease-in-out;
@@ -260,19 +270,24 @@ input[type="text"], input[type="password"], textarea {
     padding: 3px 0px 3px 3px;
     margin: 5px 1px 3px 0px;
     border: 2px solid #C1C1C1;
-    background-color: #ecf0f1;
-    border-radius: 8px;
+    border-radius: 0px;
     padding-left: 8px;
 }
- 
-input[type="text"]:focus, input[type="password"]:focus, textarea:focus {
+
+input[type="text"]:focus,
+input[type="url"]:focus,
+input[type="password"]:focus,
+textarea:focus {
     box-shadow: 0 0 5px rgba(81, 203, 238, 1);
     padding: 3px 0px 3px 3px;
     margin: 5px 1px 3px 0px;
     border: 2px solid rgba(81, 203, 238, 1);
 }
 
-select, input[type="text"], input[type="password"]{
+select,
+input[type="text"],
+input[type="url"],
+input[type="password"]{
     width: 300px;
     height: 35px;
     font-size: 16px;
@@ -280,7 +295,9 @@ select, input[type="text"], input[type="password"]{
 
 textarea{
     font-size: 16px;
-    width: 98%;
+    width:40%;
+    height: 150px;
+    background-color:#fff;
 }
 
 select:required{
@@ -289,14 +306,17 @@ select:required{
     border: 2px solid #C1C1C1;
 }
 
-select:required:focus{
+
+select.required:focus{
     box-shadow: 0 0 5px #FF8C8C;
     border: 2px solid #FF8C8C;
 }
 
-input[type="text"]:required:focus,
-input[type="password"]:required:focus,
-textarea:required:focus {
+
+input[type="text"].required:focus,
+input[type="url"].required:focus,
+input[type="password"].required:focus,
+textarea.required:focus {
     box-shadow: 0 0 5px #FF8C8C;
     padding: 3px 0px 3px 3px;
     margin: 5px 1px 3px 0px;
@@ -304,7 +324,13 @@ textarea:required:focus {
 }
 
 button#submit {
-    margin: 25px 0;
+    width:100px;
+    padding:7px 10px;
+    border-radius: 0px;
+    background-color:#E60E64;
+    font-size:20px;
+    
+    
 }
 
 #main-nav{
@@ -476,4 +502,5 @@ nav ul ul li {
 	position: relative;
 	bottom: 1px;
 }
+
 

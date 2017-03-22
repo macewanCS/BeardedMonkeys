@@ -33,9 +33,31 @@
     <P>You may also provide an url of image of the problem if you so choose:</P>
     {{form.image_url}} <!-- change field name of hardware form-->
     <P></P>
-    <button type="submit" id="submit"><i class="fa fa-play-circle-o" aria-hidden="true"></i> Submit</button>
-</form>	
+    <!-- making button-->
+    <button type="submit" id="submit" style="background-color: #E60E64; width:100px; padding: 7px 10px; font-size:20px; border-radius:0px;">
+            <!--<i class="fa fa-play-circle-o" aria-hidden="true"></i> -->
+            Submit
+        </button>
+</form>
+
+<!--device name action-->
+<script>
+    $(document).ready(function() {
+        var devices = ["ipad", "laptop", "pc", "self-checkout"]
+        $(".device").css('display', 'none');
+        $('#id_equipment_type').change(function(){
+            if ($.inArray($('#id_equipment_type').val().toLowerCase(), devices)!=-1) {
+                $(".device").css('display', 'block');
+            } else {
+                $(".device").css('display', 'none');
+            }
+        });
+
+    })
+</script>
+
 </body>
+
 </html>
 
 {% endblock %}

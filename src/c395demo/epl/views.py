@@ -528,6 +528,7 @@ def database_saved(form, username):
         file_upload = form.cleaned_data.get("file_upload")
         device_name = form.cleaned_data.get("device_name")
         image_url = form.cleaned_data.get("image_url")
+
         # equipment type
         probType_ProbType = equipment_type
         callLog_Symptoms = equipment_type
@@ -607,7 +608,7 @@ def database_saved(form, username):
 
         # CallLog Table
         callLog_table = CallLog(
-            Symptoms = "|".join([callLog_Symptoms, image_url]), # Abdullah adding the url of the image
+            Symptoms = "|".join([callLog_Symptoms, image_url]), #adding the url of the image
             Priority = callLog_Priority,
             CallSource = callLog_CallSource,
             RecvdDate = callLog_RecvdDate,
@@ -677,7 +678,9 @@ def soft_database_saved(form, username):
         callLog_Symptoms += "|"
         asgnmnt_Description += "|"
 
-        if ( file_upload == "" or file_upload == " " ):
+        if ( file_upload == "" or
+             file_upload == " " or
+             file_upload == "http://" ):
             file_upload = "NULL"
 
         callLog_Symptoms += file_upload
@@ -692,11 +695,9 @@ def soft_database_saved(form, username):
         # call source
         callLog_CallSource = "Web"
 
-
         # assigned team name
         if( probType_ProbType == "Internet/Network" or probType_ProbType=="S:/ drive"):
             asgnmnt_TeamName = "Network Team"
-
 
         elif( probType_ProbType == "Workflows"):
             asgnmnt_TeamName = "ILS Team"
@@ -704,10 +705,8 @@ def soft_database_saved(form, username):
         else:
             asgnmnt_TeamName = "Help Desk Team"
 
-
         # assigned by
         asgnmnt_AssignedBy = "Selfserve"
-
 
         # assignment status
         asgnmnt_Status = "Unacknowledged"
@@ -741,7 +740,6 @@ def soft_database_saved(form, username):
             Category = "Software"
         )
 
-
         # Asgnmnt Table
         asgnmnt_table = Asgnmnt(
             Description = asgnmnt_Description,
@@ -761,7 +759,6 @@ def soft_database_saved(form, username):
         callLog_table.save()
         asgnmnt_table.save()
         probType_table.save()
-
 
         return "Ticket added sucessfully"
 
@@ -836,10 +833,8 @@ def service_database_saved(form, username):
         else:
             asgnmnt_TeamName = "Administrative Team"
 
-
         # assigned by
         asgnmnt_AssignedBy = "Selfserve"
-
 
         # assignment status
         asgnmnt_Status = "Unacknowledged"
@@ -915,14 +910,11 @@ def general_database_saved(form, username):
         # call source
         callLog_CallSource = "Web"
 
-
         # assigned team name
         asgnmnt_TeamName = "NULL"
 
-
         # assigned by
         asgnmnt_AssignedBy = "Selfserve"
-
 
         # assignment status
         asgnmnt_Status = "Unacknowledged"
@@ -956,7 +948,6 @@ def general_database_saved(form, username):
             Category = "Other"
         )
 
-
         # Asgnmnt Table
         asgnmnt_table = Asgnmnt(
             Description = asgnmnt_Description,
@@ -976,7 +967,6 @@ def general_database_saved(form, username):
         callLog_table.save()
         asgnmnt_table.save()
         probType_table.save()
-
 
         return "Ticket added sucessfully"
 
@@ -1008,5 +998,3 @@ def alter_status(request):
             json.dumps({"nothing to see": "this isn't happening"}),
             content_type="application/json"
         )
-
-
