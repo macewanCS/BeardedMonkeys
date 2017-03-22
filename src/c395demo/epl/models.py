@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 from epl.choices import *
 
 # Create your models here.
@@ -90,4 +91,11 @@ class ProbType(models.Model):
     ProbType = models.CharField(max_length=25,default='NULL')
     Description = models.TextField(default='NULL')
     Category = models.CharField(max_length=20,default='NULL')
+    
+class UserProfile(models.Model):
+    user = models.OneToOneField(User)
+    branch = models.CharField(max_length=20,default='staff')
+
+    def __unicode__(self):
+        return self.user.username
     
