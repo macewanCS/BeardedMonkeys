@@ -121,6 +121,7 @@ li{
 
 #manage{
     transition: background-color 0.3s;
+    z-index: 1000;
 }
 
 #manage:hover{
@@ -151,7 +152,6 @@ a{
     text-decoration: inherit;
 }
 
-// add span tag
 span.required {
     font-weight: bold;
     color: #e32;
@@ -241,6 +241,8 @@ select{
     text-overflow: ellipsis;
     white-space: nowrap;
     width: 300px;
+    height: 40px;
+    width: 300px
 }
 
 input[type="text"],
@@ -268,11 +270,10 @@ textarea {
     padding: 3px 0px 3px 3px;
     margin: 5px 1px 3px 0px;
     border: 2px solid #C1C1C1;
-    background-color: #ecf0f1;
-    border-radius: 8px;
+    border-radius: 0px;
     padding-left: 8px;
 }
- 
+
 input[type="text"]:focus,
 input[type="url"]:focus,
 input[type="password"]:focus,
@@ -294,7 +295,9 @@ input[type="password"]{
 
 textarea{
     font-size: 16px;
-    width: 98%;
+    width:40%;
+    height: 150px;
+    background-color:#fff;
 }
 
 select:required{
@@ -310,10 +313,10 @@ select.required:focus{
 }
 
 
-input[type="text"]:required:focus,
-input[type="url"]:required:focus,
-input[type="password"]:required:focus,
-textarea:required:focus {
+input[type="text"].required:focus,
+input[type="url"].required:focus,
+input[type="password"].required:focus,
+textarea.required:focus {
     box-shadow: 0 0 5px #FF8C8C;
     padding: 3px 0px 3px 3px;
     margin: 5px 1px 3px 0px;
@@ -321,7 +324,13 @@ textarea:required:focus {
 }
 
 button#submit {
-    margin: 25px 0;
+    width:100px;
+    padding:7px 10px;
+    border-radius: 0px;
+    background-color:#E60E64;
+    font-size:20px;
+    
+    
 }
 
 #main-nav{
@@ -493,4 +502,5 @@ nav ul ul li {
 	position: relative;
 	bottom: 1px;
 }
+
 

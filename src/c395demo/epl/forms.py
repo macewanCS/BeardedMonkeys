@@ -1,4 +1,3 @@
-
 from django.utils.safestring import mark_safe
 from epl.choices import *
 from django import forms
@@ -46,15 +45,21 @@ class HardwareTicketForm(forms.Form):
 	device_name = forms.CharField(max_length=200, required=False)
 
 class SoftwareTicketForm(forms.Form):
-	system = forms.ChoiceField(choices=SOFTWARE_CHOICES,
-		label='Which system?')
-	system_offline = forms.ChoiceField(widget=forms.RadioSelect, choices=YES_NO_CHOICE,
-		label='Is the system completely offline/broken?')
-	problem_description = forms.CharField(widget=forms.Textarea,
-		label='Description of the Problem')
-	steps_replicate_problem = forms.CharField(widget=forms.Textarea, required=False,
-		label='Share any steps to replicate the problem')
-	image_url = forms.CharField(widget=forms.URLInput(attrs={'placeholder': 'https://'}), required=False)
+    system = forms.ChoiceField(choices=SOFTWARE_CHOICES,
+        label='Which system?')
+    system_offline = forms.ChoiceField(widget=forms.RadioSelect, choices=YES_NO_CHOICE,
+        label='Is the system completely offline/broken?')
+    problem_description = forms.CharField(widget=forms.Textarea,
+        label='Description of the Problem')
+    steps_replicate_problem = forms.CharField(widget=forms.Textarea, required=False,
+        label='Share any steps to replicate the problem')
+    image_url = forms.CharField(widget=forms.URLInput(attrs={'placeholder': 'https://'}), required=False)
+    # apply class to all fields.
+    def __init__(self, *args, **kwargs):
+        super(SoftwareTicketForm, self).__init__(*args, **kwargs)
+        for field in self.fields:
+            if field != "system_offline":
+                self.fields[field].widget.attrs.update({'class' : 'software'})
 
 class PasswordTicketForm(forms.Form):
     system_type = forms.ChoiceField(choices=SYSTEM_CHOICES)
