@@ -191,6 +191,26 @@ def detail(request, id):
 
     if ( len(temp) <= 1 ):
         temp = parsing(ticket.Symptoms, "`")
+        
+    if ( ticket.Category == "Hardware" or
+         ticket.Category == "Software" ):
+        
+        if ( ticket.Category == "Hardware" ):
+            url = temp[5]
+        else:
+            url = temp[4]
+        
+        is_img = "false"
+        
+        if ( url[-4:] == ".png" or
+             url[-4:] == ".jpg" or
+             url[-4:] == ".gif" ):
+             is_img = "img"
+        elif ( len(url) > 1 and
+               url[:4] == "http" ):
+            is_img = "file"
+        else:
+            is_img = "Null"
 
     if ( ticket.Category == "Hardware" ):
         context = {
@@ -202,6 +222,8 @@ def detail(request, id):
             "AssetTag" : temp[1],
             "DeviceName" : temp[2],
             "Description" : temp[3],
+            "URL" : url,
+            "is_img": is_img,
             "ErrorMsg" : temp[4],
             "Category" : ticket.Category,
             "CallStatus" : ticket.CallStatus,
@@ -216,6 +238,9 @@ def detail(request, id):
             "System" : temp[0],
             "Offline" : temp[1],
             "Description" : temp[2],
+            "Replicate" : temp[3],
+            "URL" : url,
+            "is_img": is_img,
             "Category" : ticket.Category,
             "CallStatus" : ticket.CallStatus,
             "Priority" : ticket.Priority
@@ -673,6 +698,12 @@ def soft_database_saved(form, username):
         asgnmnt_Description += "|"
         callLog_Symptoms += problem_description
         asgnmnt_Description += problem_description
+        
+        # description of problem
+        callLog_Symptoms += "|"
+        asgnmnt_Description += "|"
+        callLog_Symptoms += steps_replicate_problem
+        asgnmnt_Description += steps_replicate_problem
 
         #image link
         callLog_Symptoms += "|"

@@ -13,7 +13,9 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
     
     <link href="https://fortawesome.github.io/Font-Awesome/assets/font-awesome/css/font-awesome.css" rel="stylesheet">
-    
+    <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+
+
 <style>    
     @media screen and (max-width: 800px) {
         #main-nav {display:none}
@@ -47,7 +49,7 @@
                             <!-- Here is the dropdown menu of manage/view Tickets-->
                             <li id="manage" class="view">
                                 <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> Manage/View Tickets <i class="fa fa-chevron-down" aria-hidden="true"></i></a>
-                                <ul style="width:210px">
+                                <ul style="width:213px">
                                     <li><a href="{% url 'tickets' %}">Manage My Tickets</a></li>
                                     <li><a href="{% url 'manage' %}">Manage Branch Tickets</a></li>
                                 </ul>
@@ -76,6 +78,10 @@
 	    {% block content %}
 	        <h1>Documentation/Tutorial:</h1>
 	        <title>Home</title>
+	        <div style="text-align: center;">
+	        <iframe width="560" height="315" src="https://www.youtube.com/embed/T0aLkpa_vRA" frameborder="0" allowfullscreen></iframe>
+	        </div>
+	        </div>
         {% endblock %}
     </div>
 	<!-- logout modal window-->
@@ -89,5 +95,14 @@
           <a id="yButton" class="button modalButton" href="/logout" style="float:right; margin-right:20px;">Yes</a>
       </div>
     </div>
+     <!--footer-->
+    <footer>
+        <div style="margin: 0px 20px;">
+            <span><i class="fa fa-facebook fa-2x" aria-hidden="true"></i></span>
+            <span><i class="icon-google-plus icon-2x" aria-hidden="true"></i></span>
+            <span><i class="fa fa-twitter fa-2x" aria-hidden="true"></i></span>
+            <div style="float:right; margin: 20px 10px"><i class="fa fa-copyright" aria-hidden="true"></i> 2017 Edmonton Public Library</div>
+        </div>
+    </footer>
 </body>
 </html>
