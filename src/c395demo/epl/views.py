@@ -42,6 +42,7 @@ def hardware(request):
     # user must need to login to view pages
     if (not request.user.is_authenticated()):
         return redirect('/login')
+    print(get_branch(request, request.user))
 
     form = HardwareTicketForm(request.POST or None)
     if form.is_valid():
@@ -213,32 +214,43 @@ def detail(request, id):
             is_img = "Null"
 
     if ( ticket.Category == "Hardware" ):
+        equip = acceptable(temp[0])
+        asset = acceptable(temp[1])
+        device = acceptable(temp[2])
+        description = acceptable(temp[3])
+        error = acceptable(temp[4])
+        
         context = {
             "CallID" : ticket.CallID,
             "CustID" : ticket.CustID,
             "Symptoms" : ticket.Symptoms,
             "RecvdDate" : recvdDate,
-            "EquipType" : temp[0],
-            "AssetTag" : temp[1],
-            "DeviceName" : temp[2],
-            "Description" : temp[3],
+            "EquipType" : equip,
+            "AssetTag" : asset,
+            "DeviceName" : device,
+            "Description" : description,
             "URL" : url,
             "is_img": is_img,
-            "ErrorMsg" : temp[4],
+            "ErrorMsg" : error,
             "Category" : ticket.Category,
             "CallStatus" : ticket.CallStatus,
             "Priority" : ticket.Priority
         }
 
     elif ( ticket.Category == "Software" ):
+        system = acceptable(temp[0])
+        offline = acceptable(temp[1])
+        description = acceptable(temp[2])
+        replicate = acceptable(temp[3])
+        
         context = {
             "CallID" : ticket.CallID,
             "CustID" : ticket.CustID,
             "RecvdDate" : recvdDate,
-            "System" : temp[0],
-            "Offline" : temp[1],
-            "Description" : temp[2],
-            "Replicate" : temp[3],
+            "System" : system,
+            "Offline" : offline,
+            "Description" : description,
+            "Replicate" : replicate,
             "URL" : url,
             "is_img": is_img,
             "Category" : ticket.Category,
@@ -297,6 +309,13 @@ def get_username(request):
         username = request.user.username
 
     return username
+    
+def get_branch(request, user):
+    branch = None
+    if request.user.is_authenticated():
+        branch = user.userprofile.get_branch()
+
+    return branch
 
 #---------------------------------
 # login and user authentication
@@ -336,6 +355,15 @@ def logout_view(request):
 # function parse a string
 def parsing(string, parse):
     return string.split(parse)
+
+# get a string if its acceptable
+# i.e, len(string) > 0 then returns
+# the string, otherwise nothing
+def acceptable(string):
+    if ( len(string) > 0 ):
+        return string
+    else:
+        return ""
 
 # resolved ticket status
 
