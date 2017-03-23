@@ -12,7 +12,7 @@
 	<!--change upppercase tag name to lowercase-->
     <form role="form" action="" method="post">
     {% csrf_token %}
-    <p>What is the device's asset ID number? (<a style="color:grey;" href="javascript:alert('An asset tag is ....');">What is an Asset ID?</a>) <span class="required">*</span></p>
+    <p>What is the device's five digit asset ID number? (<a style="color:grey;" href="javascript:alert('An asset tag is ....');">What is an Asset ID?</a>) <span class="required">*</span></p>
     {{form.asset_tag}}
     <p></p>
     <div>
