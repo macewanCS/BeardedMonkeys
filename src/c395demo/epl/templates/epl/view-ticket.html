@@ -102,6 +102,10 @@
         <p>{{ Offline }}</p>
         <h5>What are the specific details of the problem?</h5> 
         <p>{{ Description }}</p>
+        {% if Replicate|length > 0 %}
+            <h5>Please share any steps you can to allow us to replicate the problem:</h5> 
+            <p>{{ Replicate }}</p>
+        {% endif %}
     {% endif %}
     
     {% if Category == "Service" %}

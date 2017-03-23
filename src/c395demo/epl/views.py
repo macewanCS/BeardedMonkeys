@@ -198,7 +198,7 @@ def detail(request, id):
         if ( ticket.Category == "Hardware" ):
             url = temp[5]
         else:
-            url = temp[3]
+            url = temp[4]
         
         is_img = "false"
         
@@ -238,6 +238,7 @@ def detail(request, id):
             "System" : temp[0],
             "Offline" : temp[1],
             "Description" : temp[2],
+            "Replicate" : temp[3],
             "URL" : url,
             "is_img": is_img,
             "Category" : ticket.Category,
@@ -697,6 +698,12 @@ def soft_database_saved(form, username):
         asgnmnt_Description += "|"
         callLog_Symptoms += problem_description
         asgnmnt_Description += problem_description
+        
+        # description of problem
+        callLog_Symptoms += "|"
+        asgnmnt_Description += "|"
+        callLog_Symptoms += steps_replicate_problem
+        asgnmnt_Description += steps_replicate_problem
 
         #image link
         callLog_Symptoms += "|"
