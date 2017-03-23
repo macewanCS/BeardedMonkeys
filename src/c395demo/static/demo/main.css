@@ -398,6 +398,7 @@ table.sortable th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):not(.sor
     padding: 20px;
     border: 1px solid #888;
     width: 30%;
+    min-width:200px;
 }
 
 /* The Close Button */

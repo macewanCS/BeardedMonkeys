@@ -2,6 +2,9 @@ $(document).ready(function(){
     $( "a[id*='logout']" ).click(function(){
         $("#logoutModal").css("display", "block")
     });
+    $( "a[id*='lit-log']" ).click(function(){
+        $("#logoutModal").css("display", "block")
+    });
     $( "a[id*='myBtn']" ).click(function(){
         id = $(this).attr('id').replace("myBtn_", "")
         $("#myModal").css("display", "block");
