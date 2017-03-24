@@ -144,6 +144,16 @@ li{
     background-color: #182A76;
 }
 
+#navigation{
+    transition: background-color 0.3s;
+}
+
+#navigation:hover{
+    color: #fff;
+    background-color: #182A76;
+}
+}
+
 .row{
     width: 90%;
     margin: 0 auto;

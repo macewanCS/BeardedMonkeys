@@ -1,6 +1,7 @@
 from django.utils.safestring import mark_safe
 from epl.choices import *
 from django import forms
+from django.core.validators import RegexValidator
 
 # import for user authentication
 from django.contrib.auth import (
@@ -36,8 +37,8 @@ class UserLogin(forms.Form):
         return super(UserLogin, self).clean(*args, **kwargs)
 
 class HardwareTicketForm(forms.Form):
-	asset_tag = forms.CharField(max_length=200,
-		label=mark_safe('Asset Tag (<a href="/questions/whyname/" target="_blank">Where to find the Asset Tag</a>?)'))
+	asset_tag = forms.CharField(max_length=5, min_length=5, validators=[RegexValidator(regex='^\d{5}$', message='Asset tag must be 5 integers', code='wrongInput')],
+	label=mark_safe('Asset Tag (<a href="/questions/whyname/" target="_blank">Where to find the Asset Tag</a>?)'))
 	equipment_type = forms.ChoiceField(choices=EQUIPMENT_TYPE_CHOICES)
 	problem_description = forms.CharField(widget=forms.Textarea)
 	error_messages = forms.CharField(widget=forms.Textarea, required=False)
