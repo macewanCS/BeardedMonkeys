@@ -3,6 +3,10 @@ from epl.models import CallLog
 
 register = template.Library()
 
+@register.filter(name='firstUpper')
+def firstUpper(string):
+    return string.upper()
+
 @register.simple_tag
 def descGet(id):
     ticket = CallLog.objects.get(CallID = id)
