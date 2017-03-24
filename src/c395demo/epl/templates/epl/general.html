@@ -10,13 +10,14 @@
 <body>
 	<h1>General/Other Tickets</h1>
 	<form role="form" action="" method="post">
-    {% csrf_token %}
-    <P>What can we help you with today?: <span class="required">*</span></P>
-    {{form.problem}}
-    <br><br><br>
-    <!-- making button-->
-    <button type="submit" class="submit">Submit Ticket</button>
-    <br><br><br>
+        {% csrf_token %}
+        <P>What can we help you with today?: <span class="required">*</span></P>
+        {{form.problem}}
+        <br><br><br>
+        <!-- making button-->
+        <button type="submit" class="submit">Submit Ticket</button>
+        <br><br><br>
+    </form>
 </html>
 
 {% endblock %}

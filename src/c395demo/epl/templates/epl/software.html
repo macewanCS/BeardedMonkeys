@@ -10,23 +10,20 @@
 	<h1>Software Tickets</h1>
 	<form role="form" action="" method="post">
     {% csrf_token %}
-        <!--fixing style-->
-        <P>Which system?</P>
-        {{form.system}}<span class="required"> *</span>
-        <P>Is the system completely offline/broken?
+        <p>Which system? <span class="required">*</span></p>
+        {{form.system}}
+        <p>Is the system completely offline/broken? <span class="required">*</span></p>
         {{form.system_offline}}
-        <P>Please describe the problem as best you can:</P>
-        {{form.problem_description}} <span class="required" style="position:relative; bottom:130px"> *</span>
-        <P>Please share any steps you can to allow us to replicate the problem:</P>
+        <p>Please describe the problem as best you can: <span class="required">*</span></p>
+        {{form.problem_description}}
+        <p>Please share any steps you can to allow us to replicate the problem:</p>
         {{form.steps_replicate_problem}}
         <p>You may also provide a link to an image of the problem if you so choose:</p>
         {{form.image_url}}
-        <p></p>
+        <br><br><br>
         <!-- making button-->
-        <button type="submit" id="submit" style="background-color: #E60E64; width:100px; padding: 7px 10px; font-size:20px; border-radius:0px;">
-            <!--<i class="fa fa-play-circle-o" aria-hidden="true"></i> -->
-            Submit
-        </button>
+        <button type="submit" class="submit">Submit Ticket</button>
+        <br><br><br>
     </form>
 </body>
 </html>

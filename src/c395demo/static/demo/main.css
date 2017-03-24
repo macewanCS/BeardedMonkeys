@@ -244,18 +244,18 @@ select{
     -webkit-padding-end: 20px;
     -webkit-padding-start: 2px;
     -webkit-user-select: none;
-    background-image: url(http://i62.tinypic.com/15xvbd5.png), -webkit-linear-gradient(#FAFAFA, #F4F4F4 40%, #E5E5E5);
+    background-image: url(http://i62.tinypic.com/15xvbd5.png), -webkit-linear-gradient(#FAFAFA, #FFFFFF 40%, #FFFFFF);
     background-position: 97% center;
     background-repeat: no-repeat;
-    border: 1px solid #AAA;
     color: #555;
     font-size: inherit;
-    margin: 20px;
     overflow: hidden;
     padding: 5px 10px;
     text-overflow: ellipsis;
     white-space: nowrap;
     width: 300px;
+    margin: 5px 1px 3px 0px;
+    border: 2px solid #9C9C9C;
 }
 
 input[type="text"],
@@ -282,7 +282,7 @@ textarea {
     outline: none;
     padding: 3px 0px 3px 3px;
     margin: 5px 1px 3px 0px;
-    border: 2px solid #C1C1C1;
+    border: 2px solid #9C9C9C;
     border-radius: 0px;
     padding-left: 8px;
 }
@@ -312,13 +312,6 @@ textarea{
     height: 150px;
     background-color:#fff;
 }
-
-select:required{
-    padding: 3px 0px 3px 3px;
-    margin: 5px 1px 3px 0px;
-    border: 2px solid #C1C1C1;
-}
-
 
 select.required:focus{
     box-shadow: 0 0 5px #FF8C8C;
