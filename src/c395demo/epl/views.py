@@ -175,12 +175,20 @@ def manage(request):
     asgnmnts = Asgnmnt.objects.all()
     probTypes = ProbType.objects.all()
 
+    #IT functionality
+    try:
+        branch = UserProfile.objects.get(user=request.user).branch
+    except:
+        branch = "staff"
+
     context = {
         "callLogs" : callLogs,
         "asgnmnts" : asgnmnts,
         "probTypes" : probTypes,
-        "available" : ["Hardware", "Software", "Service", "Other", "Password"]
+        "available" : ["Hardware", "Software", "Service", "Other", "Password"],
+        "branch" : branch
         }
+        
     return render(request, 'epl/manage-tickets.html', context)
 
 def detail(request, id):
@@ -304,6 +312,13 @@ def detail(request, id):
 
     else:
         context = {}
+   
+   # IT functionality   
+    try:
+        branch = UserProfile.objects.get(user=request.user).branch
+    except:
+        branch = "staff"
+    context['branch'] = branch
 
     return render(request, 'epl/view-ticket.html', context)
 

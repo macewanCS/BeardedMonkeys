@@ -41,8 +41,8 @@
                             <div class="button"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</div>
                         </a>
 
-                        <!--check if the user is owner of the ticket. And if he is ownere, he can click resolve button; if not, he can't-->
-                        {% if user.username == callLog.CustID %}
+                         <!--IT functionality -->
+                        {% if branch == "IT" %}
                             <a href="#" id="myBtn_{{ callLog.CallID }}" class="button" style="display:inline-block;"> <div>
                                 {% if callLog.CallStatus == "Open" %}
                                     <i class="fa fa-check" aria-hidden="true"></i> Resolved
@@ -51,13 +51,24 @@
                                 {% endif %}
                             </div></a>
                         {% else %}
-                            <a href="#" href="#" class="button disabled" style="background-color:grey; display:inline-block;"> <div>
-                                {% if callLog.CallStatus == "Open" %}
-                                    <i class="fa fa-check" aria-hidden="true"></i> Resolved
-                                {% else %}
-                                    <i class="fa fa-check" aria-hidden="true"></i> Re-open
-                                {% endif %}
-                            </div></a>
+                        <!--check if the user is owner of the ticket. And if he is ownere, he can click resolve button; if not, he can't-->
+                            {% if user.username == callLog.CustID %}
+                                <a href="#" id="myBtn_{{ callLog.CallID }}" class="button" style="display:inline-block;"> <div>
+                                    {% if callLog.CallStatus == "Open" %}
+                                        <i class="fa fa-check" aria-hidden="true"></i> Resolved
+                                    {% else %}
+                                        <i class="fa fa-check" aria-hidden="true"></i> Re-open
+                                    {% endif %}
+                                </div></a>
+                            {% else %}
+                                <a href="#" href="#" style="display:inline-block;"> <div class="button disabled" style="background-color:grey;" >
+                                    {% if callLog.CallStatus == "Open" %}
+                                        <i class="fa fa-check" aria-hidden="true"></i> Resolved
+                                    {% else %}
+                                        <i class="fa fa-check" aria-hidden="true"></i> Re-open
+                                    {% endif %}
+                                </div></a>
+                            {% endif %}
                         {% endif %}
                     </td>
                 </tr>
