@@ -18,7 +18,6 @@
 	        <th>Date</th>
 	        <th>Category</th>
 	        <th>Status</th>
-	        <th>Priority</th>
 	        <th class= "sorttable_nosort">Description</th>
 	        <th class= "sorttable_nosort">Options</th>
 	    </tr>
@@ -31,7 +30,6 @@
                     <td> 20{{ callLog.RecvdDate }} </td>
                     <td> {{ callLog.Category }} </td>
                     <td id="status_{{ callLog.CallID }}"> {{ callLog.CallStatus }} </td>
-                    <td> {{ callLog.Priority }} </td>
                     <td style="text-align:left;"> {% descGet callLog.CallID %} </span></td>
                     
                     <td>
