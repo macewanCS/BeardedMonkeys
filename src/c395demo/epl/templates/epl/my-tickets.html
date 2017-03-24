@@ -4,13 +4,13 @@
 
 <html>
 <head>
-	<title>View/Manage All Your Tickets</title>
+	<title>{{ username }}'s Tickets</title>
 	{% load static %}
 
 	<script src="{% static '/demo/sorttable.js' %}"></script>
 </head>
 <body>
-    <h1>View/Manage All Your Tickets</h1>
+    <h1>{{ username }}'s Tickets</h1>
 	<table class="sortable">
 	    <tr>
 	        <th>ID</th>

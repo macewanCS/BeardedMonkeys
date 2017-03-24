@@ -41,17 +41,17 @@
                         <ul id="main-nav" class="menu">
                             <li id="home"><a href="{% url 'index' %}"><i class="fa fa-home fa-2x" aria-hidden="true"></i></a></li>
                             <li style="font-size: 30px;">|</li>
-                            <li id="add" class="create">
-                                <a href="{% url 'add'%}"><i class="fa fa-plus" aria-hidden="true"></i> Create Tickets</i></a>
-                            </li>
+                            <a href="{% url 'add'%}"><li id="add" class="create">
+                                <i class="fa fa-plus" aria-hidden="true"></i> Create Tickets</i>
+                            </li></a>
                             <li style="font-size: 30px;">|</li>
 
                             <!-- Here is the dropdown menu of manage/view Tickets-->
                             <li id="manage" class="view">
-                                <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> Manage/View Tickets <i class="fa fa-chevron-down" aria-hidden="true"></i></a>
+                                <a><i class="fa fa-eye" aria-hidden="true"></i> Manage/View Tickets <i class="fa fa-chevron-down" aria-hidden="true"></i></a>
                                 <ul style="width:213px">
-                                    <li><a href="{% url 'tickets' %}">Manage My Tickets</a></li>
-                                    <li><a href="{% url 'manage' %}">Manage Branch Tickets</a></li>
+                                    <a href="{% url 'tickets' %}"><li>Manage My Tickets</li></a>
+                                    <a href="{% url 'manage' %}"><li>Manage Branch Tickets</li></a>
                                 </ul>
                             </li>
                         </ul>

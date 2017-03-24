@@ -158,6 +158,7 @@ def tickets(request):
     callLogs = CallLog.objects.filter(CustID=username)
 
     context = {
+        "username" : username,
         "callLogs" : callLogs,
         "available" : ["Hardware", "Software", "Service", "Other", "Password"]
         }
@@ -183,6 +184,10 @@ def manage(request):
     return render(request, 'epl/manage-tickets.html', context)
 
 def detail(request, id):
+    # user must need to login to view pages
+    if (not request.user.is_authenticated()):
+        return redirect('/login')
+    
     ticket = CallLog.objects.get(CallID = id)
 
     recvdDate = "20"
@@ -835,6 +840,19 @@ def service_database_saved(form, username):
         software = form.cleaned_data.get("software")
         pc = form.cleaned_data.get("pc")
         description = form.cleaned_data.get("description")
+        
+        if ( len(system) < 1 ):
+            system = "N/A"
+        if ( len(asset_tag) < 1 ):
+            asset_tag = "N/A"
+        if ( len(move_location) < 1 ):
+            move_location = "N/A"
+        if ( len(software) < 1 ):
+            software = "N/A"
+        if ( len(pc) < 1 ):
+            pc = "N/A"
+        if ( len(description) < 1 ):
+            description = "N/A"
 
         # request type
         probType_ProbType = request_type

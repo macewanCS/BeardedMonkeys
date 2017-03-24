@@ -11,35 +11,29 @@
 	<h1>Hardware Tickets</h1>
 	<!--change upppercase tag name to lowercase-->
     <form role="form" action="" method="post">
-    {% csrf_token %}
-    <p>What is the device's five digit asset ID number? (<a style="color:grey;" href="javascript:alert('An asset tag is ....');">What is an Asset ID?</a>) <span class="required">*</span></p>
-    {{form.asset_tag}}
-    <p></p>
-    <div>
-        <table width="100%">
-            <tr>
-                <td WIDTH="30%"><p>What type of device is having the problem? <span class="required">*</span></p></td>
-                <td class="device" style="text-align: center;"><p>What is the specific device's name?</p></td>
-            </tr>
-            <tr>
-                <td>{{form.equipment_type}}</td>
-                <td class="device" style="text-align: center;">{{form.device_name}}</td>
-            </tr>
-        </table>
-    </div>
-    <p>Please describe the problem as best you can: <span class="required">*</span></p>
-    {{form.problem_description}}
-    <p>Please share any error messages that the device may be displaying:</p>
-    {{form.error_messages}}
-    <p>You may also provide an url of image of the problem if you so choose:</p>
-    {{form.image_url}} <!-- change field name of hardware form-->
-    <p></p>
-    <!-- making button-->
-    <button type="submit" id="submit" style="background-color: #E60E64; width:100px; padding: 7px 10px; font-size:20px; border-radius:0px;">
-            <!--<i class="fa fa-play-circle-o" aria-hidden="true"></i> -->
-            Submit
-        </button>
-</form>
+        {% csrf_token %}
+        <p>What is the device's asset ID number? (<a style="color:grey;" href="javascript:alert('An asset tag is ....');">What is an Asset ID?</a>) <span class="required">*</span></p>
+        {{form.asset_tag}}
+        <p></p>
+        <div>
+            <p>What type of device is having the problem? <span class="required">*</span></p>
+            {{form.equipment_type}}
+            <div class="device">
+                <p>What is the specific device's name?</p>
+                {{form.device_name}}
+            </div>
+        </div>
+        <p>Please describe the problem as best you can: <span class="required">*</span></p>
+        {{form.problem_description}}
+        <p>Please share any error messages that the device may be displaying:</p>
+        {{form.error_messages}}
+        <p>You may also provide an url of image of the problem if you so choose:</p>
+        {{form.image_url}} <!-- change field name of hardware form-->
+        <br><br><br>
+        <!-- making button-->
+        <button type="submit" class="submit">Submit Ticket</button>
+        <br><br><br>
+    </form>
 
 <!--device name action-->
 <script>
