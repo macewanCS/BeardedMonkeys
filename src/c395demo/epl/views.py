@@ -158,6 +158,7 @@ def tickets(request):
     callLogs = CallLog.objects.filter(CustID=username)
 
     context = {
+        "username" : username,
         "callLogs" : callLogs,
         "available" : ["Hardware", "Software", "Service", "Other", "Password"]
         }
@@ -183,6 +184,10 @@ def manage(request):
     return render(request, 'epl/manage-tickets.html', context)
 
 def detail(request, id):
+    # user must need to login to view pages
+    if (not request.user.is_authenticated()):
+        return redirect('/login')
+    
     ticket = CallLog.objects.get(CallID = id)
 
     recvdDate = "20"

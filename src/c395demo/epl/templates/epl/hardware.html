@@ -16,16 +16,12 @@
     {{form.asset_tag}}
     <p></p>
     <div>
-        <table width="100%">
-            <tr>
-                <td WIDTH="30%"><p>What type of device is having the problem? <span class="required">*</span></p></td>
-                <td class="device" style="text-align: center;"><p>What is the specific device's name?</p></td>
-            </tr>
-            <tr>
-                <td>{{form.equipment_type}}</td>
-                <td class="device" style="text-align: center;">{{form.device_name}}</td>
-            </tr>
-        </table>
+        <p>What type of device is having the problem? <span class="required">*</span></p>
+        {{form.equipment_type}}
+        <div class="device">
+            <p>What is the specific device's name?</p>
+            {{form.device_name}}
+        </div>
     </div>
     <p>Please describe the problem as best you can: <span class="required">*</span></p>
     {{form.problem_description}}
@@ -33,12 +29,10 @@
     {{form.error_messages}}
     <p>You may also provide an url of image of the problem if you so choose:</p>
     {{form.image_url}} <!-- change field name of hardware form-->
-    <p></p>
+    <br><br><br>
     <!-- making button-->
-    <button type="submit" id="submit" style="background-color: #E60E64; width:100px; padding: 7px 10px; font-size:20px; border-radius:0px;">
-            <!--<i class="fa fa-play-circle-o" aria-hidden="true"></i> -->
-            Submit
-        </button>
+    <button type="submit" class="submit">Submit Ticket</button>
+    <br><br><br>
 </form>
 
 <!--device name action-->

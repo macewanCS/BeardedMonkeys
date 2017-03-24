@@ -43,7 +43,7 @@ $(document).ready(function(){
     });
 
 //    highlight field
-    $("#submit").click(function(){
+    $("button").click(function(){
         $('input[required]').each(function(){
             if (!$(this).val()) {
                $(this).addClass("required")

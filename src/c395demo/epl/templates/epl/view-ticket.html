@@ -87,10 +87,14 @@
         {% if DeviceName|length > 0 %}
             <p>{{ DeviceName }}</p>
         {% else %}
-            <p>NULL</p>
+            <p>Not Provided</p>
         {% endif %}
-        <h5>What (if any) error message(s) is the device diplaying?</h5> 
-        <p>{{ ErrorMsg }}</p>
+        <h5>What (if any) error message(s) is the device diplaying?</h5>
+        {% if ErrorMsg|length > 0 and ErrorMsg != "NULL" %}
+            <p>{{ ErrorMsg }}</p>
+        {% else %}
+            <p>Not Provided</p>
+        {% endif %}
         <h5>What are the specific details of the problem?</h5> 
         <p>{{ Description }}</p>
     {% endif %}
@@ -154,6 +158,9 @@
     {% elif is_img == "file" %}
         <h5>Error Description File:</h5>
         <a href="{{ URL }}"><p style="color: blue;">{{ URL }}</p></a>
+    {% elif Category == "Hardware" or Category == "Software" %}
+        <h5>Error Description Image:</h5>
+        <p>Not Provided</p>
     {% endif %}
     
     <br><br><br>
