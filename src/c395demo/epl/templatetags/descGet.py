@@ -11,33 +11,36 @@ def firstUpper(string):
 def descGet(id):
     ticket = CallLog.objects.get(CallID = id)
     temp = ticket.Symptoms.split("|")
+    
     if ( len(temp) <= 1 ):
         temp = ticket.Symptoms.split("`")
     
     string = ""
     if (ticket.Category == "Hardware"):
-        string += temp[3]
-        if (len(string) > 30):
-            string = temp[3][:30]
-            string += "..."
-        return string
+        if ( not len(temp) >= 4 ):
+            return truncate(temp[0])
+        return truncate(temp[3])
+        
     elif (ticket.Category == "Software"):
-        string += temp[2]
-        if (len(string) > 30):
-            string = temp[2][:30]
-            string += "..."
-        return string
+        if ( not len(temp) >= 3 ):
+            return truncate(temp[0])
+        return truncate(temp[2])
+        
     elif (ticket.Category == "Service"):
-        string = temp[0]
-        return string
+        return truncate(temp[0])
+        
     elif (ticket.Category == "Password"):
         string += "Reset "
         string += temp[0]
         string += " password."
         return string
+        
     elif (ticket.Category == "Other"):
-        string += temp[0]
-        if (len(string) > 30):
-            string = temp[0][:30]
-            string += "..."
-        return string
+        return truncate(temp[0])
+        
+def truncate(string):
+    if (len(string) > 30):
+        string = string[:30]
+        string += "..."
+    return string
+    

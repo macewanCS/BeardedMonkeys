@@ -30,9 +30,10 @@
         transition: color 0.4s;
     }
     #nav:hover{
-        color: #004B8D;
+        color: #E60E64;
     }
     #naver{
+        display: none;
         margin-top: 55px;
         padding-left: 0;
     }
@@ -52,7 +53,7 @@
     $(function() {
         $("#nav").click(function(){
             $("#naver").slideToggle(250);
-            $("#nav i").toggleClass("fa-times-circle fa-bars");
+            $("#nav i").toggleClass("fa-bars fa-times-circle");
         });
     });
 </script>
@@ -64,7 +65,7 @@
 	        <div class="col span_1_of_3">
 		        <a href="{% url 'index' %}"><img id="logo" src="{% static 'demo/epl-logo.png' %}" alt="epl logo"></a>
 		        <div id="nav" style="cursor: pointer;">
-	                <i class="fa fa-times-circle fa-2x" aria-hidden="true"></i>
+	                <i class="fa fa-bars fa-2x" aria-hidden="true"></i>
 	            </div>
 	        </div>
 		    {% if user.is_authenticated %}
