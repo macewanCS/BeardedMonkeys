@@ -15,35 +15,69 @@
     <link href="https://fortawesome.github.io/Font-Awesome/assets/font-awesome/css/font-awesome.css" rel="stylesheet">
     <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
 
-
 <style>    
     @media screen and (max-width: 800px) {
         #main-nav {display:none}
         #logout {display:none}
-}
+        #logo{ height:95%; width: auto; }
+    }
     @media screen and (min-width: 800px) {
-        #lit-nav {display:none}
-}
-    
+        #nav, #naver {display:none !important;}
+    }
+    #nav{
+        float: right;
+        margin-top: 35px;
+        transition: color 0.4s;
+    }
+    #nav:hover{
+        color: #004B8D;
+    }
+    #naver{
+        margin-top: 55px;
+        padding-left: 0;
+    }
+    #naver li{
+        display: block;
+        border-bottom: 1px solid #ccc;
+    }
+    #naver li:hover{
+        background-color: #E60E64;
+        color: white;
+    }
+    #naver li:first-child{
+        border-top: 1px solid #ccc;
+    }
 </style>
+<script>
+    $(function() {
+        $("#nav").click(function(){
+            $("#naver").slideToggle(250);
+            $("#nav i").toggleClass("fa-times-circle fa-bars");
+        });
+    });
+</script>
 </head>
 <body>
+    {% load descGet %}
 	<header style="position: relative">
 	    <div class="row">
 	        <div class="col span_1_of_3">
-		        <a href="{% url 'index' %}"><img src="{% static 'demo/epl-logo.png' %}" alt="epl logo"></a>
+		        <a href="{% url 'index' %}"><img id="logo" src="{% static 'demo/epl-logo.png' %}" alt="epl logo"></a>
+		        <div id="nav" style="cursor: pointer;">
+	                <i class="fa fa-times-circle fa-2x" aria-hidden="true"></i>
+	            </div>
 	        </div>
 		    {% if user.is_authenticated %}
 		        <div class="col span_1_of_3">
 		            <nav>
-                        <label for="drop" class="toggle">Menu</label>
-                        <input type="checkbox" id="drop" />
                         <ul id="main-nav" class="menu">
                             <li id="home"><a href="{% url 'index' %}"><i class="fa fa-home fa-2x" aria-hidden="true"></i></a></li>
                             <li style="font-size: 30px;">|</li>
-                            <a href="{% url 'add'%}"><li id="add" class="create">
-                                <i class="fa fa-plus" aria-hidden="true"></i> Create Tickets</i>
-                            </li></a>
+                            <a href="{% url 'add'%}">
+                                <li id="add" class="create">
+                                    <i class="fa fa-plus" aria-hidden="true"></i> Create Tickets</i>
+                                </li>
+                            </a>
                             <li style="font-size: 30px;">|</li>
 
                             <!-- Here is the dropdown menu of manage/view Tickets-->
@@ -55,26 +89,21 @@
                                 </ul>
                             </li>
                         </ul>
-                        <ul id="lit-nav" class="menu" style="float:right">
-                            <li id="navigation" class="view">
-                                <a href="#"><i class="fa fa-eye" aria-hidden="true" ></i> Navigation <i class="fa fa-chevron-down" aria-hidden="true"></i></a>
-                                <ul style="width:160px">
-                                    <li id="home"><a href="{% url 'index' %}">Home</a></li>
-                                    <li id="add" class="create" style="background-color: #182A76;"><a href="{% url 'add'%}">Create Tickets</i></a></li>
-                                    <li><a href="{% url 'tickets' %}">My Tickets</a></li>
-                                    <li><a href="{% url 'manage' %}">Branch Tickets</a></li>
-                                    <li><a href="#" id="lit-log"> Logout, {{ user.get_username }}</a></li>
-                                </ul>
-                            </li>
-                        </ul>                    
                     </nav>
 		        </div>
 		        <a href="#" id="logout">
-		            <i class="fa fa-sign-out" aria-hidden="true"></i> Logout, {{ user.get_username }}
+		            <i class="fa fa-sign-out" aria-hidden="true"></i> Logout, {{ user.get_username|firstUpper }}
 	            </a>
 	        {% endif %}
 	</header>
 	<div class="row">
+	    <ul id="naver">
+	        <a href="{% url 'index' %}"><li>Home</li></a>
+	        <a href="{% url 'add'%}"><li>Create Tickets</li></a>
+	        <a href="{% url 'tickets' %}"><li>Manage My Tickets</li></a>
+            <a href="{% url 'manage' %}"><li>Manage Branch Tickets</li></a>
+	        <a href="#"><li>Logout, {{ user.get_username|firstUpper }}</li></a>
+	    </ul>
 	    {% block content %}
 	        <h1>Documentation/Tutorial:</h1>
 	        <title>Home</title>

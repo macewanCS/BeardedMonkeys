@@ -551,3 +551,25 @@ footer span i {
     left: 50%;
     transform: translate(-50%, -50%);
 }
+
+
+/******************************************
+    Login Page
+******************************************/
+
+@media screen and (max-width: 600px) {
+    #outer {width: 100% !important;}
+}
+
+#outer{
+    background-color:white;
+    box-shadow: 0px 3px 10px #ccc;
+    width: 550px;
+    height: 375px;
+    margin-top:100px
+}
+
+#upper{
+    border-bottom: 2px solid lightgrey;
+    width:100%;
+}
