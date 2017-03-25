@@ -13,18 +13,23 @@ $(document).ready(function(){
         } else {
                 $("#modalText").html("Are you sure that you want to re-open the ticket?");
         }
+
+//      fixing the status bar bug
         $("#yButton").click(function() {
            $("#myModal").css("display", "none");
            if ($("#status_"+id).text().indexOf("Open")>=0){
             alterData(id, "Resolved")
             //$("#status_"+id).html("Resolved");
             $("#myBtn_"+id).html('<i class="fa fa-check" aria-hidden="true"></i>Re-open');
+            $('.stat').attr('src', '/static/demo/view-ticket/resolved-bar.jpg')
            }
            else {
             alterData(id, "Open")
             $("#myBtn_"+id).html('<i class="fa fa-check" aria-hidden="true"></i>Resolved');
+            $('.stat').attr('src', '/static/demo/view-ticket/open-bar.jpg')
            }
         });
+
     });
 
     $(".nButton").click(function () {
