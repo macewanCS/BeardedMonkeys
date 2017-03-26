@@ -16,15 +16,15 @@ head {background-color:#ddeeee; box-shadow: 0px 0px 0px #ccc;}
 	<title>Login Page</title>
 </head>
 <body>
-    <div id="outer" style="background-color:white; box-shadow: 0px 3px 10px #ccc; width: 550px; height: 375px; margin-top:100px" >
-        <div id="upper" align="left" style="border-bottom: 2px solid lightgrey; width:100%;">
+    <div id="outer">
+        <div id="upper">
             <h1 style="margin-bottom:0; margin-top:0;margin-left:25px"><img src="{% static 'demo/epl-logo.png' %}" style="height:84px;width:152px;" alt="epl logo"></h1>
         </div>
         <div id="center" align="left" style="width:100%; padding: 0 25px 25px; color:grey" >
 	        <form action='' method='POST' >
 	        {% csrf_token %}
 	        {% if form.non_field_errors %}
-	            <P style="margin-bottom:0; color:grey">{{ form.non_field_errors|striptags }}</P>
+	            <P style="margin-bottom:0; color:red">{{ form.non_field_errors|striptags }}</P>
 	        {% else %}
 	            <BR><BR>   
 	        {% endif %}

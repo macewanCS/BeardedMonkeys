@@ -100,14 +100,14 @@
         {% else %}
             <p>Not Provided</p>
         {% endif %}
+        <h5>What are the specific details of the problem?</h5> 
+        <p>{{ Description }}</p>
         <h5>What (if any) error message(s) is the device diplaying?</h5>
         {% if ErrorMsg|length > 0 and ErrorMsg != "NULL" %}
             <p>{{ ErrorMsg }}</p>
         {% else %}
             <p>Not Provided</p>
         {% endif %}
-        <h5>What are the specific details of the problem?</h5> 
-        <p>{{ Description }}</p>
     {% endif %}
     
     {% if Category == "Software" %}

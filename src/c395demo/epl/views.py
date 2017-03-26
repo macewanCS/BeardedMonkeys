@@ -206,9 +206,10 @@ def detail(request, id):
     if ( len(temp) <= 1 ):
         temp = parsing(ticket.Symptoms, "`")
         
+    temp = get_data(temp)
+        
     if ( ticket.Category == "Hardware" or
          ticket.Category == "Software" ):
-        
         if ( ticket.Category == "Hardware" ):
             url = temp[5]
         else:
@@ -857,17 +858,17 @@ def service_database_saved(form, username):
         description = form.cleaned_data.get("description")
         
         if ( len(system) < 1 ):
-            system = "N/A"
+            system = "Not Provided"
         if ( len(asset_tag) < 1 ):
-            asset_tag = "N/A"
+            asset_tag = "Not Provided"
         if ( len(move_location) < 1 ):
-            move_location = "N/A"
+            move_location = "Not Provided"
         if ( len(software) < 1 ):
-            software = "N/A"
+            software = "Not Provided"
         if ( len(pc) < 1 ):
-            pc = "N/A"
+            pc = "Not Provided"
         if ( len(description) < 1 ):
-            description = "N/A"
+            description = "Not Provided"
 
         # request type
         probType_ProbType = request_type
@@ -1064,6 +1065,23 @@ def general_database_saved(form, username):
 
     except:
         return "Something went wrong"
+
+def get_data(lis):
+    new_list = []
+    length = len(lis) - 1
+    k = 0
+    for i in range(0, 7):
+        if ( i > length ):
+            new_list.append("Not Provided")
+        else:
+            if ( lis[k] == "" or
+                 lis[k] == "NULL" or
+                 lis[k] == "N/A" ):
+                new_list.append("Not Provided")
+            else:
+                new_list.append(lis[k])
+            k += 1
+    return new_list
 
 @csrf_exempt
 def alter_status(request):
