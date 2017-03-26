@@ -42,7 +42,6 @@ def hardware(request):
     # user must need to login to view pages
     if (not request.user.is_authenticated()):
         return redirect('/login')
-    print(get_branch(request, request.user))
 
     form = HardwareTicketForm(request.POST or None)
     if form.is_valid():
