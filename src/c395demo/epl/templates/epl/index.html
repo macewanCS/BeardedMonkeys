@@ -20,6 +20,9 @@
         #main-nav {display:none}
         #logout {display:none}
         #logo{ height:95%; width: auto; }
+        #head .span_1_of_3{
+            width: 100% !important;
+        }
     }
     @media screen and (min-width: 800px) {
         #nav, #naver {display:none !important;}
@@ -45,8 +48,23 @@
         background-color: #E60E64;
         color: white;
     }
-    #naver li:first-child{
-        border-top: 1px solid #ccc;
+    /* https://css-tricks.com/NetMag/FluidWidthVideo/Article-FluidWidthVideo.php */
+    .videoWrapper {
+	    position: relative;
+	    padding-bottom: 56.25%; /* 16:9 */
+	    padding-top: 25px;
+	    height: 0;
+	    width: 80%;
+	    margin: 0 auto;
+        margin-bottom: 65px;
+        border: 2px solid;
+    }
+    .videoWrapper iframe {
+	    position: absolute;
+	    top: 0;
+	    left: 0;
+	    width: 100%;
+	    height: 100%;
     }
 </style>
 <script>
@@ -61,7 +79,7 @@
 <body>
     {% load descGet %}
 	<header style="position: relative">
-	    <div class="row">
+	    <div class="row" id="head">
 	        <div class="col span_1_of_3">
 		        <a href="{% url 'index' %}"><img id="logo" src="{% static 'demo/epl-logo.png' %}" alt="epl logo"></a>
 		        <div id="nav" style="cursor: pointer;">
@@ -76,15 +94,15 @@
                             <li style="font-size: 30px;">|</li>
                             <a href="{% url 'add'%}">
                                 <li id="add" class="create">
-                                    <i class="fa fa-plus" aria-hidden="true"></i> Create Tickets</i>
+                                    <i class="fa fa-plus" aria-hidden="true"></i>&ensp;Create Tickets</i>
                                 </li>
                             </a>
                             <li style="font-size: 30px;">|</li>
 
                             <!-- Here is the dropdown menu of manage/view Tickets-->
                             <li id="manage" class="view">
-                                <a><i class="fa fa-eye" aria-hidden="true"></i> Manage/View Tickets <i class="fa fa-chevron-down" aria-hidden="true"></i></a>
-                                <ul style="width:213px">
+                                <a><i class="fa fa-eye" aria-hidden="true"></i>&ensp;Manage/View Tickets&ensp;<i class="fa fa-chevron-down" aria-hidden="true"></i></a>
+                                <ul style="width:221px">
                                     <a href="{% url 'tickets' %}"><li>Manage My Tickets</li></a>
                                     <a href="{% url 'manage' %}"><li>Manage Branch Tickets</li></a>
                                 </ul>
@@ -99,18 +117,30 @@
 	</header>
 	<div class="row">
 	    <ul id="naver">
-	        <a href="{% url 'index' %}"><li>Home</li></a>
-	        <a href="{% url 'add'%}"><li>Create Tickets</li></a>
-	        <a href="{% url 'tickets' %}"><li>Manage My Tickets</li></a>
-            <a href="{% url 'manage' %}"><li>Manage Branch Tickets</li></a>
-	        <a href="#"><li>Logout, {{ user.get_username|firstUpper }}</li></a>
+	        <a href="{% url 'index' %}">
+	            <li style="border-top: 1px solid #ccc;">
+	                <i class="fa fa-home" aria-hidden="true"></i>&emsp;Home
+                </li>
+            </a>
+	        <a href="{% url 'add'%}">
+	            <li><i class="fa fa-plus" aria-hidden="true"></i>&emsp;Create Tickets</li>
+            </a>
+	        <a href="{% url 'tickets' %}">
+	            <li><i class="fa fa-eye" aria-hidden="true"></i>&emsp;Manage My Tickets</li>
+            </a>
+            <a href="{% url 'manage' %}">
+                <li><i class="fa fa-eye" aria-hidden="true"></i>&emsp;Manage Branch Tickets</li>
+            </a>
+	        <a href="#">
+	            <li><i class="fa fa-sign-out" aria-hidden="true"></i>&emsp;Logout, {{ user.get_username|firstUpper }}</li>
+            </a>
 	    </ul>
 	    {% block content %}
 	        <h1>Documentation/Tutorial:</h1>
 	        <title>Home</title>
-	        <div style="text-align: center;">
-	        <iframe width="560" height="315" src="https://www.youtube.com/embed/T0aLkpa_vRA" frameborder="0" allowfullscreen></iframe>
-	        </div>
+            <div class="videoWrapper">
+                <iframe src="https://www.youtube.com/embed/T0aLkpa_vRA" frameborder="0" allowfullscreen></iframe>
+            </div>
 	        </div>
         {% endblock %}
     </div>

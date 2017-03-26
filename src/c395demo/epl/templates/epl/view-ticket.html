@@ -30,6 +30,10 @@
                 <img class="stat" src="{% static 'demo/view-ticket/resolved-bar.jpg' %}">
             {% elif CallStatus == "Closed" %}
                 <img class="stat" src="{% static 'demo/view-ticket/finished-bar.jpg' %}">
+            {% elif CallStatus == "Need Approval" %}
+                <img class="stat" src="{% static 'demo/view-ticket/need-approval-bar.jpg' %}">
+            {% else %}
+                <img class="stat" src="{% static 'demo/view-ticket/unknown-bar.jpg' %}">
             {% endif %}
         </div>
         
