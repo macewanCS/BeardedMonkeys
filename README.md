@@ -5,14 +5,14 @@
 - [User Stories](https://github.com/macewanCS/BeardedMonkeys/blob/master/specs/stories.md)
 - [PowerPoint Slides](https://github.com/macewanCS/BeardedMonkeys/blob/master/specs/BeardedMonkeys-%20Presentation.pptx)
 
-###Few Useful Git Commands:
+### Few Useful Git Commands:
 - When pushing your files, make sure you are in your own forked repository, not the group main repository.
 Run, git remote show origin
 - Cache credential for an hour, git config --global credential.helper 'cache --timeout=3600'
 - Add remote upstream, git remote add upstream http://link to repo
 - check configured remote repository, git remote -v
 
-###Admin Login
+### Admin Login
 **Login Page:** localhost:8000/admin<br />
 **email:** cmpt395@email.com<br />
 **username:** ubuntu<br />
@@ -33,11 +33,11 @@ I have been using core web languages such as HTML, CSS, JavaScript and jQuery fo
 
 You can checkout my current websites to know me better, [webpro.tech](http://www.webpro.tech/) and [Search Beast](https://www.searchbeast.ca/)
 
-### Abdullah Alshakhs##
+### Abdullah Alshakhs
 I am Abdullah, and I am here to attend the CMPT395 lab and learn more about github and its feature. 
 
 ### Connor Dykstra
 I am Connor Dykstra, and I'm not interested in saying anything interesting about myself.
 
-### Mohammed Al Hamood#
+### Mohammed Al Hamood
 i am Mohammed , and i am here in thursday lab lering how to use github.and i like to cude using C#.
