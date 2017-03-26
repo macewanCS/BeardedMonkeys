@@ -40,7 +40,7 @@
                             <div class="button"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</div>
                         </a>
 
-                        <a  href="#" style="display:inline-block;" id="myBtn_{{ callLog.CallID }}" class="button" ><div>
+                        <a  style="display:inline-block;" id="myBtn_{{ callLog.CallID }}" class="cursor button" ><div>
                             {% if callLog.CallStatus == "Open" %}
                                 <i class="fa fa-check" aria-hidden="true"></i> Resolved </div></a>
                             {% else %}
@@ -56,9 +56,9 @@
       <div class="modal-content">
           <span class="close">&times;</span>
           <p id="modalText">Are you sure the ticket has been resolved?</p>
-          <a id="nButton" class="button modalButton" href="#" style="float:right">No</a>
+          <a id="nButton" class="button modalButton cursor" style="float:right">No</a>
           <a class="button modalButton" style="visibility:hidden;"></a>
-          <a id="yButton" class="button modalButton" href="#" style="float:right; margin-right:20px;">Yes</a>
+          <a id="yButton" class="button modalButton cursor" style="float:right; margin-right:20px;">Yes</a>
       </div>
     </div>
 <script>
@@ -121,7 +121,7 @@ function alterData(id, status){
         // handle a non-successful response
         error : function(xhr,errmsg,err) {
             $('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
-                " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
+                " <a class='cursor' class='close'>&times;</a></div>"); // add the error to the dom
             console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
         }
     });

@@ -39,7 +39,7 @@
         <!--check if the user is owner of the ticket. And if he is ownere, he can click resolve button; if not, he can't-->
         <!-- IT functionality-->
         {% if branch == "IT" %}
-            <a id="myBtn_{{ CallID }}" class="button" href="#">
+            <a id="myBtn_{{ CallID }}" class="button cursor">
                 {% if CallStatus == "Open" %}
                     <i class="fa fa-check" aria-hidden="true"></i> Resolved
                 {% else %}
@@ -48,7 +48,7 @@
             </a>
         {% else %}
             {% if user.username == CustID %}
-                <a id="myBtn_{{ CallID }}" class="button" href="#">
+                <a id="myBtn_{{ CallID }}" class="button cursor">
                     {% if CallStatus == "Open" %}
                         <i class="fa fa-check" aria-hidden="true"></i> Resolved
                     {% else %}
@@ -56,7 +56,7 @@
                     {% endif %}
                 </a>
             {% else %}
-                <a class="button disabled" href="#" style="background-color:grey;">
+                <a class="button disabled cursor" style="background-color:grey;">
                     {% if CallStatus == "Open" %}
                         <i class="fa fa-check" aria-hidden="true"></i> Resolved
                     {% else %}
@@ -65,8 +65,9 @@
                 </a>
             {% endif %}
         {% endif %}
-
-        <p style="margin-top: 10px;">Posted by {{ CustID }}</p>
+        
+        {% load descGet %}
+        <p style="margin-top: 10px;">Posted by {{ CustID|firstUpper }}</p>
     </div>
 
     <h3>Ticket ID: {{ CallID }}</h3> 
@@ -181,9 +182,9 @@
       <div class="modal-content">
           <span class="close">&times;</span>
           <p id="modalText">Are you sure the ticket has been resolved?</p>
-          <a class="button modalButton nButton" href="#" style="float:right">No</a> <!-- add class and remove id-->
+          <a class="button modalButton nButton cursor" style="float:right">No</a> <!-- add class and remove id-->
           <a class="button modalButton" style="visibility:hidden;"></a>
-          <a id="yButton" class="button modalButton" href="#" style="float:right; margin-right:20px;">Yes</a>
+          <a id="yButton" class="button modalButton cursor" style="float:right; margin-right:20px;">Yes</a>
       </div>
     </div>
 

@@ -241,6 +241,10 @@ button:hover{
     text-align:center;
 }
 
+.cursor{
+    cursor: pointer;
+}
+
 .disabled {
     pointer-events: none;
     cursor: default;
