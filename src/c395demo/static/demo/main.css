@@ -1,13 +1,29 @@
+/*html*/
+html {
+    height: 100%;
+    box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
 body {
+    width: 100%;
+    min-height: 100%;
+    position: relative;
 	font-family: 'Roboto', sans-serif;
 	font-size: 100%;
 	color: #000000;
 	margin: 0;
-	padding: 0;
+	padding-bottom: 60px;
+
 }
 
 h1{
-    color: #347D00;
+    color: #E60E64;
 }
 
 h3{
@@ -121,10 +137,18 @@ li{
 
 #manage{
     transition: background-color 0.3s;
-    z-index: 1000;
 }
 
 #manage:hover{
+    color: #fff;
+    background-color: #182A76;
+}
+
+#navigation{
+    transition: background-color 0.3s;
+}
+
+#navigation:hover{
     color: #fff;
     background-color: #182A76;
 }
@@ -217,6 +241,10 @@ button:hover{
     text-align:center;
 }
 
+.cursor{
+    cursor: pointer;
+}
+
 .disabled {
     pointer-events: none;
     cursor: default;
@@ -229,20 +257,18 @@ select{
     -webkit-padding-end: 20px;
     -webkit-padding-start: 2px;
     -webkit-user-select: none;
-    background-image: url(http://i62.tinypic.com/15xvbd5.png), -webkit-linear-gradient(#FAFAFA, #F4F4F4 40%, #E5E5E5);
+    background-image: url(http://i62.tinypic.com/15xvbd5.png), -webkit-linear-gradient(#FAFAFA, #FFFFFF 40%, #FFFFFF);
     background-position: 97% center;
     background-repeat: no-repeat;
-    border: 1px solid #AAA;
     color: #555;
     font-size: inherit;
-    margin: 20px;
     overflow: hidden;
     padding: 5px 10px;
     text-overflow: ellipsis;
     white-space: nowrap;
     width: 300px;
-    height: 40px;
-    width: 300px
+    margin: 5px 1px 3px 0px;
+    border: 2px solid #9C9C9C;
 }
 
 input[type="text"],
@@ -269,7 +295,7 @@ textarea {
     outline: none;
     padding: 3px 0px 3px 3px;
     margin: 5px 1px 3px 0px;
-    border: 2px solid #C1C1C1;
+    border: 2px solid #9C9C9C;
     border-radius: 0px;
     padding-left: 8px;
 }
@@ -300,13 +326,6 @@ textarea{
     background-color:#fff;
 }
 
-select:required{
-    padding: 3px 0px 3px 3px;
-    margin: 5px 1px 3px 0px;
-    border: 2px solid #C1C1C1;
-}
-
-
 select.required:focus{
     box-shadow: 0 0 5px #FF8C8C;
     border: 2px solid #FF8C8C;
@@ -323,14 +342,16 @@ textarea.required:focus {
     border: 2px solid #FF8C8C;
 }
 
-button#submit {
-    width:100px;
-    padding:7px 10px;
-    border-radius: 0px;
-    background-color:#E60E64;
-    font-size:20px;
-    
-    
+button.submit {
+    background-color: #E60E64;
+    font-size: 20px;
+    box-shadow: 0px 2px 7px #BBB;
+    transition: background-color 0.4s;
+}
+
+button.submit:hover {
+    box-shadow: 0px 2px 7px #ccc;
+    background-color: #FF0066;
 }
 
 #main-nav{
@@ -386,6 +407,7 @@ table.sortable th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):not(.sor
     padding: 20px;
     border: 1px solid #888;
     width: 30%;
+    min-width:200px;
 }
 
 /* The Close Button */
@@ -479,6 +501,7 @@ nav ul ul {
 	margin: 0;
 	color: #fff;
 	border-radius:0px 0px 10px 10px;
+	z-index:100;
 }
 
 nav ul li.create ul{
@@ -503,4 +526,54 @@ nav ul ul li {
 	bottom: 1px;
 }
 
+/* Footer*/
+footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background-color: #ebebeb;
+    box-shadow: 0px 3px 3px #ccc inset;
+}
 
+footer span {
+    position: relative;
+    display: block;
+    float: left;
+    width: 40px;
+    height: 40px;
+    background-color: #b7b7b7;
+    margin: 13px 10px 10px;
+    color: #fff;
+    text-align: center;
+}
+
+footer span i {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+
+/******************************************
+    Login Page
+******************************************/
+
+@media screen and (max-width: 600px) {
+    #outer {width: 100% !important;}
+}
+
+#outer{
+    background-color:white;
+    box-shadow: 0px 3px 10px #ccc;
+    width: 550px;
+    height: 375px;
+    margin-top:100px
+}
+
+#upper{
+    border-bottom: 2px solid lightgrey;
+    width:100%;
+}

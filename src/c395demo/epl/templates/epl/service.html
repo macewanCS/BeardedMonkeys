@@ -20,14 +20,16 @@
       $('#id_pc').hide();
       $('#id_description_label').hide();
       $('#id_description').hide();
+      <!-- fix required fields bug-->
       $('#id_request_type').on('change', function () {
           if ($(this).val() === 'Move equipment request') {
               $('#id_system_label').show();
               $('#id_system').show();
               $('#id_asset_tag_label').show();
               $('#id_asset_tag').show();
+              $('#id_asset_tag').attr('required', true);
               $('#id_move_location_label').show();
-              $('#id_move_location').show();
+              $('#id_move_location').show().attr('required', true);
               $('#id_software_label').hide();
               $('#id_software').hide();
               $('#id_pc_label').hide();
@@ -39,7 +41,7 @@
               $('#id_system_label').show();
               $('#id_system').show();
               $('#id_asset_tag_label').show();
-              $('#id_asset_tag').show();
+              $('#id_asset_tag').show().attr('required', true);
               $('#id_move_location_label').hide();
               $('#id_move_location').hide();
               $('#id_software_label').hide();
@@ -56,10 +58,10 @@
               $('#id_asset_tag').hide();
               $('#id_move_location_label').hide();
               $('#id_move_location').hide();
-              $('#id_software_label').show();
-              $('#id_software').show();
-              $('#id_pc_label').show();
-              $('#id_pc').show();
+              $('#id_software_label').show().attr('required', true);;
+              $('#id_software').show().attr('required', true);;
+              $('#id_pc_label').show().attr('required', true);;
+              $('#id_pc').show().attr('required', true);;
               $('#id_description_label').hide();
               $('#id_description').hide();
           } 
@@ -72,6 +74,8 @@
               $('#id_move_location').hide();
               $('#id_software_label').hide();
               $('#id_software').hide();
+              $('#id_pc_label').hide();
+              $('#id_pc').hide();
               $('#id_description_label').show();
               $('#id_description').show();
           } 
@@ -99,27 +103,25 @@
 <body>
 	<h1>Service Tickets</h1>
 	<form role="form" action="" method="post">
-    {% csrf_token %}
-    <P>Request type: <span class="required">*</span></P>
-    {{form.request_type}}
-    <P id="id_system_label">Which system? <span class="required">*</span></P>
-    {{form.system}}
-    <P id="id_asset_tag_label">Please provide the asset tag(s) of the equipment you want moved or surplused: (<a style="color:grey;"            href="javascript:alert('An asset tag is ....');">What is an Asset ID?</a>)      <span class="required">*</span></P>
-    {{form.asset_tag}}
-    <P id="id_move_location_label">Where would you like the equipment moved to?: <span class="required">*</span></P>
-    {{form.move_location}}
-    <P id="id_software_label">What software are you looking for? <span class="required">*</span></P>
-    {{form.software}}
-    <P id="id_pc_label">Which PC do you want this software installed on? <span class="required">*</span></P>
-    {{form.pc}}
-    <P id="id_description_label">Description of the problem: <span class="required">*</span></P>
-    {{form.description}}
-    <BR>
-    <!-- making button-->
-    <button type="submit" id="submit" style="background-color: #E60E64; width:100px; padding: 7px 10px; font-size:20px; border-radius:0px;">
-            <!--<i class="fa fa-play-circle-o" aria-hidden="true"></i> -->
-            Submit
-        </button>
+        {% csrf_token %}
+        <P>Request type: <span class="required">*</span></P>
+        {{form.request_type}}
+        <P id="id_system_label">Which system? <span class="required">*</span></P>
+        {{form.system}}
+        <P id="id_asset_tag_label">Please provide the asset tag(s) of the equipment you want moved or surplused: (<a style="color:grey;"            href="javascript:alert('An asset tag is ....');">What is an Asset ID?</a>)      <span class="required">*</span></P>
+        {{form.asset_tag}}
+        <P id="id_move_location_label">Where would you like the equipment moved to?: <span class="required">*</span></P>
+        {{form.move_location}}
+        <P id="id_software_label">What software are you looking for? <span class="required">*</span></P>
+        {{form.software}}
+        <P id="id_pc_label">Which PC do you want this software installed on? <span class="required">*</span></P>
+        {{form.pc}}
+        <P id="id_description_label">Description of the problem:</P>
+        {{form.description}}
+        <br><br><br>
+        <!-- making button-->
+        <button type="submit" class="submit">Submit Ticket</button>
+        <br><br><br>
     </form>
 </body>
 </html>

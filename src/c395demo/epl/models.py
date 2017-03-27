@@ -1,11 +1,8 @@
 from django.db import models
+from django.contrib.auth.models import User
 from epl.choices import *
 
 # Create your models here.
-class UserProfile(models.Model):
-   Username = models.CharField(primary_key=True, max_length=50)
-   Branch = models.CharField(max_length=50, default='NULL')
-   Role = models.CharField(max_length=50, default='NULL')
 
 class CallLog(models.Model):
     CallID = models.AutoField(primary_key=True)
@@ -57,7 +54,7 @@ class CallLog(models.Model):
     PastDue = models.CharField(max_length=10,default='NULL')
     SaveFlag = models.CharField(max_length=5,default='NULL')
     TempTime = models.IntegerField(default=0)
-
+    
 class Asgnmnt (models.Model):
     AssignedBy= models.CharField(max_length=96,default='NULL')
     DateAssign= models.CharField(max_length=10,default='NULL')
@@ -89,9 +86,22 @@ class Asgnmnt (models.Model):
     TeamName = models.CharField(max_length=30,default='NULL')
     TempNotes = models.TextField(default='NULL')
     TempTime= models.IntegerField(default=0)
-
+   
 class ProbType(models.Model):
     ProbType = models.CharField(max_length=25,default='NULL')
     Description = models.TextField(default='NULL')
     Category = models.CharField(max_length=20,default='NULL')
+    
+class UserProfile(models.Model):
+    user = models.OneToOneField(User)
+    branch = models.CharField(max_length=20,default='staff')
 
+    def __unicode__(self):
+        return self.user.username
+        
+    def __str__(self):
+        return self.user.username
+        
+    def get_branch(self):
+        return self.branch
+    

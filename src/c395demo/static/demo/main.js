@@ -2,6 +2,9 @@ $(document).ready(function(){
     $( "a[id*='logout']" ).click(function(){
         $("#logoutModal").css("display", "block")
     });
+    $( "a[id*='lit-log']" ).click(function(){
+        $("#logoutModal").css("display", "block")
+    });
     $( "a[id*='myBtn']" ).click(function(){
         id = $(this).attr('id').replace("myBtn_", "")
         $("#myModal").css("display", "block");
@@ -10,18 +13,23 @@ $(document).ready(function(){
         } else {
                 $("#modalText").html("Are you sure that you want to re-open the ticket?");
         }
+
+//      fixing the status bar bug
         $("#yButton").click(function() {
            $("#myModal").css("display", "none");
            if ($("#status_"+id).text().indexOf("Open")>=0){
             alterData(id, "Resolved")
             //$("#status_"+id).html("Resolved");
             $("#myBtn_"+id).html('<i class="fa fa-check" aria-hidden="true"></i>Re-open');
+            $('.stat').attr('src', '/static/demo/view-ticket/resolved-bar.jpg')
            }
            else {
             alterData(id, "Open")
             $("#myBtn_"+id).html('<i class="fa fa-check" aria-hidden="true"></i>Resolved');
+            $('.stat').attr('src', '/static/demo/view-ticket/open-bar.jpg')
            }
         });
+
     });
 
     $(".nButton").click(function () {
@@ -40,7 +48,7 @@ $(document).ready(function(){
     });
 
 //    highlight field
-    $("#submit").click(function(){
+    $("button").click(function(){
         $('input[required]').each(function(){
             if (!$(this).val()) {
                $(this).addClass("required")

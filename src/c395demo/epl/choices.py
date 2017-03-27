@@ -60,14 +60,3 @@ REQUEST_TYPE_CHOICE = (
         ('New equipment request', 'New equipment request'),
         ('Surplus equipment request', 'Surplus equipment request')
 )
-
-BRANCH_CHOICE = (
-        ('HR', 'HR'),
-        ('IT', 'IT'),
-        ('EPL', 'EPL')
-        )
-
-ROLE_CHOICE = (
-        ('Manager', 'Manager'),
-        ('Staff', 'Staff')
-        )

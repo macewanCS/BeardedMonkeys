@@ -10,6 +10,10 @@
 	        font-size: 20px;
 	        margin:0;
 	    }
+	    .stat{
+	        max-width: 100%;
+	        height: auto;
+	    }
 	</style>
 </head>
 <body>
@@ -19,13 +23,13 @@
         {% load static %}
         <div style="margin: 0 -3px 7px 0;">
             {% if CallStatus == "Open" %}
-                <img src="{% static 'demo/view-ticket/open-bar.jpg' %}">
+                <img class="stat" src="{% static 'demo/view-ticket/open-bar.jpg' %}">
             {% elif CallStatus == "InProgress" %}
-                <img src="{% static 'demo/view-ticket/progress-bar.jpg' %}">
+                <img class="stat" src="{% static 'demo/view-ticket/progress-bar.jpg' %}">
             {% elif CallStatus == "Resolved" %}
-                <img src="{% static 'demo/view-ticket/resolved-bar.jpg' %}">
+                <img class="stat" src="{% static 'demo/view-ticket/resolved-bar.jpg' %}">
             {% elif CallStatus == "Closed" %}
-                <img src="{% static 'demo/view-ticket/finished-bar.jpg' %}">
+                <img class="stat" src="{% static 'demo/view-ticket/finished-bar.jpg' %}">
             {% endif %}
         </div>
         
@@ -33,8 +37,9 @@
         <a class="button" href="edit.asp"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</a>
 
         <!--check if the user is owner of the ticket. And if he is ownere, he can click resolve button; if not, he can't-->
-        {% if user.username == CustID %}
-            <a id="myBtn_{{ CallID }}" class="button" href="#">
+        <!-- IT functionality-->
+        {% if branch == "IT" %}
+            <a id="myBtn_{{ CallID }}" class="button cursor">
                 {% if CallStatus == "Open" %}
                     <i class="fa fa-check" aria-hidden="true"></i> Resolved
                 {% else %}
@@ -42,16 +47,27 @@
                 {% endif %}
             </a>
         {% else %}
-            <a class="button disabled" href="#" style="background-color:grey;">
-                {% if CallStatus == "Open" %}
-                    <i class="fa fa-check" aria-hidden="true"></i> Resolved
-                {% else %}
-                    <i class="fa fa-check" aria-hidden="true"></i> Re-open
-                {% endif %}
-            </a>
+            {% if user.username == CustID %}
+                <a id="myBtn_{{ CallID }}" class="button cursor">
+                    {% if CallStatus == "Open" %}
+                        <i class="fa fa-check" aria-hidden="true"></i> Resolved
+                    {% else %}
+                        <i class="fa fa-check" aria-hidden="true"></i> Re-open
+                    {% endif %}
+                </a>
+            {% else %}
+                <a class="button disabled cursor" style="background-color:grey;">
+                    {% if CallStatus == "Open" %}
+                        <i class="fa fa-check" aria-hidden="true"></i> Resolved
+                    {% else %}
+                        <i class="fa fa-check" aria-hidden="true"></i> Re-open
+                    {% endif %}
+                </a>
+            {% endif %}
         {% endif %}
-
-        <p style="margin-top: 10px;">Posted by {{ CustID }}</p>
+        
+        {% load descGet %}
+        <p style="margin-top: 10px;">Posted by {{ CustID|firstUpper }}</p>
     </div>
 
     <h3>Ticket ID: {{ CallID }}</h3> 
@@ -79,12 +95,20 @@
         <p>{{ EquipType }}</p>
         <h5>What is the device's asset ID?</h5> 
         <p>{{ AssetTag }}</p>
-        <h5>What is the device's name?</h5> 
-        <p>{{ DeviceName }}</p>
-        <h5>What (if any) error message(s) is the device diplaying?</h5> 
-        <p>{{ ErrorMsg }}</p>
+        <h5>What is the device's name?</h5>
+        {% if DeviceName|length > 0 %}
+            <p>{{ DeviceName }}</p>
+        {% else %}
+            <p>Not Provided</p>
+        {% endif %}
         <h5>What are the specific details of the problem?</h5> 
         <p>{{ Description }}</p>
+        <h5>What (if any) error message(s) is the device diplaying?</h5>
+        {% if ErrorMsg|length > 0 and ErrorMsg != "NULL" %}
+            <p>{{ ErrorMsg }}</p>
+        {% else %}
+            <p>Not Provided</p>
+        {% endif %}
     {% endif %}
     
     {% if Category == "Software" %}
@@ -94,38 +118,42 @@
         <p>{{ Offline }}</p>
         <h5>What are the specific details of the problem?</h5> 
         <p>{{ Description }}</p>
+        {% if Replicate|length > 0 %}
+            <h5>Please share any steps you can to allow us to replicate the problem:</h5> 
+            <p>{{ Replicate }}</p>
+        {% endif %}
     {% endif %}
     
     {% if Category == "Service" %}
         <h5>Request type:</h5> 
         <p>{{ request_type }}</p>
         {% if request_type == "Move equipment request" %}
-            <h5>Which system?</h5> 
-            <p>{{ System_type }}</p>
-            <h5>Asset ID:</h5> 
-            <p>{{ asset_tag }}</p>
-            <h5>Move location:</h5> 
-            <p>{{ move_location }}</p>
+        <h5>Which system?</h5> 
+        <p>{{ System_type }}</p>
+        <h5>Asset ID:</h5> 
+        <p>{{ asset_tag }}</p>
+        <h5>Move location:</h5> 
+        <p>{{ move_location }}</p>
         {% elif request_type == "Surplus equipment request" %}
-            <h5>Which system?</h5> 
-            <p>{{ System_type }}</p>
-            <h5>Asset ID:</h5> 
-            <p>{{ asset_tag }}</p>
+        <h5>Which system?</h5> 
+        <p>{{ System_type }}</p>
+        <h5>Asset ID:</h5> 
+        <p>{{ asset_tag }}</p>
         {% elif request_type == "New software request" %}
-            <h5>Software:</h5> 
-            <p>{{ software }}</p>
-            <h5>PC:</h5> 
-            <p>{{ pc }}</p>
-            {% else %}
-            <h5>Description:</h5> 
-            <p>{{ description }}</p>
+        <h5>Software:</h5> 
+        <p>{{ software }}</p>
+        <h5>PC:</h5> 
+        <p>{{ pc }}</p>
+        {% else %}
+        <h5>Description:</h5> 
+        <p>{{ description }}</p>
         {% endif %}
     {% endif %}
     
     {% if Category == "Password" %}
-        <h5>Which system?</h5> 
+        <h5>Which system?</h5>
         <p>{{ System_type }}</p>
-        <h5>Which account/username?</h5> 
+        <h5>Which account/username?</h5>
         <p>{{ Sys_user }}</p>
     {% endif %}
     
@@ -133,10 +161,18 @@
         <h5>What is your question/comment?</h5> 
         <p>{{ problem }}</p>
     {% endif %}
-
-    {% if Description|length > 0 %}
-        <h5>Further details:</h5>    
-        <p>{{ Description }}</p>
+    
+    {% if is_img == "img" %}
+        <h5>Error Description Image:</h5>
+        <a href="{{ URL }}" target="_blank">
+            <img style="max-width:100%; height: auto;" src="{{ URL }}">
+        </a>
+    {% elif is_img == "file" %}
+        <h5>Error Description File:</h5>
+        <a href="{{ URL }}"><p style="color: blue;">{{ URL }}</p></a>
+    {% elif Category == "Hardware" or Category == "Software" %}
+        <h5>Error Description Image:</h5>
+        <p>Not Provided</p>
     {% endif %}
     
     <br><br><br>
@@ -146,9 +182,9 @@
       <div class="modal-content">
           <span class="close">&times;</span>
           <p id="modalText">Are you sure the ticket has been resolved?</p>
-          <a class="button modalButton nButton" href="#" style="float:right">No</a> <!-- add class and remove id-->
+          <a class="button modalButton nButton cursor" style="float:right">No</a> <!-- add class and remove id-->
           <a class="button modalButton" style="visibility:hidden;"></a>
-          <a id="yButton" class="button modalButton" href="#" style="float:right; margin-right:20px;">Yes</a>
+          <a id="yButton" class="button modalButton cursor" style="float:right; margin-right:20px;">Yes</a>
       </div>
     </div>
 

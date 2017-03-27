@@ -4,21 +4,40 @@
 
 <html>
 <head>
-	<title>Manage Tickets Page</title>
+	<title>Branch Tickets</title>
 	{% load static %}
 
+    <link rel="stylesheet" type="text/css" href="/static/demo/main.css" />
+    <link rel="stylesheet" type="text/css" href="/static/demo/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="/static/demo/grid.css" />
+    <link href="https://fortawesome.github.io/Font-Awesome/assets/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
 	<script src="{% static '/demo/sorttable.js' %}"></script>
+    <script>
+    $(document).ready(function () {
+                size_tr = $("#ticket-table tr").size();
+                x=11;
+                $('#ticket-table tr').hide();
+                $('#ticket-table tr:lt('+x+')').show();
+                     $('#loadMore').click(function () {
+                         x= (x+10 <= size_tr) ? x+10 : size_tr;
+                         $('#ticket-table tr:lt('+x+')').show();
+                     });
+    });
+    </script>
 </head>
 <body>
-    <h1>Manage Tickets Page</h1>
-	<table class="sortable">
+    <h1>Branch Tickets</h1>
+	<table class="sortable" id="ticket-table">
 	    <tr>
 	        <th>ID</th>
 	        <th>Author</th>
 	        <th>Date</th>
 	        <th>Category</th>
 	        <th>Status</th>
-	        <th>Priority</th>
 	        <th class= "sorttable_nosort">Description</th>
 	        <th class= "sorttable_nosort">Options</th>
 	    </tr>
@@ -30,8 +49,7 @@
                     <td> {{ callLog.CustID }} </td>
                     <td> 20{{ callLog.RecvdDate }} </td>
                     <td> {{ callLog.Category }} </td>
-                     <td id="status_{{ callLog.CallID }}"> {{ callLog.CallStatus }} </td>
-                    <td> {{ callLog.Priority }} </td>
+                    <td id="status_{{ callLog.CallID }}"> {{ callLog.CallStatus }} </td>
                     <td style="text-align:left;"> {% descGet callLog.CallID %} </td>
                     <td>
                         <a href="{% url 'detail' id=callLog.CallID %}" style="display:inline-block;">
@@ -41,9 +59,9 @@
                             <div class="button"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</div>
                         </a>
 
-                        <!--check if the user is owner of the ticket. And if he is ownere, he can click resolve button; if not, he can't-->
-                        {% if user.username == callLog.CustID %}
-                            <a href="#" id="myBtn_{{ callLog.CallID }}" class="button" style="display:inline-block;"> <div>
+                         <!--IT functionality -->
+                        {% if branch == "IT" %}
+                            <a id="myBtn_{{ callLog.CallID }}" class="cursor button" style="display:inline-block;"> <div>
                                 {% if callLog.CallStatus == "Open" %}
                                     <i class="fa fa-check" aria-hidden="true"></i> Resolved
                                 {% else %}
@@ -51,27 +69,42 @@
                                 {% endif %}
                             </div></a>
                         {% else %}
-                            <a href="#" href="#" style="background-color:grey; display:inline-block;"> <div class="button disabled">
-                                {% if callLog.CallStatus == "Open" %}
-                                    <i class="fa fa-check" aria-hidden="true"></i> Resolved
-                                {% else %}
-                                    <i class="fa fa-check" aria-hidden="true"></i> Re-open
-                                {% endif %}
-                            </div></a>
+                        <!--check if the user is owner of the ticket. And if he is ownere, he can click resolve button; if not, he can't-->
+                            {% if user.username == callLog.CustID %}
+                                <a id="myBtn_{{ callLog.CallID }}" class="cursor button" style="display:inline-block;"> <div>
+                                    {% if callLog.CallStatus == "Open" %}
+                                        <i class="fa fa-check" aria-hidden="true"></i> Resolved
+                                    {% else %}
+                                        <i class="fa fa-check" aria-hidden="true"></i> Re-open
+                                    {% endif %}
+                                </div></a>
+                            {% else %}
+                                <a class="cursor" style="display:inline-block;"> <div class="button disabled" style="background-color:grey;" >
+                                    {% if callLog.CallStatus == "Open" %}
+                                        <i class="fa fa-check" aria-hidden="true"></i> Resolved
+                                    {% else %}
+                                        <i class="fa fa-check" aria-hidden="true"></i> Re-open
+                                    {% endif %}
+                                </div></a>
+                            {% endif %}
                         {% endif %}
                     </td>
                 </tr>
             {% endif %}
 	    {% endfor %}
     </table>
+    <div align="center">
+        <button class="submit" id="loadMore">Load More Tickets</input>
+    </div>
+    <BR><BR>
     <div id="myModal" class="modal">
       <!-- Modal content -->
       <div class="modal-content">
           <span class="close">&times;</span>
           <p id="modalText">Are you sure the ticket has been resolved?</p>
-          <a class="button modalButton nButton" href="#" style="float:right">No</a><!-- add class and remove id-->
+          <a class="button modalButton nButton cursor" style="float:right">No</a><!-- add class and remove id-->
           <a class="button modalButton" style="visibility:hidden;"></a>
-          <a id="yButton" class="button modalButton" href="#" style="float:right; margin-right:20px;">Yes</a>
+          <a id="yButton" class="button modalButton cursor" style="float:right; margin-right:20px;">Yes</a>
       </div>
     </div>
 </body>

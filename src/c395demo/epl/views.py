@@ -157,6 +157,7 @@ def tickets(request):
     callLogs = CallLog.objects.filter(CustID=username)
 
     context = {
+        "username" : username,
         "callLogs" : callLogs,
         "available" : ["Hardware", "Software", "Service", "Other", "Password"]
         }
@@ -173,15 +174,27 @@ def manage(request):
     asgnmnts = Asgnmnt.objects.all()
     probTypes = ProbType.objects.all()
 
+    #IT functionality
+    try:
+        branch = UserProfile.objects.get(user=request.user).branch
+    except:
+        branch = "staff"
+
     context = {
         "callLogs" : callLogs,
         "asgnmnts" : asgnmnts,
         "probTypes" : probTypes,
-        "available" : ["Hardware", "Software", "Service", "Other", "Password"]
+        "available" : ["Hardware", "Software", "Service", "Other", "Password"],
+        "branch" : branch
         }
+        
     return render(request, 'epl/manage-tickets.html', context)
 
 def detail(request, id):
+    # user must need to login to view pages
+    if (not request.user.is_authenticated()):
+        return redirect('/login')
+    
     ticket = CallLog.objects.get(CallID = id)
 
     recvdDate = "20"
@@ -191,31 +204,68 @@ def detail(request, id):
 
     if ( len(temp) <= 1 ):
         temp = parsing(ticket.Symptoms, "`")
+        
+    temp = get_data(temp)
+        
+    if ( ticket.Category == "Hardware" or
+         ticket.Category == "Software" ):
+        if ( ticket.Category == "Hardware" ):
+            url = temp[5]
+        else:
+            url = temp[4]
+        
+        is_img = "false"
+        
+        if ( url[-4:] == ".png" or
+             url[-4:] == ".jpg" or
+             url[-4:] == ".gif" ):
+             is_img = "img"
+        elif ( len(url) > 1 and
+               url[:4] == "http" ):
+            is_img = "file"
+        else:
+            is_img = "Null"
 
     if ( ticket.Category == "Hardware" ):
+        equip = acceptable(temp[0])
+        asset = acceptable(temp[1])
+        device = acceptable(temp[2])
+        description = acceptable(temp[3])
+        error = acceptable(temp[4])
+        
         context = {
             "CallID" : ticket.CallID,
             "CustID" : ticket.CustID,
             "Symptoms" : ticket.Symptoms,
             "RecvdDate" : recvdDate,
-            "EquipType" : temp[0],
-            "AssetTag" : temp[1],
-            "DeviceName" : temp[2],
-            "Description" : temp[3],
-            "ErrorMsg" : temp[4],
+            "EquipType" : equip,
+            "AssetTag" : asset,
+            "DeviceName" : device,
+            "Description" : description,
+            "URL" : url,
+            "is_img": is_img,
+            "ErrorMsg" : error,
             "Category" : ticket.Category,
             "CallStatus" : ticket.CallStatus,
             "Priority" : ticket.Priority
         }
 
     elif ( ticket.Category == "Software" ):
+        system = acceptable(temp[0])
+        offline = acceptable(temp[1])
+        description = acceptable(temp[2])
+        replicate = acceptable(temp[3])
+        
         context = {
             "CallID" : ticket.CallID,
             "CustID" : ticket.CustID,
             "RecvdDate" : recvdDate,
-            "System" : temp[0],
-            "Offline" : temp[1],
-            "Description" : temp[2],
+            "System" : system,
+            "Offline" : offline,
+            "Description" : description,
+            "Replicate" : replicate,
+            "URL" : url,
+            "is_img": is_img,
             "Category" : ticket.Category,
             "CallStatus" : ticket.CallStatus,
             "Priority" : ticket.Priority
@@ -262,6 +312,13 @@ def detail(request, id):
 
     else:
         context = {}
+   
+   # IT functionality   
+    try:
+        branch = UserProfile.objects.get(user=request.user).branch
+    except:
+        branch = "staff"
+    context['branch'] = branch
 
     return render(request, 'epl/view-ticket.html', context)
 
@@ -272,6 +329,13 @@ def get_username(request):
         username = request.user.username
 
     return username
+    
+def get_branch(request, user):
+    branch = None
+    if request.user.is_authenticated():
+        branch = user.userprofile.get_branch()
+
+    return branch
 
 #---------------------------------
 # login and user authentication
@@ -311,6 +375,15 @@ def logout_view(request):
 # function parse a string
 def parsing(string, parse):
     return string.split(parse)
+
+# get a string if its acceptable
+# i.e, len(string) > 0 then returns
+# the string, otherwise nothing
+def acceptable(string):
+    if ( len(string) > 0 ):
+        return string
+    else:
+        return ""
 
 # resolved ticket status
 
@@ -673,6 +746,12 @@ def soft_database_saved(form, username):
         asgnmnt_Description += "|"
         callLog_Symptoms += problem_description
         asgnmnt_Description += problem_description
+        
+        # description of problem
+        callLog_Symptoms += "|"
+        asgnmnt_Description += "|"
+        callLog_Symptoms += steps_replicate_problem
+        asgnmnt_Description += steps_replicate_problem
 
         #image link
         callLog_Symptoms += "|"
@@ -776,6 +855,19 @@ def service_database_saved(form, username):
         software = form.cleaned_data.get("software")
         pc = form.cleaned_data.get("pc")
         description = form.cleaned_data.get("description")
+        
+        if ( len(system) < 1 ):
+            system = "Not Provided"
+        if ( len(asset_tag) < 1 ):
+            asset_tag = "Not Provided"
+        if ( len(move_location) < 1 ):
+            move_location = "Not Provided"
+        if ( len(software) < 1 ):
+            software = "Not Provided"
+        if ( len(pc) < 1 ):
+            pc = "Not Provided"
+        if ( len(description) < 1 ):
+            description = "Not Provided"
 
         # request type
         probType_ProbType = request_type
@@ -972,6 +1064,23 @@ def general_database_saved(form, username):
 
     except:
         return "Something went wrong"
+
+def get_data(lis):
+    new_list = []
+    length = len(lis) - 1
+    k = 0
+    for i in range(0, 7):
+        if ( i > length ):
+            new_list.append("Not Provided")
+        else:
+            if ( lis[k] == "" or
+                 lis[k] == "NULL" or
+                 lis[k] == "N/A" ):
+                new_list.append("Not Provided")
+            else:
+                new_list.append(lis[k])
+            k += 1
+    return new_list
 
 @csrf_exempt
 def alter_status(request):
