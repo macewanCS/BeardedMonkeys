@@ -36,16 +36,25 @@
                         <a href="{% url 'detail' id=callLog.CallID %}" style="display:inline-block;">
                             <div class="button"><i class="fa fa-folder-open-o" aria-hidden="true"></i> View</div>
                         </a>
-                        <a href="edit.asp" style="display:inline-block;">
-                            <div class="button"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</div>
-                        </a>
-
-                        <a  style="display:inline-block;" id="myBtn_{{ callLog.CallID }}" class="cursor button" ><div>
-                            {% if callLog.CallStatus == "Open" %}
-                                <i class="fa fa-check" aria-hidden="true"></i> Resolved </div></a>
-                            {% else %}
-                                <i class="fa fa-check" aria-hidden="true"></i> Re-open </div></a>
-                            {% endif %}
+                        {% if callLog.CallStatus == "Unapproved" or callLog.CallStatus == "Disapproved" %}
+                            <a href="edit.asp" class="button disabled" style="display:inline-block; background-color: grey" >
+                                     <div ><i class="fa fa-pencil" aria-hidden="true"></i> Edit</div>
+                                 </a>
+                            <a style="display:inline-block;"> <div class="button disabled" style="background-color:grey;" >
+                                        <i class="fa fa-check" aria-hidden="true"></i> Open
+                                </div></a>
+                        {% else %}
+                        
+                            <a href="edit.asp" style="display:inline-block;">
+                                <div class="button"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</div>
+                            </a>
+                            <a  style="display:inline-block;" id="myBtn_{{ callLog.CallID }}" class="cursor button" ><div>
+                                {% if callLog.CallStatus == "Open" %}
+                                    <i class="fa fa-check" aria-hidden="true"></i> Resolved </div></a>
+                                {% else %}
+                                    <i class="fa fa-check" aria-hidden="true"></i> Re-open </div></a>
+                                {% endif %}
+                        {% endif %}
                     </td>
                 </tr>
             {% endif %}

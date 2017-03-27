@@ -945,7 +945,11 @@ def service_database_saved(form, username):
         callLog_Tracker = "selfserve"
 
         # call log status
-        callLog_Status = "Open"
+        
+        if( request_type == "Move equipment request"):
+            callLog_Status = "Unapproved"
+        else:
+            callLog_Status = "Open"
 
         # CallLog Table
         callLog_table = CallLog(

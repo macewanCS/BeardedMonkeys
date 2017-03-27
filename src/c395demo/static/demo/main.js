@@ -13,6 +13,18 @@ $(document).ready(function(){
         } else {
                 $("#modalText").html("Are you sure that you want to re-open the ticket?");
         }
+    });
+    $( "a[id*='appBtn']" ).click(function(){
+        id = $(this).attr('id').replace("appBtn_", "")
+        $("#appModal").css("display", "block");
+        $("#appModalText").html("Are you sure you wish to approve the ticket?");
+    });
+    $( "a[id*='disBtn']" ).click(function(){
+        id = $(this).attr('id').replace("disBtn_", "")
+        $("#disModal").css("display", "block");
+        $("#disModalText").html("Are you sure you wish to disapprove the ticket?");
+    });
+        
 
 //      fixing the status bar bug
         $("#yButton").click(function() {
@@ -29,9 +41,17 @@ $(document).ready(function(){
             $('.stat').attr('src', '/static/demo/view-ticket/open-bar.jpg')
            }
         });
-
-    });
-
+        $("#appYButton").click(function() {
+            $("#appModal").css("display", "none");
+            alterData(id, "Open")
+            $('.stat').attr('src', '/static/demo/view-ticket/open-bar.jpg')
+            window.location.reload()
+        });
+        $("#disYButton").click(function() {
+            $("#disModal").css("display", "none");
+            alterData(id, "Disapproved")
+        });
+    
     $(".nButton").click(function () {
         $(".modal").css("display", "none");
     });
@@ -91,4 +111,4 @@ $(document).ready(function(){
             }
         });
     }
-})
+});
