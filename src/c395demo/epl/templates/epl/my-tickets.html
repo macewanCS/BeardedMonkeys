@@ -30,21 +30,28 @@
                     <td> 20{{ callLog.RecvdDate }} </td>
                     <td> {{ callLog.Category }} </td>
                     <td id="status_{{ callLog.CallID }}"> {{ callLog.CallStatus }} </td>
-                    <td style="text-align:left;"> {% descGet callLog.CallID %} </span></td>
-                    
+                    <td style="text-align:left;"> {% descGet callLog.CallID %} </td>
                     <td>
                         <a href="{% url 'detail' id=callLog.CallID %}" style="display:inline-block;">
                             <div class="button"><i class="fa fa-folder-open-o" aria-hidden="true"></i> View</div>
                         </a>
                         {% if callLog.CallStatus == "Unapproved" or callLog.CallStatus == "Disapproved" %}
-                            <a href="edit.asp" class="button disabled" style="display:inline-block; background-color: grey" >
-                                     <div ><i class="fa fa-pencil" aria-hidden="true"></i> Edit</div>
-                                 </a>
-                            <a style="display:inline-block;"> <div class="button disabled" style="background-color:grey;" >
-                                        <i class="fa fa-check" aria-hidden="true"></i> Open
-                                </div></a>
+                            {% if branch == "manager" %}
+                                <a id="disBtn_{{ callLog.CallID }}" class="cursor button" style="display:inline-block;"> <div>
+                                        <i class="fa fa-check" aria-hidden="true"></i> Disapprove
+                                    </div></a>
+                                <a id="appBtn_{{ callLog.CallID }}" class="cursor button" style="display:inline-block;"> <div>
+                                    <i class="fa fa-check" aria-hidden="true"></i> Approve
+                                    </div></a>
+                            {% else %}
+                                <a href="edit.asp" class="button disabled" style="display:inline-block; background-color: grey" >
+                                        <div ><i class="fa fa-pencil" aria-hidden="true"></i> Edit</div>
+                                    </a>
+                                <a style="display:inline-block;"> <div class="button disabled" style="background-color:grey;" >
+                                            <i class="fa fa-check" aria-hidden="true"></i> Open
+                                    </div></a>
+                            {% endif %}
                         {% else %}
-                        
                             <a href="edit.asp" style="display:inline-block;">
                                 <div class="button"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</div>
                             </a>
@@ -70,11 +77,33 @@
           <a id="yButton" class="button modalButton cursor" style="float:right; margin-right:20px;">Yes</a>
       </div>
     </div>
+    <div id="appModal" class="modal">
+      <!-- Modal content -->
+      <div class="modal-content">
+          <span class="close">&times;</span>
+          <p id="appModalText">Are you sure you wish to approve the ticket?</p>
+          <a class="button modalButton nButton cursor" style="float:right">No</a>
+          <a class="button modalButton" style="visibility:hidden;"></a>
+          <a id="appYButton" class="button modalButton cursor" style="float:right; margin-right:20px;">Yes</a>
+      </div>
+    </div>
+    <div id="disModal" class="modal">
+      <!-- Modal content -->
+      <div class="modal-content">
+          <span class="close">&times;</span>
+          <p id="disModalText">Are you sure you wish to disapprove the ticket?</p>
+          <a class="button modalButton nButton cursor" style="float:right">No</a>
+          <a class="button modalButton" style="visibility:hidden;"></a>
+          <a id="disYButton" class="button modalButton cursor" style="float:right; margin-right:20px;">Yes</a>
+      </div>
+    </div>
 <script>
 var modal = document.getElementById('myModal');
 var span = document.getElementsByClassName("close")[0];
 var yBtn = document.getElementById("yButton");
 var nBtn = document.getElementById("nButton");
+var appYBtn = document.getElementById("appYButton");
+var disYBtn = document.getElementById("disYButton");
 
 $(document).ready(function(){
     $( "a[id*='myBtn']" ).click(function(){
@@ -98,7 +127,26 @@ $(document).ready(function(){
            }
         }
     });
-
+    $( "a[id*='appBtn']" ).click(function(){
+        id = $(this).attr('id').replace("appBtn_", "")
+        $("#appModal").css("display", "block");
+        $("#appModalText").html("Are you sure you wish to approve the ticket?");
+        appYBtn.onclick = function() {
+            modal.style.display = "none";
+            alterData(id, "Open")
+            $('.stat').attr('src', '/static/demo/view-ticket/open-bar.jpg')
+            window.location.reload()
+        }
+    });
+    $( "a[id*='disBtn']" ).click(function(){
+        id = $(this).attr('id').replace("disBtn_", "")
+        $("#disModal").css("display", "block");
+        $("#disModalText").html("Are you sure you wish to disapprove the ticket?");
+        disYButton.onclick function() {
+            modal.style.display = "none";
+            alterData(id, "Disapproved")
+        }
+    });
 })
 
 nBtn.onclick = function() {
