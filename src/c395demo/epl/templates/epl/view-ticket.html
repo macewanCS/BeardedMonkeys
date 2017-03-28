@@ -34,7 +34,11 @@
         </div>
         
         <a class="button" href="{% url 'manage' %}"><i class="fa fa-chevron-circle-left" aria-hidden="true"></i> Back</a>
+        {% if Category == "Other" %}
+        <a class="button" href="/general?ticketID={{CallID}}"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</a>
+        {% else %}
         <a class="button" href="edit.asp"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</a>
+        {% endif %}
 
         <!--check if the user is owner of the ticket. And if he is ownere, he can click resolve button; if not, he can't-->
         <!-- IT functionality-->

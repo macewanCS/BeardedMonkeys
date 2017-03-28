@@ -112,15 +112,36 @@ def general(request):
     if (not request.user.is_authenticated()):
         return redirect('/login')
 
-    form = GeneralTicketForm(request.POST or None)
+    print("Inside general")
+    ticketId = request.GET.get('ticketID')
+    print("Got ticketId")
+    if ticketId == None:
+        form = GeneralTicketForm(request.POST or None)
+    else:
+        context = successTicketSummary(request, ticketId)
+        print(context["problem"])
+        data = {"problem" : "Testing"}
+        callLog = CallLog.objects.get(pk=ticketId)
+        form = GeneralTicketForm(request.POST, problem='Test1')
+        print('is valid: ', form.is_valid())
+
+    print("Instantiated form")
+    print form.is_valid(), form.errors
     if form.is_valid():
+        print("Form is valid")
         #saving data into the database
-        msg = general_database_saved(form, request.user.username)
+        msg = general_database_saved(form, request.user.username, ticketId)
 
         # Get the general ticket Id and redirect to the successful
         # submission page with the general ticket info
-        ticketId = getTicketId("Other", request.user.username)
-        context = successTicketSummary(request, ticketId)
+        if (ticketId == None):
+            ticketId = getTicketId("Other", request.user.username)
+            context = successTicketSummary(request, ticketId)
+            print("NOne")
+        else:
+            #context = successTicketSummary(request, ticketId)
+            print('Form problem')
+
         return render(request, "epl/general_submitted.html", context)
 
     context = {'form': GeneralTicketForm}
@@ -187,14 +208,14 @@ def manage(request):
         "available" : ["Hardware", "Software", "Service", "Other", "Password"],
         "branch" : branch
         }
-        
+
     return render(request, 'epl/manage-tickets.html', context)
 
 def detail(request, id):
     # user must need to login to view pages
     if (not request.user.is_authenticated()):
         return redirect('/login')
-    
+
     ticket = CallLog.objects.get(CallID = id)
 
     recvdDate = "20"
@@ -204,18 +225,18 @@ def detail(request, id):
 
     if ( len(temp) <= 1 ):
         temp = parsing(ticket.Symptoms, "`")
-        
+
     temp = get_data(temp)
-        
+
     if ( ticket.Category == "Hardware" or
          ticket.Category == "Software" ):
         if ( ticket.Category == "Hardware" ):
             url = temp[5]
         else:
             url = temp[4]
-        
+
         is_img = "false"
-        
+
         if ( url[-4:] == ".png" or
              url[-4:] == ".jpg" or
              url[-4:] == ".gif" ):
@@ -232,7 +253,7 @@ def detail(request, id):
         device = acceptable(temp[2])
         description = acceptable(temp[3])
         error = acceptable(temp[4])
-        
+
         context = {
             "CallID" : ticket.CallID,
             "CustID" : ticket.CustID,
@@ -255,7 +276,7 @@ def detail(request, id):
         offline = acceptable(temp[1])
         description = acceptable(temp[2])
         replicate = acceptable(temp[3])
-        
+
         context = {
             "CallID" : ticket.CallID,
             "CustID" : ticket.CustID,
@@ -312,8 +333,8 @@ def detail(request, id):
 
     else:
         context = {}
-   
-   # IT functionality   
+
+   # IT functionality
     try:
         branch = UserProfile.objects.get(user=request.user).branch
     except:
@@ -329,7 +350,7 @@ def get_username(request):
         username = request.user.username
 
     return username
-    
+
 def get_branch(request, user):
     branch = None
     if request.user.is_authenticated():
@@ -746,7 +767,7 @@ def soft_database_saved(form, username):
         asgnmnt_Description += "|"
         callLog_Symptoms += problem_description
         asgnmnt_Description += problem_description
-        
+
         # description of problem
         callLog_Symptoms += "|"
         asgnmnt_Description += "|"
@@ -855,7 +876,7 @@ def service_database_saved(form, username):
         software = form.cleaned_data.get("software")
         pc = form.cleaned_data.get("pc")
         description = form.cleaned_data.get("description")
-        
+
         if ( len(system) < 1 ):
             system = "Not Provided"
         if ( len(asset_tag) < 1 ):
@@ -986,7 +1007,7 @@ def service_database_saved(form, username):
         return "Something went wrong"
 
 # Save a general ticket
-def general_database_saved(form, username):
+def general_database_saved(form, username, ticketID):
     try:
         # getting data from the form
         problem = form.cleaned_data.get("problem")
@@ -1027,8 +1048,10 @@ def general_database_saved(form, username):
         # call log status
         callLog_Status = "Open"
 
+        print("ticketID = ", ticketID)
         # CallLog Table
-        callLog_table = CallLog(
+        if (ticketID == None):
+            callLog_table = CallLog(
             Symptoms = callLog_Symptoms,
             Priority = callLog_Priority,
             CallSource = callLog_CallSource,
@@ -1038,7 +1061,21 @@ def general_database_saved(form, username):
             Tracker = callLog_Tracker,
             CallStatus = callLog_Status,
             Category = "Other"
-        )
+            )
+        else:
+            callLog_table = CallLog(
+            CallID = ticketID,
+            Symptoms = callLog_Symptoms,
+            Priority = callLog_Priority,
+            CallSource = callLog_CallSource,
+            RecvdDate = callLog_RecvdDate,
+            RecvdTime = callLog_RecvdTime,
+            CustID = callLog_CustID,
+            Tracker = callLog_Tracker,
+            CallStatus = callLog_Status,
+            Category = "Other"
+            )
+
 
         # Asgnmnt Table
         asgnmnt_table = Asgnmnt(

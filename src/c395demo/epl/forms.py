@@ -1,6 +1,7 @@
 from django.utils.safestring import mark_safe
 from epl.choices import *
 from django import forms
+from epl.models import *
 from django.core.validators import RegexValidator
 
 # import for user authentication
@@ -79,3 +80,7 @@ class ServiceTicketForm(forms.Form):
 
 class GeneralTicketForm(forms.Form):
     problem = forms.CharField(widget=forms.Textarea(attrs={'rows': 10, 'cols': 10}), max_length=500)
+    def __init__(self, *args, **kwargs):
+        self.problem = kwargs.pop('problem',None)
+        super(GeneralTicketForm, self).__init__(*args, **kwargs)
+
