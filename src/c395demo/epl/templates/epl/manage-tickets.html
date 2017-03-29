@@ -37,8 +37,8 @@
                         </a>
                         {% if callLog.CallStatus == "Unapproved" or callLog.CallStatus == "Disapproved" %}
                             {% if branch == "manager" %}
-                                <a id="disBtn_{{ callLog.CallID }}" class="cursor button" style="display:inline-block;"> <div>
-                                        <i class="fa fa-check" aria-hidden="true"></i> Disapprove
+                                <a id="appBtn_{{ callLog.CallID }}" class="cursor button" style="display:inline-block;"> <div>
+                                        <i class="fa fa-check" aria-hidden="true"></i> Approve
                                     </div></a>
                             {% else %}
                                  <a href="edit.asp" class="button disabled" style="display:inline-block; background-color: grey" >
@@ -46,9 +46,15 @@
                                  </a>
                             {% endif %}
                         {% else %}
-                            <a href="edit.asp" style="display:inline-block;">
-                                <div class="button"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</div>
-                            </a>
+                            {% if user.username == callLog.CustID %}
+                                <a href="edit.asp" style="display:inline-block;">
+                                    <div class="button"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</div>
+                                </a>
+                            {% else %}
+                                <a href="edit.asp" class="button disabled" style="display:inline-block; background-color: grey" >
+                                    <div ><i class="fa fa-pencil" aria-hidden="true"></i> Edit</div>
+                                </a>
+                            {% endif %}
                         {% endif %}
 
                          <!--IT functionality -->
@@ -63,8 +69,8 @@
                         <!--Manager functionality -->    
                         {% elif branch == "manager" %}
                                 {% if callLog.CallStatus == "Unapproved" or callLog.CallStatus == "Disapproved" %}
-                                <a id="appBtn_{{ callLog.CallID }}" class="cursor button" style="display:inline-block;"> <div>
-                                    <i class="fa fa-check" aria-hidden="true"></i> Approve
+                                <a id="disBtn_{{ callLog.CallID }}" class="cursor button" style="display:inline-block;"> <div>
+                                    <i class="fa fa-check" aria-hidden="true"></i> Disapprove
                                 {% else %}
                                     <a id="myBtn_{{ callLog.CallID }}" class="cursor button" style="display:inline-block;"> <div>
                                     {% if callLog.CallStatus == "Open" %}

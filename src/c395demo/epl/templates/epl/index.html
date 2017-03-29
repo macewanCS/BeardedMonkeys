@@ -103,7 +103,7 @@
 	        <a href="{% url 'add'%}"><li>Create Tickets</li></a>
 	        <a href="{% url 'tickets' %}"><li>Manage My Tickets</li></a>
             <a href="{% url 'manage' %}"><li>Manage Branch Tickets</li></a>
-	        <a href="#"><li>Logout, {{ user.get_username|firstUpper }}</li></a>
+	        <a href="#" id="lit-log"><li>Logout, {{ user.get_username|firstUpper }}</li></a>
 	    </ul>
 	    {% block content %}
 	        <h1>Documentation/Tutorial:</h1>
