@@ -156,10 +156,16 @@ def tickets(request):
     username = request.user.username
     callLogs = CallLog.objects.filter(CustID=username)
 
+    try:
+        branch = UserProfile.objects.get(user=request.user).branch
+    except:
+        branch = "staff"
+
     context = {
         "username" : username,
         "callLogs" : callLogs,
-        "available" : ["Hardware", "Software", "Service", "Other", "Password"]
+        "available" : ["Hardware", "Software", "Service", "Other", "Password"],
+        "branch" : branch
         }
     return render(request, 'epl/my-tickets.html', context)
 
@@ -945,7 +951,11 @@ def service_database_saved(form, username):
         callLog_Tracker = "selfserve"
 
         # call log status
-        callLog_Status = "Open"
+        
+        if( request_type == "Move equipment request"):
+            callLog_Status = "Unapproved"
+        else:
+            callLog_Status = "Open"
 
         # CallLog Table
         callLog_table = CallLog(
