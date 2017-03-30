@@ -119,14 +119,15 @@ def general(request):
         form = GeneralTicketForm(request.POST or None)
     else:
         context = successTicketSummary(request, ticketId)
-        print(context["problem"])
+        print('context problem: ',context["problem"])
         data = {"problem" : "Testing"}
-        callLog = CallLog.objects.get(pk=ticketId)
-        form = GeneralTicketForm(request.POST, problem='Test1')
+        ticket = CallLog.objects.get(pk=ticketId)
+        form = GeneralTicketForm(request.POST or None, initial={'problem': ticket.Symptoms }, auto_id=False)
         print('is valid: ', form.is_valid())
+        print (form)
 
     print("Instantiated form")
-    print form.is_valid(), form.errors
+    print (form.is_valid(), form.errors)
     if form.is_valid():
         print("Form is valid")
         #saving data into the database
@@ -144,7 +145,7 @@ def general(request):
 
         return render(request, "epl/general_submitted.html", context)
 
-    context = {'form': GeneralTicketForm}
+    context = {'form': form}
     return render(request, 'epl/general.html', context)
 
 # password recovery tickets page view
