@@ -195,10 +195,6 @@ def manage(request):
         }
         
     return render(request, 'epl/manage-tickets.html', context)
-    
-def edit(request, id):
-    context = {}
-    return render(request, 'epl/manage-tickets.html', context)
 
 def detail(request, id):
     # user must need to login to view pages

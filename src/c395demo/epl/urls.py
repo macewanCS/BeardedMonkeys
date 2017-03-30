@@ -17,7 +17,6 @@ urlpatterns = [
     url(r'^my-tickets/', views.tickets, name='tickets'),
     
     url(r'^view-ticket/(?P<id>[0-9]+)/$', views.detail, name='detail'),
-    url(r'^edit/(?P<id>[0-9]+)/$', views.edit, name='edit'),
     
     url(r'^login/', views.login_view, name='login'),
     url(r'^logout/', views.logout_view, name='logout'),
