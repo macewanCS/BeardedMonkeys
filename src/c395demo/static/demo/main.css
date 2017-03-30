@@ -580,3 +580,39 @@ footer span i {
     border-bottom: 2px solid lightgrey;
     width:100%;
 }
+
+/*hover style*/
+.show-image{
+    position: absolute;
+    left: 0px;
+    padding: 6px;
+    top: 34px;
+    display: none;
+    background: #4d4d4d;
+}
+
+.show-image:before{
+    bottom: 100%;
+    left: 30%;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+    border: 14px solid transparent;
+    margin-left: -13px;
+    border-bottom-color: #4d4d4d;
+}
+
+.hover a{
+    position: relative;
+}
+
+.hover a:hover{
+    text-decoration: underline;
+    color: blue!important;
+}
+
+.hover a:hover .show-image{
+    display: block;
+}
