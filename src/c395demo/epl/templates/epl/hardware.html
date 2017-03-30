@@ -2,7 +2,7 @@
 {% extends 'epl/index.html' %}
 
 {% block content %}
-
+{% load static %}
 <html>
 <head>
 	<title>Hardware Tickets</title>
@@ -12,7 +12,13 @@
 	<!--change upppercase tag name to lowercase-->
     <form role="form" action="" method="post">
         {% csrf_token %}
-        <p>What is the device's asset ID number? (<a style="color:grey;" href="javascript:alert('An asset tag is ....');">What is an Asset ID?</a>) <span class="required">*</span></p>
+        <!--add hover effect for 'What is an Asset ID?'-->
+        <p class="hover" >What is the device's asset ID number? (<a style="color:grey;" href="javascript:alert('An asset tag is ....');">What is an Asset ID?
+            <span class="show-image">
+                <img src="{% static 'demo/image.png' %}" alt="epl logo">
+            </span>
+        </a>) <span class="required">*</span>
+        </p>
         {{form.asset_tag}}
         <p></p>
         <div>
@@ -28,7 +34,7 @@
         <p>Please share any error messages that the device may be displaying:</p>
         {{form.error_messages}}
         <p>You may also provide an url of image of the problem if you so choose:</p>
-        {{form.image_url}} <!-- change field name of hardware form-->
+        {{form.image_url}} 
         <br><br><br>
         <!-- making button-->
         <button type="submit" class="submit">Submit Ticket</button>

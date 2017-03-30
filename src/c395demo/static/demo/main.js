@@ -2,9 +2,11 @@ $(document).ready(function(){
     $( "a[id*='logout']" ).click(function(){
         $("#logoutModal").css("display", "block")
     });
+    //for the mobile-view logout button
     $( "a[id*='lit-log']" ).click(function(){
         $("#logoutModal").css("display", "block")
     });
+    //resolved/reopen button for view pages
     $( "a[id*='myBtn']" ).click(function(){
         id = $(this).attr('id').replace("myBtn_", "")
         $("#myModal").css("display", "block");
@@ -13,13 +15,27 @@ $(document).ready(function(){
         } else {
                 $("#modalText").html("Are you sure that you want to re-open the ticket?");
         }
+    });
+    //manager's approve and disapprove buttons for view pages
+    $( "a[id*='appBtn']" ).click(function(){
+        id = $(this).attr('id').replace("appBtn_", "")
+        $("#appModal").css("display", "block");
+        $("#appModalText").html("Are you sure you wish to approve the ticket?");
+    });
+    $( "a[id*='disBtn']" ).click(function(){
+        id = $(this).attr('id').replace("disBtn_", "")
+        $("#disModal").css("display", "block");
+        $("#disModalText").html("Are you sure you wish to disapprove the ticket?");
+    });
+        
 
-//      fixing the status bar bug
+//fixing the status bar bug
+        //yes buttons for popups (resolve/reopen, approve, disapprove)
         $("#yButton").click(function() {
            $("#myModal").css("display", "none");
+           //checking whether ticket status is open to decide which button to display
            if ($("#status_"+id).text().indexOf("Open")>=0){
             alterData(id, "Resolved")
-            //$("#status_"+id).html("Resolved");
             $("#myBtn_"+id).html('<i class="fa fa-check" aria-hidden="true"></i>Re-open');
             $('.stat').attr('src', '/static/demo/view-ticket/resolved-bar.jpg')
            }
@@ -29,9 +45,17 @@ $(document).ready(function(){
             $('.stat').attr('src', '/static/demo/view-ticket/open-bar.jpg')
            }
         });
-
-    });
-
+        $("#appYButton").click(function() {
+            $("#appModal").css("display", "none");
+            alterData(id, "Open")
+            $('.stat').attr('src', '/static/demo/view-ticket/open-bar.jpg')
+            window.location.reload()
+        });
+        $("#disYButton").click(function() {
+            $("#disModal").css("display", "none");
+            alterData(id, "Disapproved")
+        });
+    
     $(".nButton").click(function () {
         $(".modal").css("display", "none");
     });
@@ -91,4 +115,4 @@ $(document).ready(function(){
             }
         });
     }
-})
+});

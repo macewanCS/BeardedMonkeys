@@ -4,7 +4,7 @@
 	<link rel="stylesheet" type="text/css" href="{% static '/demo/main.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static '/demo/grid.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static '/demo/normalize.css' %}">
-	<link rel="icon" href="{% static '/demo/favicon.png' %}" sizes="16x16 32x32" type="image/png">
+	<link rel="icon" href="{% static '/demo/favicon.png' %}" sizes="16x16 32x32" type="image/png">	
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -15,11 +15,15 @@
     <link href="https://fortawesome.github.io/Font-Awesome/assets/font-awesome/css/font-awesome.css" rel="stylesheet">
     <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
 
+<!-- alter header display based on screen size (for mobile views) -->
 <style>    
     @media screen and (max-width: 800px) {
         #main-nav {display:none}
         #logout {display:none}
         #logo{ height:95%; width: auto; }
+        #head .span_1_of_3{
+            width: 100% !important;
+        }
     }
     @media screen and (min-width: 800px) {
         #nav, #naver {display:none !important;}
@@ -44,9 +48,7 @@
     #naver li:hover{
         background-color: #E60E64;
         color: white;
-    }
-    #naver li:first-child{
-        border-top: 1px solid #ccc;
+    }height: 100%;
     }
 </style>
 <script>
@@ -61,7 +63,7 @@
 <body>
     {% load descGet %}
 	<header style="position: relative">
-	    <div class="row">
+	    <div class="row" id="head">
 	        <div class="col span_1_of_3">
 		        <a href="{% url 'index' %}"><img id="logo" src="{% static 'demo/epl-logo.png' %}" alt="epl logo"></a>
 		        <div id="nav" style="cursor: pointer;">
@@ -76,15 +78,15 @@
                             <li style="font-size: 30px;">|</li>
                             <a href="{% url 'add'%}">
                                 <li id="add" class="create">
-                                    <i class="fa fa-plus" aria-hidden="true"></i> Create Tickets</i>
+                                    <i class="fa fa-plus" aria-hidden="true"></i>&ensp;Create Tickets</i>
                                 </li>
                             </a>
                             <li style="font-size: 30px;">|</li>
 
                             <!-- Here is the dropdown menu of manage/view Tickets-->
                             <li id="manage" class="view">
-                                <a style="cursor: default;"><i class="fa fa-eye" aria-hidden="true"></i> Manage/View Tickets <i class="fa fa-chevron-down" aria-hidden="true"></i></a>
-                                <ul style="width:213px">
+                                <a style="cursor: default;"><i class="fa fa-eye" aria-hidden="true"></i>&ensp;Manage/View Tickets&ensp;<i class="fa fa-chevron-down" aria-hidden="true"></i></a>
+                                <ul style="width:221px">
                                     <a href="{% url 'tickets' %}"><li>Manage My Tickets</li></a>
                                     <a href="{% url 'manage' %}"><li>Manage Branch Tickets</li></a>
                                 </ul>
@@ -92,24 +94,36 @@
                         </ul>
                     </nav>
 		        </div>
-		        <a href="#" id="logout">
+		        <a class="cursor" id="logout">
 		            <i class="fa fa-sign-out" aria-hidden="true"></i> Logout, {{ user.get_username|firstUpper }}
 	            </a>
 	        {% endif %}
 	</header>
 	<div class="row">
 	    <ul id="naver">
-	        <a href="{% url 'index' %}"><li>Home</li></a>
-	        <a href="{% url 'add'%}"><li>Create Tickets</li></a>
-	        <a href="{% url 'tickets' %}"><li>Manage My Tickets</li></a>
-            <a href="{% url 'manage' %}"><li>Manage Branch Tickets</li></a>
-	        <a href="#"><li>Logout, {{ user.get_username|firstUpper }}</li></a>
+	        <a href="{% url 'index' %}">
+	            <li style="border-top: 1px solid #ccc;">
+	                <i class="fa fa-home" aria-hidden="true"></i>&emsp;Home
+                </li>
+            </a>
+	        <a href="{% url 'add'%}">
+	            <li><i class="fa fa-plus" aria-hidden="true"></i>&emsp;Create Tickets</li>
+            </a>
+	        <a href="{% url 'tickets' %}">
+	            <li><i class="fa fa-eye" aria-hidden="true"></i>&emsp;Manage My Tickets</li>
+            </a>
+            <a href="{% url 'manage' %}">
+                <li><i class="fa fa-eye" aria-hidden="true"></i>&emsp;Manage Branch Tickets</li>
+            </a>
+	        <a id="lit-log" class="cursor">
+	            <li><i class="fa fa-sign-out" aria-hidden="true"></i>&emsp;Logout, {{ user.get_username|firstUpper }}</li>
+            </a>
 	    </ul>
 	    {% block content %}
 	        <h1>Documentation/Tutorial:</h1>
 	        <title>Home</title>
-	        <div style="text-align: center;">
-	        <iframe width="560" height="315" src="https://www.youtube.com/embed/T0aLkpa_vRA" frameborder="0" allowfullscreen></iframe>
+	        <div style="text-align:center;">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/T0aLkpa_vRA" frameborder="0" allowfullscreen></iframe>
 	        </div>
 	        </div>
         {% endblock %}
@@ -120,7 +134,7 @@
       <div class="modal-content">
           <span class="close">&times;</span>
           <p id="modalText">Are you sure you want to log out?</p>
-          <a class="button modalButton nButton" href="#" style="float:right">No</a>
+          <a class="button modalButton nButton cursor" style="float:right">No</a>
           <a class="button modalButton" style="visibility:hidden;"></a>
           <a id="yButton" class="button modalButton" href="/logout" style="float:right; margin-right:20px;">Yes</a>
       </div>

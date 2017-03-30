@@ -38,8 +38,9 @@ class UserLogin(forms.Form):
         return super(UserLogin, self).clean(*args, **kwargs)
 
 class HardwareTicketForm(forms.Form):
-	asset_tag = forms.CharField(max_length=5, min_length=5, validators=[RegexValidator(regex='^\d{5}$', message='Asset tag must be 5 integers', code='wrongInput')],
-	label=mark_safe('Asset Tag (<a href="/questions/whyname/" target="_blank">Where to find the Asset Tag</a>?)'))
+	asset_tag = forms.CharField(max_length=5, min_length=5, 
+	    validators=[RegexValidator(regex='^\d{5}$', message='Asset tag must be 5 integers', code='wrongInput')],
+	    label=mark_safe('Asset Tag (<a href="/questions/whyname/" target="_blank">Where to find the Asset Tag</a>?)'))
 	equipment_type = forms.ChoiceField(choices=EQUIPMENT_TYPE_CHOICES)
 	problem_description = forms.CharField(widget=forms.Textarea)
 	error_messages = forms.CharField(widget=forms.Textarea, required=False)
@@ -70,7 +71,7 @@ class PasswordTicketForm(forms.Form):
 class ServiceTicketForm(forms.Form):
     request_type = forms.ChoiceField(choices=REQUEST_TYPE_CHOICE)
     system = forms.ChoiceField(choices=SYSTEM_CHOICES, required=False)
-    asset_tag = forms.CharField(max_length=200,
+    asset_tag = forms.CharField(max_length=5, min_length=5, validators=[RegexValidator(regex='^\d{5}$', message='Asset tag must be 5 integers', code='wrongInput')],
 		label=mark_safe('Asset Tag (<a href="/questions/whyname/" target="_blank">Where to find the Asset Tag</a>?) of the equipment you want moved or surplused'), required=False)
     move_location = forms.CharField(max_length=200, label='Where would you like this equipment moved to?', required=False)
     software = forms.CharField(max_length=200, label='What software are you looking for?', required=False)

@@ -30,17 +30,39 @@
                 <img class="stat" src="{% static 'demo/view-ticket/resolved-bar.jpg' %}">
             {% elif CallStatus == "Closed" %}
                 <img class="stat" src="{% static 'demo/view-ticket/finished-bar.jpg' %}">
+            {% elif CallStatus == "Need Approval" %}
+                <img class="stat" src="{% static 'demo/view-ticket/need-approval-bar.jpg' %}">
+            {% else %}
+                <img class="stat" src="{% static 'demo/view-ticket/unknown-bar.jpg' %}">
             {% endif %}
         </div>
         
         <a class="button" href="{% url 'manage' %}"><i class="fa fa-chevron-circle-left" aria-hidden="true"></i> Back</a>
-        {% if Category == "Other" %}
-        <a class="button" href="/general?ticketID={{CallID}}"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</a>
+        
+        <!-- If user is manager, replace edit button with approve button for non-approved tickets -->
+        {% if CallStatus == "Unapproved" or CallStatus == "Disapproved" %}
+                {% if branch == "manager" %}
+                    <a id="appBtn_{{ CallID }}" class="cursor button" style="display:inline-block;"> <div>
+                        <i class="fa fa-check" aria-hidden="true"></i> Approve
+                    </div></a>
+                {% else %}
+                    <a href="edit.asp" class="button disabled" style="display:inline-block; background-color: grey" >
+                        <div ><i class="fa fa-pencil" aria-hidden="true"></i> Edit</div>
+                    </a>
+                {% endif %}
         {% else %}
-        <a class="button" href="edit.asp"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</a>
+                <!-- allow users to edit own approved tickets -->
+                {% if user.username == CustID %}
+                    <a href="edit.asp" style="display:inline-block;">
+                        <div class="button"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</div>
+                    </a>
+                {% else %}
+                    <a href="edit.asp" class="button disabled" style="display:inline-block; background-color: grey" >
+                        <div ><i class="fa fa-pencil" aria-hidden="true"></i> Edit</div>
+                    </a>
+                {% endif %}
         {% endif %}
-
-        <!--check if the user is owner of the ticket. And if he is ownere, he can click resolve button; if not, he can't-->
+        
         <!-- IT functionality-->
         {% if branch == "IT" %}
             <a id="myBtn_{{ CallID }}" class="button cursor">
@@ -50,23 +72,44 @@
                     <i class="fa fa-check" aria-hidden="true"></i> Re-open
                 {% endif %}
             </a>
-        {% else %}
-            {% if user.username == CustID %}
-                <a id="myBtn_{{ CallID }}" class="button cursor">
-                    {% if CallStatus == "Open" %}
-                        <i class="fa fa-check" aria-hidden="true"></i> Resolved
-                    {% else %}
-                        <i class="fa fa-check" aria-hidden="true"></i> Re-open
-                    {% endif %}
-                </a>
+        <!-- If manager, replace resolve/reopen button with disapprove button if non-approved ticket -->
+        {% elif branch == "manager" %}
+            {% if CallStatus == "Unapproved" or CallStatus == "Disapproved" %}
+                <a id="disBtn_{{ CallID }}" class="cursor button" style="display:inline-block;"> <div>
+                    <i class="fa fa-check" aria-hidden="true"></i> Disapprove
             {% else %}
-                <a class="button disabled cursor" style="background-color:grey;">
+                <a id="myBtn_{{ CallID }}" class="cursor button" style="display:inline-block;"> <div>
                     {% if CallStatus == "Open" %}
                         <i class="fa fa-check" aria-hidden="true"></i> Resolved
                     {% else %}
                         <i class="fa fa-check" aria-hidden="true"></i> Re-open
                     {% endif %}
-                </a>
+            {% endif %}
+            </div></a>
+        {% else %}
+            <!--allow user to resolve/reopen approved tickets -->
+            {% if CallStatus != "Unapproved" and CallStatus != "Disapproved" %}
+                {% if user.username == CustID %}
+                    <a id="myBtn_{{ CallID }}" class="cursor button" style="display:inline-block;"> <div>
+                    {% if CallStatus == "Open" %}
+                        <i class="fa fa-check" aria-hidden="true"></i> Resolved
+                    {% else %}
+                        <i class="fa fa-check" aria-hidden="true"></i> Re-open
+                    {% endif %}
+                    </div></a>
+                {% else %}
+                    <a style="display:inline-block;"> <div class="button disabled" style="background-color:grey;" >
+                    {% if CallStatus == "Open" %}
+                        <i class="fa fa-check" aria-hidden="true"></i> Resolved
+                    {% else %}
+                        <i class="fa fa-check" aria-hidden="true"></i> Re-open
+                    {% endif %}
+                    </div></a>
+                {% endif %}
+            {% else %}
+                <a style="display:inline-block;"> <div class="button disabled" style="background-color:grey;" >
+                    <i class="fa fa-check" aria-hidden="true"></i> Open
+                </div></a>
             {% endif %}
         {% endif %}
         
@@ -93,7 +136,8 @@
 
     <h5>Status:</h5>
     <p><span id="status_{{ CallID }}">{{ CallStatus }}</span></p>
-     
+    
+    <!-- display different data depending on ticket category -->
     {% if Category == "Hardware" %}
         <h5>What kind of device is having the problem?</h5> 
         <p>{{ EquipType }}</p>
@@ -182,7 +226,7 @@
     <br><br><br>
     
     <div id="myModal" class="modal">
-      <!-- Modal content -->
+      <!-- Resolve/reopen popup window -->
       <div class="modal-content">
           <span class="close">&times;</span>
           <p id="modalText">Are you sure the ticket has been resolved?</p>
@@ -191,7 +235,26 @@
           <a id="yButton" class="button modalButton cursor" style="float:right; margin-right:20px;">Yes</a>
       </div>
     </div>
-
+    <div id="appModal" class="modal">
+      <!-- Manager's approve ticket window -->
+      <div class="modal-content">
+          <span class="close">&times;</span>
+          <p id="appModalText">Are you sure you wish to approve the ticket?</p>
+          <a class="button modalButton nButton cursor" style="float:right">No</a>
+          <a class="button modalButton" style="visibility:hidden;"></a>
+          <a id="appYButton" class="button modalButton cursor" style="float:right; margin-right:20px;">Yes</a>
+      </div>
+    </div>
+    <div id="disModal" class="modal">
+      <!-- Manager's disapprove ticket window -->
+      <div class="modal-content">
+          <span class="close">&times;</span>
+          <p id="disModalText">Are you sure you wish to disapprove the ticket?</p>
+          <a class="button modalButton nButton cursor" style="float:right">No</a>
+          <a class="button modalButton" style="visibility:hidden;"></a>
+          <a id="disYButton" class="button modalButton cursor" style="float:right; margin-right:20px;">Yes</a>
+      </div>
+    </div>
 </body>
 </html>
 
