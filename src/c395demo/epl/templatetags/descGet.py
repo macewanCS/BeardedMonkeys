@@ -31,7 +31,7 @@ def get_date(string):
 def descGet(id):
     ticket = CallLog.objects.get(CallID = id)
     temp = ticket.Symptoms.split("|")
-    
+    #obtain description from symptoms string
     if ( len(temp) <= 1 ):
         temp = ticket.Symptoms.split("`")
     
@@ -48,7 +48,7 @@ def descGet(id):
         
     elif (ticket.Category == "Service"):
         return truncate(temp[0])
-        
+    #password tickets don't have descriptions; display special message instead    
     elif (ticket.Category == "Password"):
         string += "Reset "
         string += temp[0]
@@ -57,7 +57,7 @@ def descGet(id):
         
     elif (ticket.Category == "Other"):
         return truncate(temp[0])
-        
+#ensure description isn't too long to properly display in view pages        
 def truncate(string):
     if (len(string) > 30):
         string = string[:30]

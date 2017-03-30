@@ -38,6 +38,7 @@
                         <a href="{% url 'detail' id=callLog.CallID %}" style="display:inline-block;">
                             <div class="button"><i class="fa fa-folder-open-o" aria-hidden="true"></i> View</div>
                         </a>
+                        <!-- replace edit button with approve button if user is manager and ticket is non-approved -->
                         {% if callLog.CallStatus == "Unapproved" or callLog.CallStatus == "Disapproved" %}
                             {% if branch == "manager" %}
                                 <a id="appBtn_{{ callLog.CallID }}" class="cursor button" style="display:inline-block;"> <div>
@@ -49,6 +50,7 @@
                                  </a>
                             {% endif %}
                         {% else %}
+                            <!-- Allow editing for ticket owners -->
                             {% if user.username == callLog.CustID %}
                                 <a href="edit.asp" style="display:inline-block;">
                                     <div class="button"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</div>
@@ -69,7 +71,7 @@
                                     <i class="fa fa-check" aria-hidden="true"></i> Re-open
                                 {% endif %}
                             </div></a>
-                        <!--Manager functionality -->    
+                        <!-- If user is manager, replace resolve/reopen button with disapprove button if ticket is non-approved -->    
                         {% elif branch == "manager" %}
                                 {% if callLog.CallStatus == "Unapproved" or callLog.CallStatus == "Disapproved" %}
                                 <a id="disBtn_{{ callLog.CallID }}" class="cursor button" style="display:inline-block;"> <div>
@@ -85,7 +87,7 @@
                             </div></a>
                             
                         {% else %}
-                        <!--check if the user is owner of the ticket. And if he is owner, he can click resolve button; if not, he can't-->
+                        <!--check if the user is owner of the ticket. Owners can resolve/reopen approved tickets.-->
                             {% if callLog.CallStatus != "Unapproved" and callLog.CallStatus != "Disapproved" %}
                                 {% if user.username == callLog.CustID %}
                                     <a id="myBtn_{{ callLog.CallID }}" class="cursor button" style="display:inline-block;"> <div>
@@ -117,7 +119,7 @@
 	    </tbody>
     </table>
     <div id="myModal" class="modal">
-      <!-- Modal content -->
+      <!-- Resolve/reopen popup window -->
       <div class="modal-content">
           <span class="close">&times;</span>
           <p id="modalText">Are you sure the ticket has been resolved?</p>
@@ -127,7 +129,7 @@
       </div>
     </div>
     <div id="appModal" class="modal">
-      <!-- Modal content -->
+      <!-- Manager approve ticket popup window -->
       <div class="modal-content">
           <span class="close">&times;</span>
           <p id="appModalText">Are you sure you wish to approve the ticket?</p>
@@ -137,7 +139,7 @@
       </div>
     </div>
     <div id="disModal" class="modal">
-      <!-- Modal content -->
+      <!-- Manager disapprove ticket popup window -->
       <div class="modal-content">
           <span class="close">&times;</span>
           <p id="disModalText">Are you sure you wish to disapprove the ticket?</p>

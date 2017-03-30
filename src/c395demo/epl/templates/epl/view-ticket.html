@@ -38,6 +38,8 @@
         </div>
         
         <a class="button" href="{% url 'manage' %}"><i class="fa fa-chevron-circle-left" aria-hidden="true"></i> Back</a>
+        
+        <!-- If user is manager, replace edit button with approve button for non-approved tickets -->
         {% if CallStatus == "Unapproved" or CallStatus == "Disapproved" %}
                 {% if branch == "manager" %}
                     <a id="appBtn_{{ CallID }}" class="cursor button" style="display:inline-block;"> <div>
@@ -49,6 +51,7 @@
                     </a>
                 {% endif %}
         {% else %}
+                <!-- allow users to edit own approved tickets -->
                 {% if user.username == CustID %}
                     <a href="edit.asp" style="display:inline-block;">
                         <div class="button"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</div>
@@ -69,6 +72,7 @@
                     <i class="fa fa-check" aria-hidden="true"></i> Re-open
                 {% endif %}
             </a>
+        <!-- If manager, replace resolve/reopen button with disapprove button if non-approved ticket -->
         {% elif branch == "manager" %}
             {% if CallStatus == "Unapproved" or CallStatus == "Disapproved" %}
                 <a id="disBtn_{{ CallID }}" class="cursor button" style="display:inline-block;"> <div>
@@ -83,6 +87,7 @@
             {% endif %}
             </div></a>
         {% else %}
+            <!--allow user to resolve/reopen approved tickets -->
             {% if CallStatus != "Unapproved" and CallStatus != "Disapproved" %}
                 {% if user.username == CustID %}
                     <a id="myBtn_{{ CallID }}" class="cursor button" style="display:inline-block;"> <div>
@@ -131,7 +136,8 @@
 
     <h5>Status:</h5>
     <p><span id="status_{{ CallID }}">{{ CallStatus }}</span></p>
-     
+    
+    <!-- display different data depending on ticket category -->
     {% if Category == "Hardware" %}
         <h5>What kind of device is having the problem?</h5> 
         <p>{{ EquipType }}</p>
@@ -220,7 +226,7 @@
     <br><br><br>
     
     <div id="myModal" class="modal">
-      <!-- Modal content -->
+      <!-- Resolve/reopen popup window -->
       <div class="modal-content">
           <span class="close">&times;</span>
           <p id="modalText">Are you sure the ticket has been resolved?</p>
@@ -230,7 +236,7 @@
       </div>
     </div>
     <div id="appModal" class="modal">
-      <!-- Modal content -->
+      <!-- Manager's approve ticket window -->
       <div class="modal-content">
           <span class="close">&times;</span>
           <p id="appModalText">Are you sure you wish to approve the ticket?</p>
@@ -240,7 +246,7 @@
       </div>
     </div>
     <div id="disModal" class="modal">
-      <!-- Modal content -->
+      <!-- Manager's disapprove ticket window -->
       <div class="modal-content">
           <span class="close">&times;</span>
           <p id="disModalText">Are you sure you wish to disapprove the ticket?</p>

@@ -2,9 +2,11 @@ $(document).ready(function(){
     $( "a[id*='logout']" ).click(function(){
         $("#logoutModal").css("display", "block")
     });
+    //for the mobile-view logout button
     $( "a[id*='lit-log']" ).click(function(){
         $("#logoutModal").css("display", "block")
     });
+    //resolved/reopen button for view pages
     $( "a[id*='myBtn']" ).click(function(){
         id = $(this).attr('id').replace("myBtn_", "")
         $("#myModal").css("display", "block");
@@ -14,6 +16,7 @@ $(document).ready(function(){
                 $("#modalText").html("Are you sure that you want to re-open the ticket?");
         }
     });
+    //manager's approve and disapprove buttons for view pages
     $( "a[id*='appBtn']" ).click(function(){
         id = $(this).attr('id').replace("appBtn_", "")
         $("#appModal").css("display", "block");
@@ -26,12 +29,13 @@ $(document).ready(function(){
     });
         
 
-//      fixing the status bar bug
+//fixing the status bar bug
+        //yes buttons for popups (resolve/reopen, approve, disapprove)
         $("#yButton").click(function() {
            $("#myModal").css("display", "none");
+           //checking whether ticket status is open to decide which button to display
            if ($("#status_"+id).text().indexOf("Open")>=0){
             alterData(id, "Resolved")
-            //$("#status_"+id).html("Resolved");
             $("#myBtn_"+id).html('<i class="fa fa-check" aria-hidden="true"></i>Re-open');
             $('.stat').attr('src', '/static/demo/view-ticket/resolved-bar.jpg')
            }
