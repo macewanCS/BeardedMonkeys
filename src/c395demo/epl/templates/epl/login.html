@@ -18,11 +18,14 @@ head {background-color:#ddeeee; box-shadow: 0px 0px 0px #ccc;}
 <body>
     <div id="outer">
         <div id="upper">
-            <h1 style="margin-bottom:0; margin-top:0;margin-left:25px"><img src="{% static 'demo/epl-logo.png' %}" style="height:84px;width:152px;" alt="epl logo"></h1>
+            <h1 style="margin-bottom:0; margin-top:0;margin-left:25px">
+                <img src="{% static 'demo/epl-logo.png' %}" style="height:84px;width:152px;" alt="epl logo">
+            </h1>
         </div>
         <div id="center" align="left" style="width:100%; padding: 0 25px 25px; color:grey" >
 	        <form action='' method='POST' >
 	        {% csrf_token %}
+	        <!-- display error messages if they exist, empty space if not -->
 	        {% if form.non_field_errors %}
 	            <P style="margin-bottom:0; color:red">{{ form.non_field_errors|striptags }}</P>
 	        {% else %}

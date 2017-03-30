@@ -35,6 +35,7 @@
                         <a href="{% url 'detail' id=callLog.CallID %}" style="display:inline-block;">
                             <div class="button"><i class="fa fa-folder-open-o" aria-hidden="true"></i> View</div>
                         </a>
+                        <!-- If user is manager, replace edit and resolve/reopen buttons with approve and disapprove buttons for non-approved tickets -->
                         {% if callLog.CallStatus == "Unapproved" or callLog.CallStatus == "Disapproved" %}
                             {% if branch == "manager" %}
                                 <a id="appBtn_{{ callLog.CallID }}" class="cursor button" style="display:inline-block;"> <div>
@@ -51,6 +52,7 @@
                                             <i class="fa fa-check" aria-hidden="true"></i> Open
                                     </div></a>
                             {% endif %}
+                        <!-- allow editing and resolve/reopening of approved tickets -->
                         {% else %}
                             <a href="edit.asp" style="display:inline-block;">
                                 <div class="button"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</div>
@@ -68,7 +70,7 @@
 	    {% endfor %}
     </table>
       <div id="myModal" class="modal">
-      <!-- Modal content -->
+      <!-- Resolve/reopen popup window -->
       <div class="modal-content">
           <span class="close">&times;</span>
           <p id="modalText">Are you sure the ticket has been resolved?</p>
@@ -78,7 +80,7 @@
       </div>
     </div>
     <div id="appModal" class="modal">
-      <!-- Modal content -->
+      <!-- Manager's approve ticket popup window -->
       <div class="modal-content">
           <span class="close">&times;</span>
           <p id="appModalText">Are you sure you wish to approve the ticket?</p>
@@ -88,7 +90,7 @@
       </div>
     </div>
     <div id="disModal" class="modal">
-      <!-- Modal content -->
+      <!-- Manager's disapprove ticket popup window -->
       <div class="modal-content">
           <span class="close">&times;</span>
           <p id="disModalText">Are you sure you wish to disapprove the ticket?</p>
@@ -106,6 +108,7 @@ var appYBtn = document.getElementById("appYButton");
 var disYBtn = document.getElementById("disYButton");
 
 $(document).ready(function(){
+    // resolve/reopen button popup functionality
     $( "a[id*='myBtn']" ).click(function(){
         id = $(this).attr('id').replace("myBtn_", "")
         $("#myModal").css("display", "block")
@@ -118,7 +121,6 @@ $(document).ready(function(){
            modal.style.display = "none";
            if ($("#status_"+id).text().indexOf("Open")>=0){
             alterData(id, "Resolved")
-            //$("#status_"+id).html("Resolved");
             $("#myBtn_"+id).html('<i class="fa fa-check" aria-hidden="true"></i>Re-open');
            }
            else {
@@ -127,6 +129,7 @@ $(document).ready(function(){
            }
         }
     });
+    //approve ticket popup functionality
     $( "a[id*='appBtn']" ).click(function(){
         id = $(this).attr('id').replace("appBtn_", "")
         $("#appModal").css("display", "block");
@@ -138,6 +141,7 @@ $(document).ready(function(){
             window.location.reload()
         }
     });
+    //disapprove ticket popup functionality
     $( "a[id*='disBtn']" ).click(function(){
         id = $(this).attr('id').replace("disBtn_", "")
         $("#disModal").css("display", "block");

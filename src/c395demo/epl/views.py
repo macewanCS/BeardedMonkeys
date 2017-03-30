@@ -155,7 +155,8 @@ def tickets(request):
     # retriving all the data
     username = request.user.username
     callLogs = CallLog.objects.filter(CustID=username)
-
+    
+    #obtaining user's branch
     try:
         branch = UserProfile.objects.get(user=request.user).branch
     except:
@@ -180,7 +181,7 @@ def manage(request):
     asgnmnts = Asgnmnt.objects.all()
     probTypes = ProbType.objects.all()
 
-    #IT functionality
+    #obtaining user's branch
     try:
         branch = UserProfile.objects.get(user=request.user).branch
     except:
@@ -202,17 +203,19 @@ def detail(request, id):
         return redirect('/login')
     
     ticket = CallLog.objects.get(CallID = id)
-
+    
     recvdDate = "20"
     recvdDate += ticket.RecvdDate
-
+    
+    #splitting the symptoms string into multiple fields for display
     temp = parsing(ticket.Symptoms, "|")
 
     if ( len(temp) <= 1 ):
         temp = parsing(ticket.Symptoms, "`")
         
     temp = get_data(temp)
-        
+    
+    
     if ( ticket.Category == "Hardware" or
          ticket.Category == "Software" ):
         if ( ticket.Category == "Hardware" ):
@@ -221,7 +224,7 @@ def detail(request, id):
             url = temp[4]
         
         is_img = "false"
-        
+        #checking whether an image has been submitted
         if ( url[-4:] == ".png" or
              url[-4:] == ".jpg" or
              url[-4:] == ".gif" ):
@@ -232,6 +235,7 @@ def detail(request, id):
         else:
             is_img = "Null"
 
+    #designating fields for display based on the ticket's category
     if ( ticket.Category == "Hardware" ):
         equip = acceptable(temp[0])
         asset = acceptable(temp[1])
@@ -319,7 +323,7 @@ def detail(request, id):
     else:
         context = {}
    
-   # IT functionality   
+   # obtaining user's branch   
     try:
         branch = UserProfile.objects.get(user=request.user).branch
     except:
