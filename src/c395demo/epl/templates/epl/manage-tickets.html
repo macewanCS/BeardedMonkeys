@@ -12,22 +12,25 @@
 <body>
     <h1>Branch Tickets</h1>
 	<table class="sortable">
-	    <tr>
-	        <th>ID</th>
-	        <th>Author</th>
-	        <th>Date</th>
-	        <th>Category</th>
-	        <th>Status</th>
-	        <th class= "sorttable_nosort">Description</th>
-	        <th class= "sorttable_nosort">Options</th>
-	    </tr>
+	    <thead>
+	        <tr>
+	            <th>ID</th>
+	            <th>Author</th>
+	            <th>Date</th>
+	            <th>Category</th>
+	            <th>Status</th>
+	            <th class= "sorttable_nosort">Description</th>
+	            <th class= "sorttable_nosort">Options</th>
+	        </tr>
+	    </thead>
+	    <tbody>
 	    {% load descGet %}
 	    {% for callLog in callLogs %}
 	        {% if callLog.Category in available %}
                 <tr>
                     <td> {{ callLog.CallID }} </td>
                     <td> {{ callLog.CustID }} </td>
-                    <td> 20{{ callLog.RecvdDate }} </td>
+                    <td> {{ callLog.RecvdDate|get_date }} </td>
                     <td> {{ callLog.Category }} </td>
                     <td id="status_{{ callLog.CallID }}"> {{ callLog.CallStatus }} </td>
                     <td style="text-align:left;"> {% descGet callLog.CallID %} </td>
@@ -111,6 +114,7 @@
                 </tr>
             {% endif %}
 	    {% endfor %}
+	    </tbody>
     </table>
     <div id="myModal" class="modal">
       <!-- Modal content -->

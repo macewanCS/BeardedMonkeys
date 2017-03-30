@@ -556,6 +556,9 @@ footer span i {
     transform: translate(-50%, -50%);
 }
 
+.sortable .button{
+    margin-bottom: 2px;
+}
 
 /******************************************
     Login Page

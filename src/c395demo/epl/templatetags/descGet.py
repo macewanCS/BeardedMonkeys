@@ -6,6 +6,26 @@ register = template.Library()
 @register.filter(name='firstUpper')
 def firstUpper(string):
     return string.upper()
+    
+@register.filter(name='get_date')
+def get_date(string):
+    try:
+        temp = int(string[-4:])
+        month, day, year = string.split("/")
+        string = year
+        string += "-"
+        if ( len(month) == 1 ):
+            string += "0"
+        string += month
+        string += "-"
+        if ( len(day) == 1 ):
+            string += "0"
+        string += day
+    except:
+        temp = string
+        string = "20"
+        string += temp
+    return string
 
 @register.simple_tag
 def descGet(id):
