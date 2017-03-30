@@ -1,7 +1,7 @@
 EQUIPMENT_TYPE_CHOICES = (
     #adding select to the drop down menu
     ('','--Select--'),
-	('AWE', 'AWE'),
+    ('AWE', 'AWE'),
     ('Barcode scanner', 'Barcode scanner'),
     ('Cell phone', 'Cell phone'),
     ('Gate', 'Gate'),
@@ -23,7 +23,7 @@ EQUIPMENT_TYPE_CHOICES = (
 SOFTWARE_CHOICES = (
     #adding select to the drop down menu
     ('','--Select--'),
-	('Apps.epl.ca', 'Apps.epl.ca'),
+    ('Apps.epl.ca', 'Apps.epl.ca'),
     ('Bibliocommons', 'Bibliocommons'),
     ('Dayforce', 'Dayforce'),
     ('iNovah', 'iNovah'),
@@ -42,7 +42,7 @@ SOFTWARE_CHOICES = (
 SYSTEM_CHOICES = (
     #adding select to the drop down menu
     ('','--Select--'),
-	('Dayforce', 'Dayforce'),
+    ('Dayforce', 'Dayforce'),
     ('iNovah', 'iNovah'),
     ('LibraryOnline', 'LibraryOnline'),
     ('Peoplesoft', 'Peoplesoft'),
