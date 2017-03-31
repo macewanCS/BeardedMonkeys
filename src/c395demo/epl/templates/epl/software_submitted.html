@@ -4,10 +4,18 @@
 
 <html>
 <head>
-	<title>Software Ticket Submitted</title>
+    {% if PageSubmitType == "insert" %}
+	    <title>Software Ticket Submitted</title>
+    {% else %}
+	    <title>Software Ticket Updated</title>
+    {% endif %}
 </head>
 <body>
-	<h1>Software Ticket Successfully Submitted</h1>
+    {% if PageSubmitType == "insert" %}
+	    <h1>Software Ticket Successfully Submitted</h1>
+    {% else %}
+	    <h1>Software Ticket Successfully Updated</h1>
+    {% endif %}
 	
 	<div class="right">
         <p>
@@ -29,11 +37,11 @@
 
     {% if Category == "Software" %}
         <p> <span style="font-weight:bold;">Which system?: </span> 
-        <br>{{ System }} </p>
+        <br>{{ system }} </p>
         <p> <span style="font-weight:bold;">Is the system completely offline/broken?: </span>
-        <br>{{ Offline }} </p>     
+        <br>{{ system_offline }} </p>     
         <P> <span style="font-weight:bold;">Further details: </span> 
-        <br>{{ Description }} </p>
+        <br>{{ problem_description }} </p>
     {% endif %}
     <br><br><br>
     

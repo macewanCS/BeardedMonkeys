@@ -43,23 +43,36 @@ def hardware(request):
     if (not request.user.is_authenticated()):
         return redirect('/login')
 
-    form = HardwareTicketForm(request.POST or None)
+    ticketId = request.GET.get('ticketID')
+    if ticketId == None:
+        form = HardwareTicketForm(request.POST or None)
+    else:
+        context = successTicketSummary(request, ticketId, "update")
+        print context
+        form = HardwareTicketForm(request.POST or None, initial=context, auto_id=False)
+
     if form.is_valid():
         # saving data into the database
-        msg = database_saved(form, request.user.username)
+        msg = database_saved(form, request.user.username, ticketId)
 
         # Get the hardware ticket Id and redirect to the successful
         # submission page with the hardware ticket info
-        ticketId = getTicketId("Hardware", request.user.username)
-        context = successTicketSummary(request, ticketId)
+        if (ticketId == None):
+            ticketId = getTicketId("Hardware", request.user.username)
+            context = successTicketSummary(request, ticketId, "insert")
+        else:
+            context = successTicketSummary(request, ticketId, "update")
+
         return render(request, "epl/hardware_submitted.html", context)
 
-    context = {}
+    '''context = {}
     #return render(request, 'epl/hardware.html', context)
     form_class = HardwareTicketForm
     return render(request, 'epl/hardware.html', {
         'form': form_class,
-    })
+    })'''
+    context = {'form': form}
+    return render(request, 'epl/hardware.html', context)
 
 # software tickets page view
 def software(request):
@@ -67,23 +80,35 @@ def software(request):
     if (not request.user.is_authenticated()):
         return redirect('/login')
 
-    form = SoftwareTicketForm(request.POST or None)
+    ticketId = request.GET.get('ticketID')
+    if ticketId == None:
+        form = SoftwareTicketForm(request.POST or None)
+    else:
+        context = successTicketSummary(request, ticketId, "update")
+        form = SoftwareTicketForm(request.POST or None, initial=context, auto_id=False)
+
     if form.is_valid():
         # saving data into the database
-        msg = soft_database_saved(form, request.user.username)
+        msg = soft_database_saved(form, request.user.username, ticketId)
 
         # Get the software ticket Id and redirect to the successful
         # submission page with the software ticket info
-        ticketId = getTicketId("Software", request.user.username)
-        context = successTicketSummary(request, ticketId)
+        if (ticketId == None):
+            ticketId = getTicketId("Software", request.user.username)
+            context = successTicketSummary(request, ticketId, "insert")
+        else:
+            context = successTicketSummary(request, ticketId, "update")
+
         return render(request, "epl/software_submitted.html", context)
 
-    context = {}
+    #context = {}
     #return render(request, 'epl/software.html', context)
-    form_class = SoftwareTicketForm
-    return render(request, 'epl/software.html', {
-        'form': form_class,
-    })
+    #form_class = SoftwareTicketForm
+    #return render(request, 'epl/software.html', {
+    #    'form': form_class,
+    #})
+    context = {'form': form}
+    return render(request, 'epl/software.html', context)
 
 
 # service tickets page view
@@ -92,18 +117,28 @@ def service(request):
     if (not request.user.is_authenticated()):
         return redirect('/login')
 
-    form = ServiceTicketForm(request.POST or None)
+    ticketId = request.GET.get('ticketID')
+    if ticketId == None:
+        form = ServiceTicketForm(request.POST or None)
+    else:
+        context = successTicketSummary(request, ticketId, "update")
+        form = ServiceTicketForm(request.POST or None, initial=context, auto_id=False)
+
     if form.is_valid():
         #saving data into the database
-        msg = service_database_saved(form, request.user.username)
+        msg = service_database_saved(form, request.user.username, ticketId)
 
         # Get the service ticket Id and redirect to the successful
         # submission page with the service ticket info
-        ticketId = getTicketId("Service", request.user.username)
-        context = successTicketSummary(request, ticketId)
+        if (ticketId == None):
+            ticketId = getTicketId("Service", request.user.username)
+            context = successTicketSummary(request, ticketId, "insert")
+        else:
+            context = successTicketSummary(request, ticketId, "update")
+
         return render(request, "epl/service_submitted.html", context)
 
-    context = {'form': ServiceTicketForm}
+    context = {'form': form}
     return render(request, 'epl/service.html', context)
 
 # general tickets page view
@@ -112,24 +147,14 @@ def general(request):
     if (not request.user.is_authenticated()):
         return redirect('/login')
 
-    print("Inside general")
     ticketId = request.GET.get('ticketID')
-    print("Got ticketId")
     if ticketId == None:
         form = GeneralTicketForm(request.POST or None)
     else:
-        context = successTicketSummary(request, ticketId)
-        print('context problem: ',context["problem"])
-        data = {"problem" : "Testing"}
-        ticket = CallLog.objects.get(pk=ticketId)
-        form = GeneralTicketForm(request.POST or None, initial={'problem': ticket.Symptoms }, auto_id=False)
-        print('is valid: ', form.is_valid())
-        print (form)
+        context = successTicketSummary(request, ticketId, "update")
+        form = GeneralTicketForm(request.POST or None, initial=context, auto_id=False)
 
-    print("Instantiated form")
-    print (form.is_valid(), form.errors)
     if form.is_valid():
-        print("Form is valid")
         #saving data into the database
         msg = general_database_saved(form, request.user.username, ticketId)
 
@@ -137,11 +162,9 @@ def general(request):
         # submission page with the general ticket info
         if (ticketId == None):
             ticketId = getTicketId("Other", request.user.username)
-            context = successTicketSummary(request, ticketId)
-            print("NOne")
+            context = successTicketSummary(request, ticketId, "insert")
         else:
-            #context = successTicketSummary(request, ticketId)
-            print('Form problem')
+            context = successTicketSummary(request, ticketId, "update")
 
         return render(request, "epl/general_submitted.html", context)
 
@@ -154,18 +177,28 @@ def password(request):
     if (not request.user.is_authenticated()):
         return redirect('/login')
 
-    form = PasswordTicketForm(request.POST or None)
+    ticketId = request.GET.get('ticketID')
+    if ticketId == None:
+        form = PasswordTicketForm(request.POST or None)
+    else:
+        context = successTicketSummary(request, ticketId, "update")
+        form = PasswordTicketForm(request.POST or None, initial=context, auto_id=False)
+
     if form.is_valid():
         # saving data into the database
-        msg = pass_database_saved(form, request.user.username)
+        msg = pass_database_saved(form, request.user.username, ticketId)
 
-        # Get the hardware ticket Id and redirect to the successful
-        # submission page with the hardware ticket info
-        ticketId = getTicketId("Password", request.user.username)
-        context = successTicketSummary(request, ticketId)
+        # Get the password ticket Id and redirect to the successful
+        # submission page with the password ticket info
+        if (ticketId == None):
+            ticketId = getTicketId("Password", request.user.username)
+            context = successTicketSummary(request, ticketId, "insert")
+        else:
+            context = successTicketSummary(request, ticketId, "update")
+
         return render(request, "epl/password_submitted.html", context)
 
-    context = {'form': PasswordTicketForm}
+    context = {'form': form}
     return render(request, 'epl/password.html', context)
 
 # my all tickets page view
@@ -177,7 +210,7 @@ def tickets(request):
     # retriving all the data
     username = request.user.username
     callLogs = CallLog.objects.filter(CustID=username)
-    
+
     #obtaining user's branch
     try:
         branch = UserProfile.objects.get(user=request.user).branch
@@ -225,10 +258,10 @@ def detail(request, id):
         return redirect('/login')
 
     ticket = CallLog.objects.get(CallID = id)
-    
+
     recvdDate = "20"
     recvdDate += ticket.RecvdDate
-    
+
     #splitting the symptoms string into multiple fields for display
     temp = parsing(ticket.Symptoms, "|")
 
@@ -245,7 +278,7 @@ def detail(request, id):
             url = temp[4]
 
         is_img = "false"
-        
+
         #checking whether an image has been submitted
         if ( url[-4:] == ".png" or
              url[-4:] == ".jpg" or
@@ -344,7 +377,7 @@ def detail(request, id):
 
     else:
         context = {}
-   
+
    # obtaining user's branch
     try:
         branch = UserProfile.objects.get(user=request.user).branch
@@ -443,7 +476,7 @@ def getTicketId(ticketCategory, username):
                 callLogId = callLog.CallID
     return callLogId
 
-def successTicketSummary(request, id):
+def successTicketSummary(request, id, pageSubmitType):
     ticket = CallLog.objects.get(CallID = id)
 
     recvdDate = "20"
@@ -460,14 +493,15 @@ def successTicketSummary(request, id):
             "CustID" : ticket.CustID,
             "Symptoms" : ticket.Symptoms,
             "RecvdDate" : recvdDate,
-            "EquipType" : temp[0],
-            "AssetTag" : temp[1],
-            "DeviceName" : temp[2],
-            "Description" : temp[3],
-            "ErrorMsg" : temp[4],
+            "equipment_type" : temp[0],
+            "asset_tag" : temp[1],
+            "device_name" : temp[2],
+            "problem_description" : temp[3],
+            "error_messages" : temp[4],
             "Category" : ticket.Category,
             "CallStatus" : ticket.CallStatus,
-            "Priority" : ticket.Priority
+            "Priority" : ticket.Priority,
+            "PageSubmitType" : pageSubmitType
         }
 
     elif ( ticket.Category == "Password" ):
@@ -479,7 +513,8 @@ def successTicketSummary(request, id):
             "sys_user" : temp[1],
             "Category" : ticket.Category,
             "CallStatus" : ticket.CallStatus,
-            "Priority" : ticket.Priority
+            "Priority" : ticket.Priority,
+            "PageSubmitType" : pageSubmitType
         }
 
     elif ( ticket.Category == "Software" ):
@@ -487,12 +522,15 @@ def successTicketSummary(request, id):
             "CallID" : ticket.CallID,
             "CustID" : ticket.CustID,
             "RecvdDate" : recvdDate,
-            "System" : temp[0],
-            "Offline" : temp[1],
-            "Description" : temp[2],
+            "system" : temp[0],
+            "system_offline" : temp[1],
+            "problem_description" : temp[2],
+            "steps_replicate_problem" : temp[3],
+            "image_url" : temp[4],
             "Category" : ticket.Category,
             "CallStatus" : ticket.CallStatus,
-            "Priority" : ticket.Priority
+            "Priority" : ticket.Priority,
+            "PageSubmitType" : pageSubmitType
         }
     elif ( ticket.Category == "Service" ):
         context = {
@@ -508,7 +546,8 @@ def successTicketSummary(request, id):
             "description" : temp[6],
             "Category" : ticket.Category,
             "CallStatus" : ticket.CallStatus,
-            "Priority" : ticket.Priority
+            "Priority" : ticket.Priority,
+            "PageSubmitType" : pageSubmitType
         }
     elif ( ticket.Category == "Other" ):
         context = {
@@ -518,7 +557,8 @@ def successTicketSummary(request, id):
             "problem" : temp[0],
             "Category" : ticket.Category,
             "CallStatus" : ticket.CallStatus,
-            "Priority" : ticket.Priority
+            "Priority" : ticket.Priority,
+            "PageSubmitType" : pageSubmitType
             }
 
     else:
@@ -531,7 +571,7 @@ def successTicketSummary(request, id):
 #------------------------------------
 
 # saving password data into database
-def pass_database_saved(form, username):
+def pass_database_saved(form, username, ticketID):
     try:
         # getting data from the form
         system_type = form.cleaned_data.get("system_type")
@@ -585,17 +625,32 @@ def pass_database_saved(form, username):
         callLog_Status = "Open"
 
         # CallLog Table
-        callLog_table = CallLog(
-            Symptoms = callLog_Symptoms,
-            Priority = callLog_Priority,
-            CallSource = callLog_CallSource,
-            RecvdDate = callLog_RecvdDate,
-            RecvdTime = callLog_RecvdTime,
-            CustID = callLog_CustID,
-            Tracker = callLog_Tracker,
-            CallStatus = callLog_Status,
-            Category = "Password"
-        )
+        if (ticketID == None):
+           callLog_table = CallLog(
+              Symptoms = callLog_Symptoms,
+              Priority = callLog_Priority,
+              CallSource = callLog_CallSource,
+              RecvdDate = callLog_RecvdDate,
+              RecvdTime = callLog_RecvdTime,
+              CustID = callLog_CustID,
+              Tracker = callLog_Tracker,
+              CallStatus = callLog_Status,
+              Category = "Password"
+           )
+        else:
+           callLog_table = CallLog(
+              CallID = ticketID,
+              Symptoms = callLog_Symptoms,
+              Priority = callLog_Priority,
+              CallSource = callLog_CallSource,
+              RecvdDate = callLog_RecvdDate,
+              RecvdTime = callLog_RecvdTime,
+              CustID = callLog_CustID,
+              Tracker = callLog_Tracker,
+              CallStatus = callLog_Status,
+              Category = "Password"
+           )
+
 
         # Asgnmnt Table
         asgnmnt_table = Asgnmnt(
@@ -623,7 +678,7 @@ def pass_database_saved(form, username):
         return "Something went wrong"
 
 # saving hardware data into database
-def database_saved(form, username):
+def database_saved(form, username, ticketID):
     try:
         # getting data from the form
         asset_tag = form.cleaned_data.get("asset_tag")
@@ -712,7 +767,8 @@ def database_saved(form, username):
         callLog_Status = "Open"
 
         # CallLog Table
-        callLog_table = CallLog(
+        if (ticketID == None):
+            callLog_table = CallLog(
             Symptoms = "|".join([callLog_Symptoms, image_url]), #adding the url of the image
             Priority = callLog_Priority,
             CallSource = callLog_CallSource,
@@ -723,7 +779,20 @@ def database_saved(form, username):
             CallStatus = callLog_Status,
             Category = "Hardware"
             #get the value of image filed in hardware form and insert the the value to Image filed of CallLog model.
-        )
+            )
+        else:
+            callLog_table = CallLog(
+                CallID = ticketID,
+            Symptoms = "|".join([callLog_Symptoms, image_url]), #adding the url of the image
+            Priority = callLog_Priority,
+            CallSource = callLog_CallSource,
+            RecvdDate = callLog_RecvdDate,
+            RecvdTime = callLog_RecvdTime,
+            CustID = callLog_CustID,
+            Tracker = callLog_Tracker,
+            CallStatus = callLog_Status,
+            Category = "Hardware"
+            )
 
         # Asgnmnt Table
         asgnmnt_table = Asgnmnt(
@@ -751,7 +820,7 @@ def database_saved(form, username):
         return "Something went wrong"
 
 # saving data into database for software
-def soft_database_saved(form, username):
+def soft_database_saved(form, username, ticketID):
     try:
         # getting data from the form
         system = form.cleaned_data.get("system")
@@ -839,7 +908,8 @@ def soft_database_saved(form, username):
         callLog_Status = "Open"
 
         # CallLog Table
-        callLog_table = CallLog(
+        if (ticketID == None):
+            callLog_table = CallLog(
             Symptoms = callLog_Symptoms,
             Priority = callLog_Priority,
             CallSource = callLog_CallSource,
@@ -849,7 +919,21 @@ def soft_database_saved(form, username):
             Tracker = callLog_Tracker,
             CallStatus = callLog_Status,
             Category = "Software"
-        )
+            )
+        else:
+            callLog_table = CallLog(
+                    CallID = ticketID,
+            Symptoms = callLog_Symptoms,
+            Priority = callLog_Priority,
+            CallSource = callLog_CallSource,
+            RecvdDate = callLog_RecvdDate,
+            RecvdTime = callLog_RecvdTime,
+            CustID = callLog_CustID,
+            Tracker = callLog_Tracker,
+            CallStatus = callLog_Status,
+            Category = "Software"
+            )
+
 
         # Asgnmnt Table
         asgnmnt_table = Asgnmnt(
@@ -877,7 +961,7 @@ def soft_database_saved(form, username):
         return "Something went wrong"
 
 # Save a service ticket
-def service_database_saved(form, username):
+def service_database_saved(form, username, ticketID):
     try:
         # getting data from the form
         request_type = form.cleaned_data.get("request_type")
@@ -888,18 +972,23 @@ def service_database_saved(form, username):
         pc = form.cleaned_data.get("pc")
         description = form.cleaned_data.get("description")
 
-        if ( len(system) < 1 ):
-            system = "Not Provided"
-        if ( len(asset_tag) < 1 ):
-            asset_tag = "Not Provided"
-        if ( len(move_location) < 1 ):
-            move_location = "Not Provided"
-        if ( len(software) < 1 ):
-            software = "Not Provided"
-        if ( len(pc) < 1 ):
-            pc = "Not Provided"
-        if ( len(description) < 1 ):
-            description = "Not Provided"
+        # The service ticket doesn't require all the fields to be provided
+        # By setting the value of the fields to 'Not Provided' in the database
+        # it is misleading as we don't know if the user entered that, as well
+        # the asset tag has a validation of having maximum of 5 characters
+        # so setting it to 'Not Provided' breaks the form.
+        #if ( len(system) < 1 ):
+        #    system = "Not Provided"
+        #if ( len(asset_tag) < 1 ):
+        #    asset_tag = "Not Provided"
+        #if ( len(move_location) < 1 ):
+        #    move_location = "Not Provided"
+        #if ( len(software) < 1 ):
+        #    software = "Not Provided"
+        #if ( len(pc) < 1 ):
+        #    pc = "Not Provided"
+        #if ( len(description) < 1 ):
+        #    description = "Not Provided"
 
         # request type
         probType_ProbType = request_type
@@ -977,24 +1066,38 @@ def service_database_saved(form, username):
         callLog_Tracker = "selfserve"
 
         # call log status
-        
+
         if( request_type == "Move equipment request"):
             callLog_Status = "Unapproved"
         else:
             callLog_Status = "Open"
 
         # CallLog Table
-        callLog_table = CallLog(
-            Symptoms = callLog_Symptoms,
-            Priority = callLog_Priority,
-            CallSource = callLog_CallSource,
-            RecvdDate = callLog_RecvdDate,
-            RecvdTime = callLog_RecvdTime,
-            CustID = callLog_CustID,
-            Tracker = callLog_Tracker,
-            CallStatus = callLog_Status,
-            Category = "Service"
-        )
+        if (ticketID == None):
+            callLog_table = CallLog(
+                    Symptoms = callLog_Symptoms,
+                    Priority = callLog_Priority,
+                    CallSource = callLog_CallSource,
+                    RecvdDate = callLog_RecvdDate,
+                    RecvdTime = callLog_RecvdTime,
+                    CustID = callLog_CustID,
+                    Tracker = callLog_Tracker,
+                    CallStatus = callLog_Status,
+                    Category = "Service"
+            )
+        else:
+            callLog_table = CallLog(
+                    CallID = ticketID,
+                    Symptoms = callLog_Symptoms,
+                    Priority = callLog_Priority,
+                    CallSource = callLog_CallSource,
+                    RecvdDate = callLog_RecvdDate,
+                    RecvdTime = callLog_RecvdTime,
+                    CustID = callLog_CustID,
+                    Tracker = callLog_Tracker,
+                    CallStatus = callLog_Status,
+                    Category = "Service"
+            )
 
         # Asgnmnt Table
         asgnmnt_table = Asgnmnt(
@@ -1008,7 +1111,7 @@ def service_database_saved(form, username):
 
         # ProbType Table
         probType_table = ProbType(
-            ProbType = probType_ProbType
+                ProbType= probType_ProbType
         )
 
         # Saving data into the database
@@ -1063,7 +1166,6 @@ def general_database_saved(form, username, ticketID):
         # call log status
         callLog_Status = "Open"
 
-        print("ticketID = ", ticketID)
         # CallLog Table
         if (ticketID == None):
             callLog_table = CallLog(

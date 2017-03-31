@@ -38,7 +38,7 @@ class UserLogin(forms.Form):
         return super(UserLogin, self).clean(*args, **kwargs)
 
 class HardwareTicketForm(forms.Form):
-	asset_tag = forms.CharField(max_length=5, min_length=5, 
+	asset_tag = forms.CharField(max_length=5, min_length=5,
 	    validators=[RegexValidator(regex='^\d{5}$', message='Asset tag must be 5 integers', code='wrongInput')],
 	    label=mark_safe('Asset Tag (<a href="/questions/whyname/" target="_blank">Where to find the Asset Tag</a>?)'))
 	equipment_type = forms.ChoiceField(choices=EQUIPMENT_TYPE_CHOICES)
@@ -59,10 +59,15 @@ class SoftwareTicketForm(forms.Form):
     image_url = forms.CharField(widget=forms.URLInput(attrs={'placeholder': 'https://'}), required=False)
     # apply class to all fields.
     def __init__(self, *args, **kwargs):
+        self.system = kwargs.pop('system',None)
+        self.system_offline = kwargs.pop('system_offline',None)
+        self.problem_description = kwargs.pop('problem_description',None)
+        self.steps_replicate_problem = kwargs.pop('steps_replicate_problem',None)
+        self.image_url = kwargs.pop('image_url',None)
         super(SoftwareTicketForm, self).__init__(*args, **kwargs)
         for field in self.fields:
             if field != "system_offline":
-                self.fields[field].widget.attrs.update({'class' : 'software'})
+               self.fields[field].widget.attrs.update({'class' : 'software'})
 
 class PasswordTicketForm(forms.Form):
     system_type = forms.ChoiceField(choices=SYSTEM_CHOICES)
@@ -71,12 +76,25 @@ class PasswordTicketForm(forms.Form):
 class ServiceTicketForm(forms.Form):
     request_type = forms.ChoiceField(choices=REQUEST_TYPE_CHOICE)
     system = forms.ChoiceField(choices=SYSTEM_CHOICES, required=False)
-    asset_tag = forms.CharField(max_length=5, min_length=5, validators=[RegexValidator(regex='^\d{5}$', message='Asset tag must be 5 integers', code='wrongInput')],
+    # The asset tag field shouldn't be validated if it is not required
+    # For example, it isn't required for "System access request"
+    #asset_tag = forms.CharField(max_length=5, min_length=5, validators=[RegexValidator(regex='^\d{5}$', message='Asset tag must be 5 integers', code='wrongInput')],
+#		label=mark_safe('Asset Tag (<a href="/questions/whyname/" target="_blank">Where to find the Asset Tag</a>?) of the equipment you want moved or surplused'), required=False)
+    asset_tag = forms.CharField(max_length=5, min_length=0,
 		label=mark_safe('Asset Tag (<a href="/questions/whyname/" target="_blank">Where to find the Asset Tag</a>?) of the equipment you want moved or surplused'), required=False)
     move_location = forms.CharField(max_length=200, label='Where would you like this equipment moved to?', required=False)
     software = forms.CharField(max_length=200, label='What software are you looking for?', required=False)
     pc = forms.CharField(max_length=200, label='Which PC do you want this software installed on?', required=False)
     description = forms.CharField(widget=forms.Textarea(attrs={'rows':10, 'cols': 10}), max_length=500, required=False)
+    def __init__(self, *args, **kwargs):
+        self.request_type = kwargs.pop('request_type',None)
+        self.system = kwargs.pop('system',None)
+        self.asset_tag = kwargs.pop('asset_tag',None)
+        self.move_location = kwargs.pop('move_location',None)
+        self.software = kwargs.pop('software',None)
+        self.pc = kwargs.pop('pc',None)
+        self.description = kwargs.pop('description',None)
+        super(ServiceTicketForm, self).__init__(*args, **kwargs)
 
 
 class GeneralTicketForm(forms.Form):

@@ -2,6 +2,8 @@
 
 {% block content %}
 
+{% load editTicketURL %}
+
 <html>
 <head>
 	<title>{{ username }}'s Tickets</title>
@@ -53,6 +55,7 @@
 	    {% load descGet %}
 	    {% for callLog in callLogs %}
 	        {% if callLog.Category in available %}
+               {% editURL callLog.Category callLog.CallID as editTicketURL %}
                 <tr>
                     <td> {{ callLog.CallID }} </td>
                     <td> {{ callLog.CustID }} </td>
@@ -75,7 +78,7 @@
                                     <i class="fa fa-check" aria-hidden="true"></i> Dispprove
                                     </div></a>
                             {% else %}
-                                <a href="edit.asp" class="button disabled" style="display:inline-block; background-color: grey" >
+                                <a href="{{editTicketURL}}" class="button disabled" style="display:inline-block; background-color: grey" >
                                         <div ><i class="fa fa-pencil" aria-hidden="true"></i> Edit</div>
                                     </a>
                                 <a style="display:inline-block;"> <div class="button disabled" style="background-color:grey;" >
@@ -85,7 +88,7 @@
                       
                         <!-- allow editing and resolve/reopening of approved tickets -->
                         {% else %}
-                            <a href="edit.asp" style="display:inline-block;">
+                            <a href="{{editTicketURL}}" style="display:inline-block;">
                                 <div class="button"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</div>
                             </a>
                             <a  style="display:inline-block;" id="myBtn_{{ callLog.CallID }}" class="cursor button" ><div>
