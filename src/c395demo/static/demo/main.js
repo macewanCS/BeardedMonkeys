@@ -90,6 +90,14 @@ $(document).ready(function(){
             }
        });
     });
+    
+     // asset tag just numbers
+    $( "#id_asset_tag" ).on('keypress', function (e) {
+        var char = String.fromCharCode(e.which);
+        if (!$.isNumeric(char)) {
+            e.preventDefault();
+        }
+    })
 
     function alterData(id, status){
         console.log(id, status)
