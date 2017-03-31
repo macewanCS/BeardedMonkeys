@@ -39,7 +39,8 @@
     </script>
 </head>
 <body>
-    <h1>{{ username }}'s Tickets</h1>
+    {% load descGet %}
+    <h1>{{ username|firstUpper }}'s Tickets</h1>
 	<table class="sortable" id="ticket-table">
 	    <tr>
 	        <th>ID</th>
@@ -50,7 +51,7 @@
 	        <th class= "sorttable_nosort">Description</th>
 	        <th class= "sorttable_nosort">Options</th>
 	    </tr>
-	    {% load descGet %}
+	    
 	    {% for callLog in callLogs %}
 	        {% if callLog.Category in available %}
                 <tr>
@@ -101,7 +102,7 @@
 	    {% endfor %}
     </table>
     <div align="center">
-        <button class="submit" id="loadMore">Load More Tickets</input>
+        <button id="loadMore">Load More Tickets</input>
     </div>
     <BR><BR>
 
