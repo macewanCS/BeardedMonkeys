@@ -2,6 +2,8 @@
 
 {% block content %}
 
+{% load editTicketURL %}
+
 <html>
 <head>
 	<title>View Ticket Page</title>
@@ -36,7 +38,9 @@
                 <img class="stat" src="{% static 'demo/view-ticket/unknown-bar.jpg' %}">
             {% endif %}
         </div>
-        
+
+       {% editURL Category CallID as editTicketURL %}
+
         <a class="button" href="{% url 'manage' %}"><i class="fa fa-chevron-circle-left" aria-hidden="true"></i> Back</a>
         
         <!-- If user is manager, replace edit button with approve button for non-approved tickets -->
@@ -46,18 +50,18 @@
                         <i class="fa fa-check" aria-hidden="true"></i> Approve
                     </div></a>
                 {% else %}
-                    <a href="edit.asp" class="button disabled" style="display:inline-block; background-color: grey" >
+                <a href="{{editTicketURL}}" class="button disabled" style="display:inline-block; background-color: grey" >
                         <div ><i class="fa fa-pencil" aria-hidden="true"></i> Edit</div>
                     </a>
                 {% endif %}
         {% else %}
                 <!-- allow users to edit own approved tickets -->
                 {% if user.username == CustID %}
-                    <a href="edit.asp" style="display:inline-block;">
+                <a href="{{editTicketURL}}" style="display:inline-block;">
                         <div class="button"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</div>
                     </a>
                 {% else %}
-                    <a href="edit.asp" class="button disabled" style="display:inline-block; background-color: grey" >
+                <a href="{{editTicketURL}}" class="button disabled" style="display:inline-block; background-color: grey" >
                         <div ><i class="fa fa-pencil" aria-hidden="true"></i> Edit</div>
                     </a>
                 {% endif %}

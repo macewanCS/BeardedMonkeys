@@ -4,10 +4,18 @@
 
 <html>
 <head>
-	<title>General Ticket Submitted</title>
+    {% if PageSubmitType == "insert" %}
+	   <title>General Ticket Submitted</title>
+    {% else %}
+	   <title>General Ticket Updated</title>
+    {% endif %}
 </head>
 <body>
-	<h1>General Ticket Successfully Submitted</h1>
+    {% if PageSubmitType == "insert" %}
+	   <h1>General Ticket Successfully Submitted</h1>
+    {% else %}
+	   <h1>General Ticket Successfully Updated</h1>
+    {% endif %}
 	
 	<div class="right">
         <p>

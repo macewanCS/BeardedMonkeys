@@ -4,10 +4,18 @@
 
 <html>
 <head>
-	<title>Hardware Ticket Page Submitted</title>
+    {% if PageSubmitType == "insert" %}
+	    <title>Hardware Ticket Page Submitted</title>
+    {% else %}
+	    <title>Hardware Ticket Page Updated</title>
+    {% endif %}
 </head>
 <body>
+    {% if PageSubmitType == "insert" %}
     <h1>Hardware Ticket Successfully Submitted</h1>
+    {% else %}
+    <h1>Hardware Ticket Successfully Updated</h1>
+    {% endif %}
     
     <div class="right">
         <p>
@@ -29,15 +37,15 @@
 
     {% if Category == "Hardware" %}
         <p> <span style="font-weight:bold;">Type of equipment: </span> 
-        <br>{{ EquipType }} </p>
+        <br>{{ equipment_type }} </p>
         <p> <span style="font-weight:bold;">Asset tag: </span> 
-        <br>{{ AssetTag }} </p>
+        <br>{{ asset_tag }} </p>
         <p> <span style="font-weight:bold;">Name of device: </span> 
-        <br>{{ DeviceName }} </p>
+        <br>{{ device_name }} </p>
         <p> <span style="font-weight:bold;">Error message displayed: </span> 
-        <br>{{ ErrorMsg }} </p>
+        <br>{{ error_messages }} </p>
         <P> <span style="font-weight:bold;">Description: </span> 
-        <br>{{ Description }} </p>
+        <br>{{ problem_description }} </p>
     {% endif %}
     <br><br><br>
     

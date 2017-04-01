@@ -3,25 +3,10 @@
 
 {% block content %}
 {% load static %}
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
 <script>
     // altering what data is displayed based on the type of service requested
    $(document).ready(function() {
-      $('#id_system_label').hide();
-      $('#id_system').hide();
-      $('#id_asset_tag_label').hide();
-      $('#id_asset_tag').hide();
-      $('#id_move_location_label').hide();
-      $('#id_move_location').hide();
-      $('#id_software_label').hide();
-      $('#id_software').hide();
-      $('#id_pc_label').hide();
-      $('#id_pc').hide();
-      $('#id_description_label').hide();
-      $('#id_description').hide();
-      <!-- fix required fields bug-->
       $('#id_request_type').on('change', function () {
           if ($(this).val() === 'Move equipment request') {
               $('#id_system_label').show();
@@ -94,7 +79,7 @@
               $('#id_description_label').show();
               $('#id_description').show();
           }
-      });
+      }).change();
    });
 </script>
 <html>
