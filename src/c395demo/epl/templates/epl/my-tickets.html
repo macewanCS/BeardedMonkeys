@@ -16,67 +16,69 @@
     {% load descGet %}
     <h1>{{ username|firstUpper }}'s Tickets</h1>
     <a id="scroll-top" title="Go Back to top">&uarr;</a>
-	<table class="sortable" id="ticket-table">
-	    <tr>
-	        <th>ID</th>
-	        <th>Author</th>
-	        <th>Date</th>
-	        <th>Category</th>
-	        <th>Status</th>
-	        <th class= "sorttable_nosort">Description</th>
-	        <th class= "sorttable_nosort">Options</th>
-	    </tr>
-	    
-	    {% for callLog in callLogs %}
-	        {% if callLog.Category in available %}
-               {% editURL callLog.Category callLog.CallID as editTicketURL %}
-                <tr>
-                    <td> {{ callLog.CallID }} </td>
-                    <td> {{ callLog.CustID }} </td>
-                    <td> {{ callLog.RecvdDate|get_date }} </td>
-                    <td> {{ callLog.Category }} </td>
-                    <td id="status_{{ callLog.CallID }}"> {{ callLog.CallStatus }} </td>
-                    <td style="text-align:left;"> {% descGet callLog.CallID %} </td>
-                    <td>
-                        <a href="{% url 'detail' id=callLog.CallID %}" style="display:inline-block;">
-                            <div class="button"><i class="fa fa-folder-open-o" aria-hidden="true"></i> View</div>
-                        </a>
-                      
-                        <!-- If user is manager, replace edit and resolve/reopen buttons with approve and disapprove buttons for non-approved tickets -->
-                        {% if callLog.CallStatus == "Unapproved" or callLog.CallStatus == "Disapproved" %}
-                            {% if branch == "manager" %}
-                                <a id="appBtn_{{ callLog.CallID }}" class="cursor button" style="display:inline-block;"> <div>
-                                        <i class="fa fa-check" aria-hidden="true"></i> Approve
-                                    </div></a>
-                                <a id="disBtn_{{ callLog.CallID }}" class="cursor button" style="display:inline-block;"> <div>
-                                    <i class="fa fa-check" aria-hidden="true"></i> Dispprove
-                                    </div></a>
-                            {% else %}
-                                <a href="{{editTicketURL}}" class="button disabled" style="display:inline-block; background-color: grey" >
-                                        <div ><i class="fa fa-pencil" aria-hidden="true"></i> Edit</div>
-                                    </a>
-                                <a style="display:inline-block;"> <div class="button disabled" style="background-color:grey;" >
-                                            <i class="fa fa-check" aria-hidden="true"></i> Open
-                                    </div></a>
-                            {% endif %}
-                      
-                        <!-- allow editing and resolve/reopening of approved tickets -->
-                        {% else %}
-                            <a href="{{editTicketURL}}" style="display:inline-block;">
-                                <div class="button"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</div>
+    <div style="overflow-x:auto;margin-bottom: 50px;">
+	    <table class="sortable" id="ticket-table">
+	        <tr>
+	            <th>ID</th>
+	            <th>Author</th>
+	            <th>Date</th>
+	            <th>Category</th>
+	            <th>Status</th>
+	            <th class= "sorttable_nosort">Description</th>
+	            <th class= "sorttable_nosort">Options</th>
+	        </tr>
+	        
+	        {% for callLog in callLogs %}
+	            {% if callLog.Category in available %}
+                   {% editURL callLog.Category callLog.CallID as editTicketURL %}
+                    <tr>
+                        <td> {{ callLog.CallID }} </td>
+                        <td> {{ callLog.CustID }} </td>
+                        <td> {{ callLog.RecvdDate|get_date }} </td>
+                        <td> {{ callLog.Category }} </td>
+                        <td id="status_{{ callLog.CallID }}"> {{ callLog.CallStatus }} </td>
+                        <td style="text-align:left;"> {% descGet callLog.CallID %} </td>
+                        <td>
+                            <a href="{% url 'detail' id=callLog.CallID %}" style="display:inline-block;">
+                                <div class="button"><i class="fa fa-folder-open-o" aria-hidden="true"></i> View</div>
                             </a>
-                            <a  style="display:inline-block;" id="myBtn_{{ callLog.CallID }}" class="cursor button" ><div>
-                                {% if callLog.CallStatus == "Open" %}
-                                    <i class="fa fa-check" aria-hidden="true"></i> Resolved </div></a>
+                          
+                            <!-- If user is manager, replace edit and resolve/reopen buttons with approve and disapprove buttons for non-approved tickets -->
+                            {% if callLog.CallStatus == "Unapproved" or callLog.CallStatus == "Disapproved" %}
+                                {% if branch == "manager" %}
+                                    <a id="appBtn_{{ callLog.CallID }}" class="cursor button" style="display:inline-block;"> <div>
+                                            <i class="fa fa-check" aria-hidden="true"></i> Approve
+                                        </div></a>
+                                    <a id="disBtn_{{ callLog.CallID }}" class="cursor button" style="display:inline-block;"> <div>
+                                        <i class="fa fa-check" aria-hidden="true"></i> Dispprove
+                                        </div></a>
                                 {% else %}
-                                    <i class="fa fa-check" aria-hidden="true"></i> Re-open </div></a>
+                                    <a href="{{editTicketURL}}" class="button disabled" style="display:inline-block; background-color: grey" >
+                                            <div ><i class="fa fa-pencil" aria-hidden="true"></i> Edit</div>
+                                        </a>
+                                    <a style="display:inline-block;"> <div class="button disabled" style="background-color:grey;" >
+                                                <i class="fa fa-check" aria-hidden="true"></i> Open
+                                        </div></a>
                                 {% endif %}
-                        {% endif %}
-                    </td>
-                </tr>
-            {% endif %}
-	    {% endfor %}
-    </table>
+                          
+                            <!-- allow editing and resolve/reopening of approved tickets -->
+                            {% else %}
+                                <a href="{{editTicketURL}}" style="display:inline-block;">
+                                    <div class="button"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</div>
+                                </a>
+                                <a  style="display:inline-block;" id="myBtn_{{ callLog.CallID }}" class="cursor button" ><div>
+                                    {% if callLog.CallStatus == "Open" %}
+                                        <i class="fa fa-check" aria-hidden="true"></i> Resolved </div></a>
+                                    {% else %}
+                                        <i class="fa fa-check" aria-hidden="true"></i> Re-open </div></a>
+                                    {% endif %}
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endif %}
+	        {% endfor %}
+        </table>
+    </div>
     <div align="center">
         <button id="loadMore">Load More Tickets</input>
     </div>
