@@ -26,7 +26,7 @@
         <div style="margin: 0 -3px 7px 0;">
             {% if CallStatus == "Open" %}
                 <img class="stat" src="{% static 'demo/view-ticket/open-bar.jpg' %}">
-            {% elif CallStatus == "InProgress" %}
+            {% elif CallStatus == "InProgress" or CallStatus == "Progress" or CallStatus == "In Progress" %}
                 <img class="stat" src="{% static 'demo/view-ticket/progress-bar.jpg' %}">
             {% elif CallStatus == "Resolved" %}
                 <img class="stat" src="{% static 'demo/view-ticket/resolved-bar.jpg' %}">
@@ -126,15 +126,25 @@
     <p style="margin-top:0;">
         Posted on {{ RecvdDate }}&ensp;
         {% if Category == "Hardware" %}
-            <img src="{% static 'demo/view-ticket/hardware-tag.jpg' %}">
+            <a href="/manage-tickets/?ticketType=hardware">
+                <img src="{% static 'demo/view-ticket/hardware-tag.jpg' %}">
+            </a>
         {% elif Category == "Software" %}
-            <img src="{% static 'demo/view-ticket/software-tag.jpg' %}">
+            <a href="/manage-tickets/?ticketType=software">
+                <img src="{% static 'demo/view-ticket/software-tag.jpg' %}">
+            </a>
         {% elif Category == "Service" %}
-            <img src="{% static 'demo/view-ticket/service-tag.jpg' %}">
+            <a href="/manage-tickets/?ticketType=service">
+                <img src="{% static 'demo/view-ticket/service-tag.jpg' %}">
+            </a>
         {% elif Category == "Other" %}
-            <img src="{% static 'demo/view-ticket/others-tag.jpg' %}">
+            <a href="/manage-tickets/?ticketType=other">
+                <img src="{% static 'demo/view-ticket/others-tag.jpg' %}">
+            </a>
         {% elif Category == "Password" %}
-            <img src="{% static 'demo/view-ticket/password-tag.jpg' %}">
+            <a href="/manage-tickets/?ticketType=password">
+                <img src="{% static 'demo/view-ticket/password-tag.jpg' %}">
+            </a>
         {% endif %}
     </p>
 

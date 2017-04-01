@@ -230,11 +230,49 @@ def manage(request):
     # user must need to login to view pages
     if (not request.user.is_authenticated()):
         return redirect('/login')
-
+    
+    ticket_type = request.GET.get('ticketType')
+    try:
+        ticket_type = ticket_type.lower()
+    except:
+        ticket_type = None
+    
     # retriving all the data
-    callLogs = CallLog.objects.all()
+    if ( ticket_type == None ):
+        callLogs = CallLog.objects.all()
+        
+    # filter based on the category of the ticket
+    elif  ( ticket_type == "hardware" ):
+        callLogs = CallLog.objects.filter(Category="Hardware")
+    elif  ( ticket_type == "software" ):
+        callLogs = CallLog.objects.filter(Category="Software")
+    elif  ( ticket_type == "service" ):
+        callLogs = CallLog.objects.filter(Category="Service")
+    elif  ( ticket_type == "password" ):
+        callLogs = CallLog.objects.filter(Category="Password")
+    elif  ( ticket_type == "other" ):
+        callLogs = CallLog.objects.filter(Category="Other")
+        
+    # filter based on status of the ticket
+    elif  ( ticket_type == "open" ):
+        callLogs = CallLog.objects.filter(CallStatus="Open")
+    elif  ( ticket_type == "resolved" ):
+        callLogs = CallLog.objects.filter(CallStatus="Resolved")
+    elif  ( ticket_type == "closed" ):
+        callLogs = CallLog.objects.filter(CallStatus="Closed")
+    elif  ( ticket_type == "disapproved" ):
+        callLogs = CallLog.objects.filter(CallStatus="Disapproved")
+    elif  ( ticket_type == "unapproved" ):
+        callLogs = CallLog.objects.filter(CallStatus="Unapproved")
+    elif  ( ticket_type == "progress" ):
+        callLogs = CallLog.objects.filter(CallStatus="InProgress")
+    
+    else:
+        callLogs = CallLog.objects.all()
+    
     asgnmnts = Asgnmnt.objects.all()
     probTypes = ProbType.objects.all()
+    
 
     #obtaining user's branch
     try:
