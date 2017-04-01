@@ -48,6 +48,7 @@ function filters (visible){
         case 'disapproved':
             $("option[value='/manage-tickets/?ticketType=disapproved']").attr("selected","selected");
             break;
-        
+        default:
+            $("option[id='selected']").attr("selected","selected");
     }
 }
