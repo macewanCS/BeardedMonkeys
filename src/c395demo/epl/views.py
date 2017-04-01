@@ -48,7 +48,6 @@ def hardware(request):
         form = HardwareTicketForm(request.POST or None)
     else:
         context = successTicketSummary(request, ticketId, "update")
-        print (context)
         form = HardwareTicketForm(request.POST or None, initial=context, auto_id=False)
 
     if form.is_valid():
@@ -500,6 +499,7 @@ def successTicketSummary(request, id, pageSubmitType):
             "device_name" : temp[2],
             "problem_description" : temp[3],
             "error_messages" : temp[4],
+            "image_url" : temp[5],
             "Category" : ticket.Category,
             "CallStatus" : ticket.CallStatus,
             "Priority" : ticket.Priority,
@@ -1243,8 +1243,6 @@ def alter_status(request):
     if request.method == 'POST':
         status = request.POST.get('status')
         id = request.POST.get('id')
-
-        print (id, status)
 
         response_data = {}
 
