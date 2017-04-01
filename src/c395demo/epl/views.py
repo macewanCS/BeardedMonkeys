@@ -48,7 +48,7 @@ def hardware(request):
         form = HardwareTicketForm(request.POST or None)
     else:
         context = successTicketSummary(request, ticketId, "update")
-        print context
+        print (context)
         form = HardwareTicketForm(request.POST or None, initial=context, auto_id=False)
 
     if form.is_valid():

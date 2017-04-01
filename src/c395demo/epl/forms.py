@@ -41,11 +41,11 @@ class HardwareTicketForm(forms.Form):
 	asset_tag = forms.CharField(max_length=5, min_length=5,
 	    validators=[RegexValidator(regex='^\d{5}$', message='Asset tag must be 5 integers', code='wrongInput')],
 	    label=mark_safe('Asset Tag (<a href="/questions/whyname/" target="_blank">Where to find the Asset Tag</a>?)'))
-	equipment_type = forms.ChoiceField(choices=EQUIPMENT_TYPE_CHOICES)
+	equipment_type = forms.ChoiceField(choices=EQUIPMENT_TYPE_CHOICES, widget=forms.Select(attrs={'id': 'id_equipment_type'}))
 	problem_description = forms.CharField(widget=forms.Textarea)
 	error_messages = forms.CharField(widget=forms.Textarea, required=False)
 	image_url = forms.CharField(widget=forms.URLInput(attrs={'placeholder': 'https://'}), required=False)
-	device_name = forms.CharField(max_length=200, required=False)
+	device_name = forms.CharField(max_length=200, widget=forms.TextInput(attrs={'id': 'id_device_name'}), required=False)
 
 class SoftwareTicketForm(forms.Form):
     system = forms.ChoiceField(choices=SOFTWARE_CHOICES,
@@ -74,18 +74,21 @@ class PasswordTicketForm(forms.Form):
     sys_user = forms.CharField(max_length=200)
 
 class ServiceTicketForm(forms.Form):
-    request_type = forms.ChoiceField(choices=REQUEST_TYPE_CHOICE)
-    system = forms.ChoiceField(choices=SYSTEM_CHOICES, required=False)
+    request_type = forms.ChoiceField(choices=REQUEST_TYPE_CHOICE, widget=forms.Select(attrs={'id': 'id_request_type'}) )
+    system = forms.ChoiceField(choices=SYSTEM_CHOICES, widget=forms.Select(attrs={'id': 'id_system'}), required=False)
     # The asset tag field shouldn't be validated if it is not required
     # For example, it isn't required for "System access request"
     #asset_tag = forms.CharField(max_length=5, min_length=5, validators=[RegexValidator(regex='^\d{5}$', message='Asset tag must be 5 integers', code='wrongInput')],
 #		label=mark_safe('Asset Tag (<a href="/questions/whyname/" target="_blank">Where to find the Asset Tag</a>?) of the equipment you want moved or surplused'), required=False)
-    asset_tag = forms.CharField(max_length=5, min_length=0,
+    asset_tag = forms.CharField(max_length=5, min_length=0, widget=forms.TextInput(attrs={'id': 'id_asset_tag'}),
 		label=mark_safe('Asset Tag (<a href="/questions/whyname/" target="_blank">Where to find the Asset Tag</a>?) of the equipment you want moved or surplused'), required=False)
-    move_location = forms.CharField(max_length=200, label='Where would you like this equipment moved to?', required=False)
-    software = forms.CharField(max_length=200, label='What software are you looking for?', required=False)
-    pc = forms.CharField(max_length=200, label='Which PC do you want this software installed on?', required=False)
-    description = forms.CharField(widget=forms.Textarea(attrs={'rows':10, 'cols': 10}), max_length=500, required=False)
+    move_location = forms.CharField(max_length=200, widget=forms.TextInput(attrs={'id': 'id_move_location'}),
+        label='Where would you like this equipment moved to?', required=False)
+    software = forms.CharField(max_length=200, widget=forms.TextInput(attrs={'id': 'id_software'}),
+        label='What software are you looking for?', required=False)
+    pc = forms.CharField(max_length=200, widget=forms.TextInput(attrs={'id': 'id_pc'}),
+        label='Which PC do you want this software installed on?', required=False)
+    description = forms.CharField(widget=forms.Textarea(attrs={'rows':10, 'cols': 10, 'id': 'id_description'}), max_length=500, required=False)
     def __init__(self, *args, **kwargs):
         self.request_type = kwargs.pop('request_type',None)
         self.system = kwargs.pop('system',None)
