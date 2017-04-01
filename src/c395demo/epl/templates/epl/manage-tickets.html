@@ -7,17 +7,6 @@
 <html>
 <head>
 	<title>Branch Tickets</title>
-	{% load static %}
-
-    <link rel="stylesheet" type="text/css" href="/static/demo/main.css" />
-    <link rel="stylesheet" type="text/css" href="/static/demo/normalize.css" />
-    <link rel="stylesheet" type="text/css" href="/static/demo/grid.css" />
-    <link href="https://fortawesome.github.io/Font-Awesome/assets/font-awesome/css/font-awesome.css" rel="stylesheet">
-    <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-
-	<script src="{% static '/demo/sorttable.js' %}"></script>
     <script>
     $(document).ready(function () {
                 size_tr = $("#ticket-table tr").size();
@@ -152,7 +141,7 @@
 	    </tbody>
     </table>
     <div align="center">
-        <button class="submit" id="loadMore">Load More Tickets</input>
+        <button id="loadMore">Load More Tickets</input>
     </div>
     <BR><BR>
     <div id="myModal" class="modal">

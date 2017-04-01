@@ -7,17 +7,6 @@
 <html>
 <head>
 	<title>{{ username }}'s Tickets</title>
-	{% load static %}
-
-    <link rel="stylesheet" type="text/css" href="/static/demo/main.css" />
-    <link rel="stylesheet" type="text/css" href="/static/demo/normalize.css" />
-    <link rel="stylesheet" type="text/css" href="/static/demo/grid.css" />
-    <link href="https://fortawesome.github.io/Font-Awesome/assets/font-awesome/css/font-awesome.css" rel="stylesheet">
-    <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-
-	<script src="{% static '/demo/sorttable.js' %}"></script>
     <script>
          $(document).ready(function () {
              size_tr = $("#ticket-table tr").size();
@@ -41,7 +30,8 @@
     </script>
 </head>
 <body>
-    <h1>{{ username }}'s Tickets</h1>
+    {% load descGet %}
+    <h1>{{ username|firstUpper }}'s Tickets</h1>
 	<table class="sortable" id="ticket-table">
 	    <tr>
 	        <th>ID</th>
@@ -52,7 +42,7 @@
 	        <th class= "sorttable_nosort">Description</th>
 	        <th class= "sorttable_nosort">Options</th>
 	    </tr>
-	    {% load descGet %}
+	    
 	    {% for callLog in callLogs %}
 	        {% if callLog.Category in available %}
                {% editURL callLog.Category callLog.CallID as editTicketURL %}
@@ -104,7 +94,7 @@
 	    {% endfor %}
     </table>
     <div align="center">
-        <button class="submit" id="loadMore">Load More Tickets</input>
+        <button id="loadMore">Load More Tickets</input>
     </div>
     <BR><BR>
 
@@ -113,7 +103,7 @@
       <div class="modal-content">
           <span class="close">&times;</span>
           <p id="modalText">Are you sure the ticket has been resolved?</p>
-          <a id="nButton" class="button modalButton cursor" style="float:right">No</a>
+          <a class="button modalButton nButton cursor" style="float:right">No</a>
           <a class="button modalButton" style="visibility:hidden;"></a>
           <a id="yButton" class="button modalButton cursor" style="float:right; margin-right:20px;">Yes</a>
       </div>

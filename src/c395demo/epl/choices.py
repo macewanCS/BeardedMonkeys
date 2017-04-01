@@ -1,5 +1,7 @@
 EQUIPMENT_TYPE_CHOICES = (
-	('AWE', 'AWE'),
+    #adding select to the drop down menu
+    ('','--Select--'),
+    ('AWE', 'AWE'),
     ('Barcode scanner', 'Barcode scanner'),
     ('Cell phone', 'Cell phone'),
     ('Gate', 'Gate'),
@@ -19,7 +21,9 @@ EQUIPMENT_TYPE_CHOICES = (
 )
 
 SOFTWARE_CHOICES = (
-	('Apps.epl.ca', 'Apps.epl.ca'),
+    #adding select to the drop down menu
+    ('','--Select--'),
+    ('Apps.epl.ca', 'Apps.epl.ca'),
     ('Bibliocommons', 'Bibliocommons'),
     ('Dayforce', 'Dayforce'),
     ('iNovah', 'iNovah'),
@@ -36,7 +40,9 @@ SOFTWARE_CHOICES = (
 )
 
 SYSTEM_CHOICES = (
-	('Dayforce', 'Dayforce'),
+    #adding select to the drop down menu
+    ('','--Select--'),
+    ('Dayforce', 'Dayforce'),
     ('iNovah', 'iNovah'),
     ('LibraryOnline', 'LibraryOnline'),
     ('Peoplesoft', 'Peoplesoft'),
@@ -53,7 +59,8 @@ YES_NO_CHOICE = (
 )
 
 REQUEST_TYPE_CHOICE = (
-        ('', ''),
+        #adding select to the drop down menu
+        ('','--Select--'),
         ('System access request', 'System access request'),
         ('Move equipment request', 'Move equipment request'),
         ('New software request', 'New software request'),

@@ -164,6 +164,7 @@ li{
     background-color: #E60E64;
     color: white;
     font-weight: bold;
+    border-radius: 0 0 10px 10px;
     transition: background-color 1s;
 }
 

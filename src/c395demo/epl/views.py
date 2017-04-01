@@ -217,6 +217,7 @@ def tickets(request):
     except:
         branch = "staff"
 
+    callLogs = reversed(callLogs)
     context = {
         "username" : username,
         "callLogs" : callLogs,
@@ -241,7 +242,8 @@ def manage(request):
         branch = UserProfile.objects.get(user=request.user).branch
     except:
         branch = "staff"
-
+    
+    callLogs = reversed(callLogs)
     context = {
         "callLogs" : callLogs,
         "asgnmnts" : asgnmnts,
