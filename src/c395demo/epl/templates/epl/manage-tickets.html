@@ -7,6 +7,8 @@
 <html>
 <head>
 	<title>Branch Tickets</title>
+	{% load static %}
+	<script src="{% static '/demo/sorttable.js' %}"></script>
     <script>
     $(document).ready(function () {
                 size_tr = $("#ticket-table tr").size();

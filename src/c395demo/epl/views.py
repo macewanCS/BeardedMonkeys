@@ -252,6 +252,26 @@ def manage(request):
         }
 
     return render(request, 'epl/manage-tickets.html', context)
+    
+def format_date(date):
+    try:
+        temp = int(date[-4:])
+        month, day, year = date.split("/")
+        date = year
+        date += "-"
+        
+        if ( len(month) == 1 ):
+            date += "0"
+        date += month
+        date += "-"
+        if ( len(day) == 1 ):
+            date += "0"
+        date += day
+    except:
+        temp = date
+        date = "20"
+        date += temp
+    return date
 
 def detail(request, id):
     # user must need to login to view pages
@@ -260,8 +280,7 @@ def detail(request, id):
 
     ticket = CallLog.objects.get(CallID = id)
 
-    recvdDate = "20"
-    recvdDate += ticket.RecvdDate
+    recvdDate = format_date(ticket.RecvdDate)
 
     #splitting the symptoms string into multiple fields for display
     temp = parsing(ticket.Symptoms, "|")
@@ -480,8 +499,7 @@ def getTicketId(ticketCategory, username):
 def successTicketSummary(request, id, pageSubmitType):
     ticket = CallLog.objects.get(CallID = id)
 
-    recvdDate = "20"
-    recvdDate += ticket.RecvdDate
+    recvdDate = format_date(ticket.RecvdDate)
 
     temp = parsing(ticket.Symptoms, "|")
 
