@@ -11,10 +11,36 @@
 	<link rel="stylesheet" type="text/css" href="{% static '/demo/scroll-top.css' %}">
 	<script src="{% static '/demo/sorttable.js' %}"></script>
 	<script src="{% static '/demo/scroll-top.js' %}"></script>
+	<script src="{% static '/demo/filter-tickets.js' %}"></script>
+	<script>
+	    $(function(){
+	        filters ("{{visible}}");
+	    });
+	</script>
 </head>
 <body>
-    <h1>Branch Tickets</h1>
     <a id="scroll-top" title="Go Back to top">&uarr;</a>
+    <h1 style="margin-bottom:0;float:left;">Branch Tickets</h1>
+    <div style="float:right; margin:2.1em 0 0 0;">
+        <select id="dynamic_select">
+            <option selected disabled>-- select ticket filter --</option>
+            <option value="/manage-tickets/">All Tickets</option>
+            <option selected disabled>-- Tickets Category Filter --</option>
+            <option value="/manage-tickets/?ticketType=hardware">Hardware Tickets</option>
+            <option value="/manage-tickets/?ticketType=software">Software Tickets</option>
+            <option value="/manage-tickets/?ticketType=service">Service Tickets</option>
+            <option value="/manage-tickets/?ticketType=password">Password Tickets</option>
+            <option value="/manage-tickets/?ticketType=other">Other Tickets</option>
+            <option selected disabled>-- Tickets Status Filter --</option>
+            <option value="/manage-tickets/?ticketType=open">Open Tickets</option>
+            <option value="/manage-tickets/?ticketType=progress">In Progess Tickets</option>
+            <option value="/manage-tickets/?ticketType=resolved">Resolved Tickets</option>
+            <option value="/manage-tickets/?ticketType=closed">Closed Tickets</option>
+            <option value="/manage-tickets/?ticketType=unapproved">Unapproved Tickets</option>
+            <option value="/manage-tickets/?ticketType=disapproved">Disapproved Tickets</option>
+        </select>
+    </div>
+    <div class="clearfix"></div>
     <div style="overflow-x:auto;margin-bottom: 50px;">
 	    <table class="sortable" id="ticket-table">
 	        <thead>

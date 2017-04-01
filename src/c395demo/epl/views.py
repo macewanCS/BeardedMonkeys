@@ -237,6 +237,7 @@ def manage(request):
     except:
         ticket_type = None
     
+    visible = "all"
     # retriving all the data
     if ( ticket_type == None ):
         callLogs = CallLog.objects.all()
@@ -244,28 +245,39 @@ def manage(request):
     # filter based on the category of the ticket
     elif  ( ticket_type == "hardware" ):
         callLogs = CallLog.objects.filter(Category="Hardware")
+        visible = "hardware"
     elif  ( ticket_type == "software" ):
         callLogs = CallLog.objects.filter(Category="Software")
+        visible = "software"
     elif  ( ticket_type == "service" ):
         callLogs = CallLog.objects.filter(Category="Service")
+        visible = "service"
     elif  ( ticket_type == "password" ):
         callLogs = CallLog.objects.filter(Category="Password")
+        visible = "password"
     elif  ( ticket_type == "other" ):
         callLogs = CallLog.objects.filter(Category="Other")
+        visible = "other"
         
     # filter based on status of the ticket
     elif  ( ticket_type == "open" ):
         callLogs = CallLog.objects.filter(CallStatus="Open")
+        visible = "open"
     elif  ( ticket_type == "resolved" ):
         callLogs = CallLog.objects.filter(CallStatus="Resolved")
+        visible = "resolved"
     elif  ( ticket_type == "closed" ):
         callLogs = CallLog.objects.filter(CallStatus="Closed")
+        visible = "closed"
     elif  ( ticket_type == "disapproved" ):
         callLogs = CallLog.objects.filter(CallStatus="Disapproved")
+        visible = "disapproved"
     elif  ( ticket_type == "unapproved" ):
         callLogs = CallLog.objects.filter(CallStatus="Unapproved")
+        visible = "unapproved"
     elif  ( ticket_type == "progress" ):
         callLogs = CallLog.objects.filter(CallStatus="InProgress")
+        visible = "progress"
     
     else:
         callLogs = CallLog.objects.all()
@@ -273,21 +285,28 @@ def manage(request):
     asgnmnts = Asgnmnt.objects.all()
     probTypes = ProbType.objects.all()
     
-
     #obtaining user's branch
     try:
         branch = UserProfile.objects.get(user=request.user).branch
     except:
         branch = "staff"
     
+    available = ["Hardware", "Software", "Service", "Other", "Password"]
+    count = 0
+    for c in callLogs:
+        if ( c.Category in available ):
+            count += 1
+
     callLogs = reversed(callLogs)
     context = {
         "callLogs" : callLogs,
         "asgnmnts" : asgnmnts,
         "probTypes" : probTypes,
-        "available" : ["Hardware", "Software", "Service", "Other", "Password"],
-        "branch" : branch
-        }
+        "available" : available,
+        "count" : count,
+        "branch" : branch,
+        "visible" : visible
+    }
 
     return render(request, 'epl/manage-tickets.html', context)
     
