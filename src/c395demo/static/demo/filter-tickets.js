@@ -11,6 +11,7 @@ $(function(){
 });
 // -------------------------------------------------------
 
+// filters the tickets based on category or status
 function filters (visible){
     switch (visible) {
         // filter based on category of tickets

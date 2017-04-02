@@ -616,3 +616,15 @@ footer span i {
 .hover a:hover .show-image{
     display: block;
 }
+
+/* found tickets */
+#branch{
+    margin-bottom:0;
+    float:left;
+    display:inline;
+}
+#result{
+    color: black;
+    font-size: 16px;
+    font-weight: normal;
+}

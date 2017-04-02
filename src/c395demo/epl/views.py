@@ -215,14 +215,18 @@ def tickets(request):
         branch = UserProfile.objects.get(user=request.user).branch
     except:
         branch = "staff"
-
+    
+    available = ["Hardware", "Software", "Service", "Other", "Password"]
+    count = total_count(callLogs, available)
+    
     callLogs = reversed(callLogs)
     context = {
         "username" : username,
         "callLogs" : callLogs,
-        "available" : ["Hardware", "Software", "Service", "Other", "Password"],
-        "branch" : branch
-        }
+        "available" : available,
+        "branch" : branch,
+        "count" : count
+    }
     return render(request, 'epl/my-tickets.html', context)
 
 # manage all tickets page view
@@ -285,17 +289,14 @@ def manage(request):
     asgnmnts = Asgnmnt.objects.all()
     probTypes = ProbType.objects.all()
     
-    #obtaining user's branch
+    # obtaining user's branch
     try:
         branch = UserProfile.objects.get(user=request.user).branch
     except:
         branch = "staff"
     
     available = ["Hardware", "Software", "Service", "Other", "Password"]
-    count = 0
-    for c in callLogs:
-        if ( c.Category in available ):
-            count += 1
+    count = total_count(callLogs, available)
 
     callLogs = reversed(callLogs)
     context = {
@@ -307,8 +308,15 @@ def manage(request):
         "branch" : branch,
         "visible" : visible
     }
-
     return render(request, 'epl/manage-tickets.html', context)
+    
+# counts the total number of tickets
+def total_count(lis, available):
+    count = 0
+    for c in lis:
+        if ( c.Category in available ):
+            count += 1
+    return count
     
 def format_date(date):
     try:
