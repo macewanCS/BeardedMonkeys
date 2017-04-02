@@ -75,7 +75,7 @@ class PasswordTicketForm(forms.Form):
 
 class ServiceTicketForm(forms.Form):
     request_type = forms.ChoiceField(choices=REQUEST_TYPE_CHOICE, widget=forms.Select(attrs={'id': 'id_request_type'}) )
-    system = forms.ChoiceField(choices=SYSTEM_CHOICES, widget=forms.Select(attrs={'id': 'id_system'}), required=False)
+    system = forms.ChoiceField(choices=SYSTEM_CHOICES, widget=forms.Select(attrs={'id': 'id_system'}), required=True)
     # The asset tag field shouldn't be validated if it is not required
     # For example, it isn't required for "System access request"
     #asset_tag = forms.CharField(max_length=5, min_length=5, validators=[RegexValidator(regex='^\d{5}$', message='Asset tag must be 5 integers', code='wrongInput')],
