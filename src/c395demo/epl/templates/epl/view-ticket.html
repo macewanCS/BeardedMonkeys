@@ -44,18 +44,22 @@
         <a class="button" href="{% url 'manage' %}"><i class="fa fa-chevron-circle-left" aria-hidden="true"></i> Back</a>
         
         <!-- If user is manager, replace edit button with approve button for non-approved tickets -->
-        {% if CallStatus == "Unapproved" or CallStatus == "Disapproved" %}
+        {% if CallStatus == "Needs Approval" or CallStatus == "Disapproved" %}
                 {% if branch == "manager" %}
                     <a id="appBtn_{{ CallID }}" class="cursor button" style="display:inline-block;"> <div>
                         <i class="fa fa-check" aria-hidden="true"></i> Approve
                     </div></a>
+                {% elif CallStatus == "Needs Approval" and user.username == CustID %}
+                    <a href="{{editTicketURL}}" style="display:inline-block;">
+                        <div class="button"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</div>
+                    </a>
                 {% else %}
                 <a href="{{editTicketURL}}" class="button disabled" style="display:inline-block; background-color: grey" >
                         <div ><i class="fa fa-pencil" aria-hidden="true"></i> Edit</div>
                     </a>
                 {% endif %}
         {% else %}
-                <!-- allow users to edit own approved tickets -->
+                <!-- allow users to edit own non-disapproved tickets -->
                 {% if user.username == CustID %}
                 <a href="{{editTicketURL}}" style="display:inline-block;">
                         <div class="button"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</div>
@@ -78,7 +82,7 @@
             </a>
         <!-- If manager, replace resolve/reopen button with disapprove button if non-approved ticket -->
         {% elif branch == "manager" %}
-            {% if CallStatus == "Unapproved" or CallStatus == "Disapproved" %}
+            {% if CallStatus == "Needs Approval" or CallStatus == "Disapproved" %}
                 <a id="disBtn_{{ CallID }}" class="cursor button" style="display:inline-block;"> <div>
                     <i class="fa fa-check" aria-hidden="true"></i> Disapprove
             {% else %}
@@ -91,11 +95,11 @@
             {% endif %}
             </div></a>
         {% else %}
-            <!--allow user to resolve/reopen approved tickets -->
-            {% if CallStatus != "Unapproved" and CallStatus != "Disapproved" %}
+            <!--allow user to resolve/reopen approved tickets and resolve non-disapproved tickets -->
+            {% if CallStatus != "Disapproved" %}
                 {% if user.username == CustID %}
                     <a id="myBtn_{{ CallID }}" class="cursor button" style="display:inline-block;"> <div>
-                    {% if CallStatus == "Open" %}
+                    {% if CallStatus == "Open" or CallStatus == "Needs Approval" %}
                         <i class="fa fa-check" aria-hidden="true"></i> Resolved
                     {% else %}
                         <i class="fa fa-check" aria-hidden="true"></i> Re-open

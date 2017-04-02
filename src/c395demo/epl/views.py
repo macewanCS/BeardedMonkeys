@@ -1145,7 +1145,7 @@ def service_database_saved(form, username, ticketID):
         # call log status
 
         if( request_type == "Move equipment request"):
-            callLog_Status = "Unapproved"
+            callLog_Status = "Needs Approval"
         else:
             callLog_Status = "Open"
 
