@@ -230,28 +230,105 @@ def manage(request):
     # user must need to login to view pages
     if (not request.user.is_authenticated()):
         return redirect('/login')
-
+    
+    ticket_type = request.GET.get('ticketType')
+    try:
+        ticket_type = ticket_type.lower()
+    except:
+        ticket_type = None
+    
+    visible = "all"
     # retriving all the data
-    callLogs = CallLog.objects.all()
+    if ( ticket_type == None ):
+        callLogs = CallLog.objects.all()
+        
+    # filter based on the category of the ticket
+    elif  ( ticket_type == "hardware" ):
+        callLogs = CallLog.objects.filter(Category="Hardware")
+        visible = "hardware"
+    elif  ( ticket_type == "software" ):
+        callLogs = CallLog.objects.filter(Category="Software")
+        visible = "software"
+    elif  ( ticket_type == "service" ):
+        callLogs = CallLog.objects.filter(Category="Service")
+        visible = "service"
+    elif  ( ticket_type == "password" ):
+        callLogs = CallLog.objects.filter(Category="Password")
+        visible = "password"
+    elif  ( ticket_type == "other" ):
+        callLogs = CallLog.objects.filter(Category="Other")
+        visible = "other"
+        
+    # filter based on status of the ticket
+    elif  ( ticket_type == "open" ):
+        callLogs = CallLog.objects.filter(CallStatus="Open")
+        visible = "open"
+    elif  ( ticket_type == "resolved" ):
+        callLogs = CallLog.objects.filter(CallStatus="Resolved")
+        visible = "resolved"
+    elif  ( ticket_type == "closed" ):
+        callLogs = CallLog.objects.filter(CallStatus="Closed")
+        visible = "closed"
+    elif  ( ticket_type == "disapproved" ):
+        callLogs = CallLog.objects.filter(CallStatus="Disapproved")
+        visible = "disapproved"
+    elif  ( ticket_type == "unapproved" ):
+        callLogs = CallLog.objects.filter(CallStatus="Unapproved")
+        visible = "unapproved"
+    elif  ( ticket_type == "progress" ):
+        callLogs = CallLog.objects.filter(CallStatus="InProgress")
+        visible = "progress"
+    
+    else:
+        callLogs = CallLog.objects.all()
+    
     asgnmnts = Asgnmnt.objects.all()
     probTypes = ProbType.objects.all()
-
+    
     #obtaining user's branch
     try:
         branch = UserProfile.objects.get(user=request.user).branch
     except:
         branch = "staff"
     
+    available = ["Hardware", "Software", "Service", "Other", "Password"]
+    count = 0
+    for c in callLogs:
+        if ( c.Category in available ):
+            count += 1
+
     callLogs = reversed(callLogs)
     context = {
         "callLogs" : callLogs,
         "asgnmnts" : asgnmnts,
         "probTypes" : probTypes,
-        "available" : ["Hardware", "Software", "Service", "Other", "Password"],
-        "branch" : branch
-        }
+        "available" : available,
+        "count" : count,
+        "branch" : branch,
+        "visible" : visible
+    }
 
     return render(request, 'epl/manage-tickets.html', context)
+    
+def format_date(date):
+    try:
+        temp = int(date[-4:])
+        month, day, year = date.split("/")
+        date = year
+        date += "-"
+        
+        if ( len(month) == 1 ):
+            date += "0"
+        date += month
+        date += "-"
+        if ( len(day) == 1 ):
+            date += "0"
+        date += day
+    except:
+        temp = date
+        date = "20"
+        date += temp
+    return date
 
 def detail(request, id):
     # user must need to login to view pages
@@ -260,8 +337,7 @@ def detail(request, id):
 
     ticket = CallLog.objects.get(CallID = id)
 
-    recvdDate = "20"
-    recvdDate += ticket.RecvdDate
+    recvdDate = format_date(ticket.RecvdDate)
 
     #splitting the symptoms string into multiple fields for display
     temp = parsing(ticket.Symptoms, "|")
@@ -480,8 +556,7 @@ def getTicketId(ticketCategory, username):
 def successTicketSummary(request, id, pageSubmitType):
     ticket = CallLog.objects.get(CallID = id)
 
-    recvdDate = "20"
-    recvdDate += ticket.RecvdDate
+    recvdDate = format_date(ticket.RecvdDate)
 
     temp = parsing(ticket.Symptoms, "|")
 

@@ -29,7 +29,7 @@
 	width: 100%;
 }
 .span_1_of_2 {
-	width: 47.5%;
+	width: 49.8%;
 }
 
 /*  GO FULL WIDTH AT LESS THAN 600 PIXELS */
@@ -47,7 +47,7 @@
 /*  GRID OF THREE  */
 .span_3_of_3 { width: 100%; }
 .span_2_of_3 { width: 65.66%; }
-.span_1_of_3 { width: 30.33%; }
+.span_1_of_3 { width: 32.5%; }
 
 /*  GO FULL WIDTH BELOW 700 PIXELS */
 @media (max-width: 700px), (max-device-width: 700px) {
