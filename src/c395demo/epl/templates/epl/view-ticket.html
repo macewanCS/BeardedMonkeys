@@ -28,11 +28,11 @@
                 <img class="stat" src="{% static 'demo/view-ticket/open-bar.jpg' %}">
             {% elif CallStatus == "InProgress" or CallStatus == "Progress" or CallStatus == "In Progress" %}
                 <img class="stat" src="{% static 'demo/view-ticket/progress-bar.jpg' %}">
-            {% elif CallStatus == "Resolved" %}
+            {% elif CallStatus == "Resolved" or CallStatus == "Resolved w/o Approval" %}
                 <img class="stat" src="{% static 'demo/view-ticket/resolved-bar.jpg' %}">
             {% elif CallStatus == "Closed" %}
                 <img class="stat" src="{% static 'demo/view-ticket/finished-bar.jpg' %}">
-            {% elif CallStatus == "Need Approval" or CallStatus == "Unapproved" %}
+            {% elif CallStatus == "Need Approval" or CallStatus == "Needs Approval" or CallStatus == "Unapproved" %}
                 <img class="stat" src="{% static 'demo/view-ticket/need-approval-bar.jpg' %}">
             {% else %}
                 <img class="stat" src="{% static 'demo/view-ticket/unknown-bar.jpg' %}">

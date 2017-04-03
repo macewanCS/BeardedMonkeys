@@ -18,7 +18,7 @@
 <!-- alter header display based on screen size (for mobile views) -->
 <style>    
     @media screen and (max-width: 800px) {
-        #main-nav {display:none}
+        #main-nav {display:none;}
         #logout {display:none}
         #logo{ height:95%; width: auto; }
         #head .span_1_of_3{
@@ -86,7 +86,7 @@
                             <!-- Here is the dropdown menu of manage/view Tickets-->
                             <li id="manage" class="view">
                                 <a style="cursor: default;"><i class="fa fa-eye" aria-hidden="true"></i>&ensp;Manage/View Tickets&ensp;<i class="fa fa-chevron-down" aria-hidden="true"></i></a>
-                                <ul style="width:221px">
+                                <ul style="width:222px">
                                     <a href="{% url 'tickets' %}"><li>Manage My Tickets</li></a>
                                     <a href="{% url 'manage' %}"><li>Manage Branch Tickets</li></a>
                                 </ul>
@@ -120,12 +120,12 @@
             </a>
 	    </ul>
 	    {% block content %}
-	        <h1>Documentation/Tutorial Video:</h1>
+	        <h2 style="margin-top:50px;">Tutorial Video:</h2>
 	        <title>Home</title>
 	        <div style="text-align:center;" class="video-container">
-                <iframe  width="853" height="480" src="https://www.youtube.com/embed/T0aLkpa_vRA" frameborder="0" allowfullscreen></iframe>
+                <iframe  width="853" height="480" src="https://www.youtube.com/embed/dBvqOvZaUIU" frameborder="0" allowfullscreen></iframe>
 	        </div>
-	        <h2>Documentation/Tutorial Text:</h2>
+	        <h2>Documentation of the application:</h2>
                 <div style="margin-left:75px">
 	                <div>
 	                    <p style="margin-left:-25px"><b>CREATING A TICKET</b></p>
