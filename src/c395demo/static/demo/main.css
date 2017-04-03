@@ -532,7 +532,7 @@ footer {
     bottom: 0;
     left: 0;
     right: 0;
-    height: 60px;
+    height: 70px;
     background-color: #ebebeb;
     box-shadow: 0px 3px 3px #ccc inset;
 }
@@ -649,5 +649,39 @@ footer span i {
     height: 150px;
     background-color:#fff;
     }
+    
+    footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 130px;
+    background-color: #ebebeb;
+    box-shadow: 0px 3px 3px #ccc inset;
+    }
+
+    footer span {
+    position: relative;
+    display: block;
+    float: left;
+    width: 40px;
+    height: 40px;
+    background-color: #b7b7b7;
+    margin: 13px 10px 10px;
+    color: #fff;
+    text-align: center;
+    }
+
+    footer span i {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    }
+
+    .sortable .button{
+    margin-bottom: 2px;
+    }
+
 
 }
