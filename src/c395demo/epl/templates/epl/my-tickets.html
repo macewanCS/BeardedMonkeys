@@ -14,7 +14,15 @@
 </head>
 <body>
     {% load descGet %}
-    <h1>{{ username|firstUpper }}'s Tickets</h1>
+    <h1>{{ username|firstUpper }}'s Tickets<span id="result">&ensp; 
+    {% if count == 0 %}
+        (No tickets are found)
+    {% elif count == 1 %}
+        (Only {{count}} ticket is found)
+    {% else %}
+        (We have found {{count}} tickets)
+    {% endif %}
+    </span></h1>
     <a id="scroll-top" title="Go Back to top">&uarr;</a>
     <div style="overflow-x:auto;margin-bottom: 50px;">
 	    <table class="sortable" id="ticket-table">

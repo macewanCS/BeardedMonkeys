@@ -40,14 +40,14 @@
         {{ request_type }} </p>
         {% if request_type == "Move equipment request" %}
         <p> <span style="font-weight:bold;">System you would like access to: </span>
-        {{ System_type }} </p>     
+        {{ system }} </p>     
         <p> <span style="font-weight:bold;">Asset tag of the equipment you want moved or surplused: </span>
         {{ asset_tag }} </p>     
         <p> <span style="font-weight:bold;">Move location: </span>
         {{ move_location }} </p>    
         {% elif request_type == "Surplus equipment request" %}
         <p> <span style="font-weight:bold;">System you would like access to: </span>
-        {{ System_type }} </p>     
+        {{ system }} </p>     
         <p> <span style="font-weight:bold;">Asset tag of the equipment you want moved or surplused: </span>
         {{ asset_tag }} </p>     
         {% elif request_type == "New software request" %}

@@ -617,7 +617,16 @@ footer span i {
     display: block;
 }
 
-
+/* found tickets */
+#branch{
+    margin-bottom:0;
+    float:left;
+    display:inline;
+}
+#result{
+    color: black;
+    font-size: 16px;
+    font-weight: normal;
 
 @media only screen and (max-width: 500px) {
     textarea {
@@ -682,6 +691,4 @@ footer span i {
     .sortable .button{
     margin-bottom: 2px;
     }
-
-
 }

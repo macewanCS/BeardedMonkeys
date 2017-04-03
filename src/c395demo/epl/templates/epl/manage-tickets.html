@@ -20,7 +20,15 @@
 </head>
 <body>
     <a id="scroll-top" title="Go Back to top">&uarr;</a>
-    <h1 style="margin-bottom:0;float:left;">Branch Tickets</h1>
+    <h1 id="branch">Branch Tickets<span id="result">&ensp; 
+    {% if count == 0 %}
+        (No tickets are found)
+    {% elif count == 1 %}
+        (Only {{count}} ticket is found)
+    {% else %}
+        (We have found {{count}} tickets)
+    {% endif %}
+    </span></h1>
     <div style="float:right; margin:2.1em 0 0 0;">
         <select id="dynamic_select">
             <option id="selected" selected disabled>-- select ticket filter --</option>
