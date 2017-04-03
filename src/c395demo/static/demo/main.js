@@ -43,7 +43,7 @@ $(document).ready(function(){
             } else if ($("#status_"+id).text().indexOf("Resolved w/o Approval")>=0) {
              alterData(id, "Needs Approval");
              $("#myBtn_"+id).html('<i class="fa fa-check" aria-hidden="true"></i>Resolved');
-             $('.stat').attr('src', '/static/demo/view-ticket/needs-approval-bar.jpg')
+             $('.stat').attr('src', '/static/demo/view-ticket/need-approval-bar.jpg')
             }
             else {
              alterData(id, "Resolved");
