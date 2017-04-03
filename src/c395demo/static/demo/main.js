@@ -33,12 +33,24 @@ $(document).ready(function(){
         //yes buttons for popups (resolve/reopen, approve, disapprove)
         $("#yButton").click(function() {
            $("#myModal").css("display", "none");
-           //checking whether ticket status is open to decide which button to display
-           if ($("#status_"+id).text().indexOf("Open")>=0 || $("#status_"+id).text().indexOf("Needs Approval")>=0){
-            alterData(id, "Resolved")
-            $("#myBtn_"+id).html('<i class="fa fa-check" aria-hidden="true"></i>Re-open');
-            $('.stat').attr('src', '/static/demo/view-ticket/resolved-bar.jpg')
-           }
+           //checking ticket status to determine displayed button
+           //else if refused to work on the first level, hence the triple or if statement
+           if ($("#status_"+id).text().indexOf("Open")>=0 || $("#status_"+id).text().indexOf("Needs Approval")>=0 || $("#status_"+id).text().indexOf("Resolved w/o Approval")>=0){
+            if ($("#status_"+id).text().indexOf("Needs Approval")>=0){
+             alterData(id, "Resolved w/o Approval");
+             $("#myBtn_"+id).html('<i class="fa fa-check" aria-hidden="true"></i>Re-open');
+             $('.stat').attr('src', '/static/demo/view-ticket/resolved-bar.jpg')
+            } else if ($("#status_"+id).text().indexOf("Resolved w/o Approval")>=0) {
+             alterData(id, "Needs Approval");
+             $("#myBtn_"+id).html('<i class="fa fa-check" aria-hidden="true"></i>Resolved');
+             $('.stat').attr('src', '/static/demo/view-ticket/needs-approval-bar.jpg')
+            }
+            else {
+             alterData(id, "Resolved");
+             $("#myBtn_"+id).html('<i class="fa fa-check" aria-hidden="true"></i>Re-open');
+             $('.stat').attr('src', '/static/demo/view-ticket/resolved-bar.jpg')
+            }
+           } 
            else {
             alterData(id, "Open")
             $("#myBtn_"+id).html('<i class="fa fa-check" aria-hidden="true"></i>Resolved');

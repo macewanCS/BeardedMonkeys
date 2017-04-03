@@ -272,9 +272,9 @@ def manage(request):
     elif  ( ticket_type == "disapproved" ):
         callLogs = CallLog.objects.filter(CallStatus="Disapproved")
         visible = "disapproved"
-    elif  ( ticket_type == "unapproved" ):
-        callLogs = CallLog.objects.filter(CallStatus="Unapproved")
-        visible = "unapproved"
+    elif  ( ticket_type == "needsapproval" ):
+        callLogs = CallLog.objects.filter(CallStatus="Needs Approval")
+        visible = "needsapproval"
     elif  ( ticket_type == "progress" ):
         callLogs = CallLog.objects.filter(CallStatus="InProgress")
         visible = "progress"
