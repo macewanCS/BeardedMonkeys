@@ -76,11 +76,7 @@ class PasswordTicketForm(forms.Form):
 class ServiceTicketForm(forms.Form):
     request_type = forms.ChoiceField(choices=REQUEST_TYPE_CHOICE, widget=forms.Select(attrs={'id': 'id_request_type'}) )
     system = forms.ChoiceField(choices=SYSTEM_CHOICES, widget=forms.Select(attrs={'id': 'id_system'}), required=True)
-    # The asset tag field shouldn't be validated if it is not required
-    # For example, it isn't required for "System access request"
-    #asset_tag = forms.CharField(max_length=5, min_length=5, validators=[RegexValidator(regex='^\d{5}$', message='Asset tag must be 5 integers', code='wrongInput')],
-#		label=mark_safe('Asset Tag (<a href="/questions/whyname/" target="_blank">Where to find the Asset Tag</a>?) of the equipment you want moved or surplused'), required=False)
-    asset_tag = forms.CharField(max_length=5, min_length=0, widget=forms.TextInput(attrs={'id': 'id_asset_tag'}),
+    asset_tag = forms.CharField(max_length=5, min_length=5, widget=forms.TextInput(attrs={'id': 'id_asset_tag'}),
 		label=mark_safe('Asset Tag (<a href="/questions/whyname/" target="_blank">Where to find the Asset Tag</a>?) of the equipment you want moved or surplused'), required=False)
     move_location = forms.CharField(max_length=200, widget=forms.TextInput(attrs={'id': 'id_move_location'}),
         label='Where would you like this equipment moved to?', required=False)

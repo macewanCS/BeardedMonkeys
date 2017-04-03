@@ -44,7 +44,7 @@
             <option value="/manage-tickets/?ticketType=progress">In Progess Tickets</option>
             <option value="/manage-tickets/?ticketType=resolved">Resolved Tickets</option>
             <option value="/manage-tickets/?ticketType=closed">Closed Tickets</option>
-            <option value="/manage-tickets/?ticketType=unapproved">Unapproved Tickets</option>
+            <option value="/manage-tickets/?ticketType=needsapproval">Non-approved Tickets</option>
             <option value="/manage-tickets/?ticketType=disapproved">Disapproved Tickets</option>
         </select>
     </div>
@@ -80,11 +80,15 @@
                                 <div class="button"><i class="fa fa-folder-open-o" aria-hidden="true"></i> View</div>
                             </a>
                             <!-- replace edit button with approve button if user is manager and ticket is non-approved -->
-                            {% if callLog.CallStatus == "Unapproved" or callLog.CallStatus == "Disapproved" %}
+                            {% if callLog.CallStatus == "Needs Approval" or callLog.CallStatus == "Disapproved" %}
                                 {% if branch == "manager" %}
                                     <a id="appBtn_{{ callLog.CallID }}" class="cursor button" style="display:inline-block;"> <div>
                                             <i class="fa fa-check" aria-hidden="true"></i> Approve
                                         </div></a>
+                                {% elif callLog.CallStatus == "Needs Approval" and user.username == callLog.CustID %}
+                                    <a href="{{editTicketURL}}" style="display:inline-block;">
+                                        <div class="button"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</div>
+                                    </a>
                                 {% else %}
                                 <a href="{{editTicketURL}}" class="button disabled" style="display:inline-block; background-color: grey" >
                                          <div ><i class="fa fa-pencil" aria-hidden="true"></i> Edit</div>
@@ -114,7 +118,7 @@
                                 </div></a>
                             <!-- If user is manager, replace resolve/reopen button with disapprove button if ticket is non-approved -->    
                             {% elif branch == "manager" %}
-                                    {% if callLog.CallStatus == "Unapproved" or callLog.CallStatus == "Disapproved" %}
+                                    {% if callLog.CallStatus == "Needs Approval" or callLog.CallStatus == "Disapproved" %}
                                     <a id="disBtn_{{ callLog.CallID }}" class="cursor button" style="display:inline-block;"> <div>
                                         <i class="fa fa-check" aria-hidden="true"></i> Disapprove
                                     {% else %}
@@ -129,10 +133,10 @@
                                 
                             {% else %}
                             <!--check if the user is owner of the ticket. Owners can resolve/reopen approved tickets.-->
-                                {% if callLog.CallStatus != "Unapproved" and callLog.CallStatus != "Disapproved" %}
+                                {% if callLog.CallStatus != "Disapproved" %}
                                     {% if user.username == callLog.CustID %}
                                         <a id="myBtn_{{ callLog.CallID }}" class="cursor button" style="display:inline-block;"> <div>
-                                            {% if callLog.CallStatus == "Open" %}
+                                            {% if callLog.CallStatus == "Open" or callLog.CallStatus == "Needs Approval" %}
                                                 <i class="fa fa-check" aria-hidden="true"></i> Resolved
                                             {% else %}
                                                 <i class="fa fa-check" aria-hidden="true"></i> Re-open
@@ -140,11 +144,7 @@
                                         </div></a>
                                     {% else %}
                                         <a style="display:inline-block;"> <div class="button disabled" style="background-color:grey;" >
-                                            {% if callLog.CallStatus == "Open" %}
-                                                <i class="fa fa-check" aria-hidden="true"></i> Resolved
-                                            {% else %}
-                                                <i class="fa fa-check" aria-hidden="true"></i> Re-open
-                                            {% endif %}
+                                            <i class="fa fa-check" aria-hidden="true"></i> Open
                                         </div></a>
                                     {% endif %}
                                 {% else %}

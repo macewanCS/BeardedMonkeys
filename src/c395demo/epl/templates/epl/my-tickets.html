@@ -52,7 +52,7 @@
                             </a>
                           
                             <!-- If user is manager, replace edit and resolve/reopen buttons with approve and disapprove buttons for non-approved tickets -->
-                            {% if callLog.CallStatus == "Unapproved" or callLog.CallStatus == "Disapproved" %}
+                            {% if callLog.CallStatus == "Needs Approval" or callLog.CallStatus == "Disapproved" %}
                                 {% if branch == "manager" %}
                                     <a id="appBtn_{{ callLog.CallID }}" class="cursor button" style="display:inline-block;"> <div>
                                             <i class="fa fa-check" aria-hidden="true"></i> Approve
@@ -60,6 +60,12 @@
                                     <a id="disBtn_{{ callLog.CallID }}" class="cursor button" style="display:inline-block;"> <div>
                                         <i class="fa fa-check" aria-hidden="true"></i> Dispprove
                                         </div></a>
+                                {% elif callLog.CallStatus == "Needs Approval" %}
+                                    <a href="{{editTicketURL}}" style="display:inline-block;">
+                                        <div class="button"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</div>
+                                    </a>
+                                    <a  style="display:inline-block;" id="myBtn_{{ callLog.CallID }}" class="cursor button" ><div>
+                                            <i class="fa fa-check" aria-hidden="true"></i> Resolved </div></a>
                                 {% else %}
                                     <a href="{{editTicketURL}}" class="button disabled" style="display:inline-block; background-color: grey" >
                                             <div ><i class="fa fa-pencil" aria-hidden="true"></i> Edit</div>
@@ -135,7 +141,7 @@ $(document).ready(function(){
     $( "a[id*='myBtn']" ).click(function(){
         id = $(this).attr('id').replace("myBtn_", "")
         $("#myModal").css("display", "block")
-        if ($("#status_"+id).text().indexOf("Open")>=0){
+        if ($("#status_"+id).text().indexOf("Open")>=0 || $("#status_"+id).text().indexOf("Needs Approval")>=0){
             $("#modalText").html("Are you sure the ticket has been resolved?");
         } else {
                 $("#modalText").html("Are you sure that you want to re-open the ticket?");
@@ -145,8 +151,7 @@ $(document).ready(function(){
            if ($("#status_"+id).text().indexOf("Open")>=0){
             alterData(id, "Resolved")
             $("#myBtn_"+id).html('<i class="fa fa-check" aria-hidden="true"></i>Re-open');
-           }
-           else {
+           } else {
             alterData(id, "Open")
             $("#myBtn_"+id).html('<i class="fa fa-check" aria-hidden="true"></i>Resolved');
            }
