@@ -621,7 +621,6 @@ def successTicketSummary(request, id, pageSubmitType):
             "PageSubmitType" : pageSubmitType
         }
     elif ( ticket.Category == "Service" ):
-        print("which system ", temp[1])
         context = {
             "CallID" : ticket.CallID,
             "CustID" : ticket.CustID,
