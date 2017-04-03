@@ -34,6 +34,9 @@ def index(request):
 
 # add ticket page
 def add(request):
+    # user must need to login to view pages
+    if (not request.user.is_authenticated()):
+        return redirect('/login')
     context = {}
     return render(request, 'epl/add-ticket.html', context)
 
