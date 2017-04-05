@@ -28,7 +28,6 @@ def index(request):
         return redirect('/login')
 
     username = get_username(request)
-    print(get_branch(username))
 
     context = { 'username': username }
     return render(request, 'epl/index.html', context)
@@ -221,7 +220,7 @@ def tickets(request):
         status = "staff"
     
     available = ["Hardware", "Software", "Service", "Other", "Password"]
-    count = total_count(callLogs, available)
+    count = total_count(callLogs, available, "any")
     
     callLogs = reversed(callLogs)
     context = {
@@ -299,8 +298,9 @@ def manage(request):
     except:
         status = "staff"
     
+    branch = get_branch(request.user.username)
     available = ["Hardware", "Software", "Service", "Other", "Password"]
-    count = total_count(callLogs, available)
+    count = total_count(callLogs, available, branch)
 
     callLogs = reversed(callLogs)
     context = {
@@ -311,16 +311,21 @@ def manage(request):
         "count" : count,
         "status" : status,
         "visible" : visible,
-        "branch" : get_branch(request.user.username)
+        "branch" : branch
     }
     return render(request, 'epl/manage-tickets.html', context)
     
 # counts the total number of tickets
-def total_count(lis, available):
+def total_count(lis, available, branch):
     count = 0
     for c in lis:
-        if ( c.Category in available ):
+        if ( c.Category in available and branch == "any" ):
             count += 1
+        else:
+            temp = c.Symptoms.split("|")
+            if ( c.Category in available and branch == temp[len(temp)-1] ):
+                count += 1
+            
     return count
     
 def format_date(date):

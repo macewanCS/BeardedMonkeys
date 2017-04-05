@@ -3,6 +3,10 @@ from epl.models import CallLog
 
 register = template.Library()
 
+@register.assignment_tag
+def define(user_branch=None):
+  return user_branch
+
 @register.filter(name='firstUpper')
 def firstUpper(string):
     return string.upper()
@@ -25,9 +29,6 @@ def get_date(string):
         temp = string
         string = "20"
         string += temp
-    return string
-    
-def get_branch(string):
     return string
 
 @register.simple_tag
@@ -64,6 +65,10 @@ def get_branch(id):
         if ( not len(temp) >= 2 ):
             return "Unknown"
         return temp[1]
+
+@register.simple_tag
+def retun_string(string):
+    return string
 
 @register.simple_tag
 def descGet(id):

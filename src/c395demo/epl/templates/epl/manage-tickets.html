@@ -6,7 +6,7 @@
 
 <html>
 <head>
-	<title>status Tickets</title>
+	<title>Branch Tickets</title>
 	{% load static %}
 	<link rel="stylesheet" type="text/css" href="{% static '/demo/scroll-top.css' %}">
 	<script src="{% static '/demo/sorttable.js' %}"></script>
@@ -20,15 +20,15 @@
 </head>
 <body>
     <a id="scroll-top" title="Go Back to top">&uarr;</a>
-    <h1 id="branch">Branch Tickets<span id="result">&ensp; 
+    <h1 id="branch">Branch Tickets<span id="result">&ensp;<br id="br"> 
     {% if count == 0 %}
-        (No tickets are found)
+        (No tickets are found
     {% elif count == 1 %}
-        (Only {{count}} ticket is found)
+        (Only {{count}} ticket is found
     {% else %}
-        (We have found {{count}} tickets)
+        (We have found {{count}} tickets
     {% endif %}
-    </span></h1>
+    in {{ branch }} branch)</span></h1>
     <div style="float:right; margin:2.1em 0 0 0;">
         <select id="dynamic_select">
             <option id="selected" selected disabled>-- select ticket filter --</option>
@@ -44,7 +44,7 @@
             <option value="/manage-tickets/?ticketType=progress">In Progess Tickets</option>
             <option value="/manage-tickets/?ticketType=resolved">Resolved Tickets</option>
             <option value="/manage-tickets/?ticketType=closed">Closed Tickets</option>
-            <option value="/manage-tickets/?ticketType=needsapproval">Non-approved Tickets</option>
+            <option value="/manage-tickets/?ticketType=needsapproval">Need Approval Tickets</option>
             <option value="/manage-tickets/?ticketType=disapproved">Disapproved Tickets</option>
         </select>
     </div>
@@ -58,7 +58,9 @@
 	                <th>Date</th>
 	                <th>Category</th>
 	                <th>Status</th>
-	                <th>Branch</th>
+	                {% if branch == "HR" or branch == "IT" %}
+	                    <th>Branch</th>
+                    {% endif %}
 	                <th class= "sorttable_nosort">Description</th>
 	                <th class= "sorttable_nosort">Options</th>
 	            </tr>
@@ -67,16 +69,22 @@
 	        {% load descGet %}
             {% editURL Category CallID as editTicketURL %}
 	        {% for callLog in callLogs %}
-	            {% captureas user_branch %}{% get_branch callLog.CallID %}{% endcaptureas %}
+	            {% if branch == "HR" or branch == "IT" %}
+	                {% captureas user_branch %}{% retun_string branch %}{% endcaptureas %}
+                {% else %}
+                    {% captureas user_branch %}{% get_branch callLog.CallID %}{% endcaptureas %}
+                {% endif %}
 	            {% if callLog.Category in available and branch == user_branch %}
-                   {% editURL callLog.Category callLog.CallID as editTicketURL %}
+                    {% editURL callLog.Category callLog.CallID as editTicketURL %}
                     <tr>
                         <td> {{ callLog.CallID }} </td>
                         <td> {{ callLog.CustID }} </td>
                         <td> {{ callLog.RecvdDate|get_date }} </td>
                         <td> {{ callLog.Category }} </td>
                         <td id="status_{{ callLog.CallID }}"> {{ callLog.CallStatus }} </td>
-                        <td> {% get_branch callLog.CallID %} </td>
+                        {% if branch == "HR" or branch == "IT" %}
+                            <td> {% get_branch callLog.CallID %} </td>
+                        {% endif %}
                         <td style="text-align:left;"> {% descGet callLog.CallID %} </td>
                         <td>
                             <a href="{% url 'detail' id=callLog.CallID %}" style="display:inline-block;">
