@@ -28,7 +28,12 @@
     {% else %}
         (We have found {{count}} tickets
     {% endif %}
-    in {{ branch }} branch)</span></h1>
+    {% if branch == "HR" or branch == "IT" %}
+        in all branches)
+    {% else %}
+        in {{ branch }} branch)
+    {% endif %}
+    </span></h1>
     <div style="float:right; margin:2.1em 0 0 0;">
         <select id="dynamic_select">
             <option id="selected" selected disabled>-- select ticket filter --</option>

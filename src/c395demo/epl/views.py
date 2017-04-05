@@ -319,7 +319,8 @@ def manage(request):
 def total_count(lis, available, branch):
     count = 0
     for c in lis:
-        if ( c.Category in available and branch == "any" ):
+        if ( c.Category in available and (branch == "any" or
+             branch == "HR" or branch == "IT") ):
             count += 1
         else:
             temp = c.Symptoms.split("|")
