@@ -149,7 +149,7 @@
                             {% elif status == "manager" %}
                                     {% if callLog.CallStatus == "Needs Approval" or callLog.CallStatus == "Disapproved" %}
                                     <a id="disBtn_{{ callLog.CallID }}" class="cursor button" style="display:inline-block;"> <div>
-                                        <i class="fa fa-check" aria-hidden="true"></i> Disapprove
+                                        <i class="fa fa-times" aria-hidden="true"></i> Disapprove
                                     {% else %}
                                         <a id="myBtn_{{ callLog.CallID }}" class="cursor button" style="display:inline-block;"> <div>
                                         {% if callLog.CallStatus == "Open" %}

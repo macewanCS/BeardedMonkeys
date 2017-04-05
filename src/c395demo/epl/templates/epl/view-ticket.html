@@ -73,6 +73,17 @@
         
         <!-- IT functionality-->
         {% if status == "IT" %}
+            {% if ticket_branch == "HR" %}
+            <a style="display:inline-block;"> <div class="button disabled" style="background-color:grey;" >
+                <i class="fa fa-check" aria-hidden="true"></i> Open
+            {% else %}
+                <a id="myBtn_{{ callLog.CallID }}" class="cursor button" style="display:inline-block;"> <div>
+                    {% if callLog.CallStatus == "Open" %}
+                         <i class="fa fa-check" aria-hidden="true"></i> Resolved
+                    {% else %}
+                         <i class="fa fa-check" aria-hidden="true"></i> Re-open
+                    {% endif %}
+                </div></a>
             <a id="myBtn_{{ CallID }}" class="button cursor">
                 {% if CallStatus == "Open" %}
                     <i class="fa fa-check" aria-hidden="true"></i> Resolved
@@ -84,7 +95,7 @@
         {% elif status == "manager" %}
             {% if CallStatus == "Needs Approval" or CallStatus == "Disapproved" %}
                 <a id="disBtn_{{ CallID }}" class="cursor button" style="display:inline-block;"> <div>
-                    <i class="fa fa-check" aria-hidden="true"></i> Disapprove
+                    <i class="fa fa-times" aria-hidden="true"></i> Disapprove
             {% else %}
                 <a id="myBtn_{{ CallID }}" class="cursor button" style="display:inline-block;"> <div>
                     {% if CallStatus == "Open" %}
