@@ -73,18 +73,23 @@
         
         <!-- IT functionality-->
         {% if status == "IT" %}
-            <a id="myBtn_{{ CallID }}" class="button cursor">
+            {% if ticket_branch == "HR" %}
+            <a style="display:inline-block;"> <div class="button disabled" style="background-color:grey;" >
+                <i class="fa fa-check" aria-hidden="true"></i> Open
+            {% else %}
+                <a id="myBtn_{{ CallID }}" class="button cursor">
                 {% if CallStatus == "Open" %}
                     <i class="fa fa-check" aria-hidden="true"></i> Resolved
                 {% else %}
                     <i class="fa fa-check" aria-hidden="true"></i> Re-open
                 {% endif %}
             </a>
+        {% endif %}
         <!-- If manager, replace resolve/reopen button with disapprove button if non-approved ticket -->
         {% elif status == "manager" %}
             {% if CallStatus == "Needs Approval" or CallStatus == "Disapproved" %}
                 <a id="disBtn_{{ CallID }}" class="cursor button" style="display:inline-block;"> <div>
-                    <i class="fa fa-check" aria-hidden="true"></i> Disapprove
+                    <i class="fa fa-times" aria-hidden="true"></i> Disapprove
             {% else %}
                 <a id="myBtn_{{ CallID }}" class="cursor button" style="display:inline-block;"> <div>
                     {% if CallStatus == "Open" %}
@@ -225,6 +230,11 @@
     
     {% if Category == "Other" %}
         <h5>What is your question/comment?</h5> 
+        <p>{{ problem }}</p>
+    {% endif %}
+    
+    {% if Category == "HR" %}
+        <h5>Details of issue:</h5> 
         <p>{{ problem }}</p>
     {% endif %}
     
