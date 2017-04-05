@@ -19,10 +19,9 @@ body {
 	color: #000000;
 	margin: 0;
 	padding-bottom: 60px;
-
 }
 
-h1{
+h1, h2{
     color: #E60E64;
 }
 
@@ -248,6 +247,10 @@ button:hover{
 .disabled {
     pointer-events: none;
     cursor: default;
+}
+
+#br{
+    display: none;
 }
 
 select{
@@ -623,10 +626,12 @@ footer span i {
     float:left;
     display:inline;
 }
+
 #result{
     color: black;
     font-size: 16px;
     font-weight: normal;
+}
 
 @media only screen and (max-width: 500px) {
     textarea {
@@ -634,61 +639,64 @@ footer span i {
     -moz-transition: all 0.30s ease-in-out;
     -ms-transition: all 0.30s ease-in-out;
     -o-transition: all 0.30s ease-in-out;
-    outline: none;
-    padding: 3px 0px 3px 3px;
-    margin: 5px 1px 3px 0px;
-    border: 2px solid #9C9C9C;
-    border-radius: 0px;
-    padding-left: 8px;
+        outline: none;
+        padding: 3px 0px 3px 3px;
+        margin: 5px 1px 3px 0px;
+        border: 2px solid #9C9C9C;
+        border-radius: 0px;
+        padding-left: 8px;
     }
 
     input[type="text"]:focus,
     input[type="url"]:focus,
     input[type="password"]:focus,
     textarea:focus {
-    box-shadow: 0 0 5px rgba(81, 203, 238, 1);
-    padding: 3px 0px 3px 3px;
-    margin: 5px 1px 3px 0px;
-    border: 2px solid rgba(81, 203, 238, 1);
+        box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+        padding: 3px 0px 3px 3px;
+        margin: 5px 1px 3px 0px;
+        border: 2px solid rgba(81, 203, 238, 1);
     }
 
     textarea{
-    font-size: 16px;
-    width:80%;
-    height: 150px;
-    background-color:#fff;
+        font-size: 16px;
+        width:80%;
+        height: 150px;
+        background-color:#fff;
     }
     
     footer {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 130px;
-    background-color: #ebebeb;
-    box-shadow: 0px 3px 3px #ccc inset;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 130px;
+        background-color: #ebebeb;
+        box-shadow: 0px 3px 3px #ccc inset;
     }
 
     footer span {
-    position: relative;
-    display: block;
-    float: left;
-    width: 40px;
-    height: 40px;
-    background-color: #b7b7b7;
-    margin: 13px 10px 10px;
-    color: #fff;
-    text-align: center;
+        position: relative;
+        display: block;
+        float: left;
+        width: 40px;
+        height: 40px;
+        background-color: #b7b7b7;
+        margin: 13px 10px 10px;
+        color: #fff;
+        text-align: center;
     }
 
     footer span i {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
     }
 
     .sortable .button{
-    margin-bottom: 2px;
+        margin-bottom: 2px;
+    }
+    #br{
+        display: inline;
     }
 }

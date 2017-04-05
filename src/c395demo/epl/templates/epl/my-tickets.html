@@ -53,7 +53,7 @@
                           
                             <!-- If user is manager, replace edit and resolve/reopen buttons with approve and disapprove buttons for non-approved tickets -->
                             {% if callLog.CallStatus == "Needs Approval" or callLog.CallStatus == "Disapproved" %}
-                                {% if branch == "manager" %}
+                                {% if status == "manager" %}
                                     <a id="appBtn_{{ callLog.CallID }}" class="cursor button" style="display:inline-block;"> <div>
                                             <i class="fa fa-check" aria-hidden="true"></i> Approve
                                         </div></a>
