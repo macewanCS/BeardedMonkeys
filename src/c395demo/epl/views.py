@@ -299,7 +299,7 @@ def manage(request):
         status = "staff"
     
     branch = get_branch(request.user.username)
-    available = ["Hardware", "Software", "Service", "Other", "Password"]
+    available = ["Hardware", "Software", "Service", "Other", "Password", "HR"]
     count = total_count(callLogs, available, branch)
 
     callLogs = reversed(callLogs)
@@ -320,7 +320,7 @@ def total_count(lis, available, branch):
     count = 0
     for c in lis:
         if ( c.Category in available and (branch == "any" or
-             branch == "HR" or branch == "IT") ):
+             branch == "IT") ):
             count += 1
         else:
             temp = c.Symptoms.split("|")

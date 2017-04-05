@@ -28,7 +28,7 @@
     {% else %}
         (We have found {{count}} tickets
     {% endif %}
-    {% if branch == "HR" or branch == "IT" %}
+    {% if branch == "IT" %}
         in all branches)
     {% else %}
         in {{ branch }} branch)
@@ -74,12 +74,17 @@
 	        {% load descGet %}
             {% editURL Category CallID as editTicketURL %}
 	        {% for callLog in callLogs %}
+	            {% if callLog.Category == "HR" %}
+                    {% captureas ticket_branch %}{{ "HR" }}{% endcaptureas %}
+                {% else %}
+                    {% captureas ticket_branch %}{% get_branch callLog.CallID %}{% endcaptureas %}
+                {% endif %}
 	            {% if branch == "HR" or branch == "IT" %}
 	                {% captureas user_branch %}{% retun_string branch %}{% endcaptureas %}
                 {% else %}
                     {% captureas user_branch %}{% get_branch callLog.CallID %}{% endcaptureas %}
                 {% endif %}
-	            {% if callLog.Category in available and branch == user_branch %}
+	            {% if callLog.Category in available and branch == "IT" or ticket_branch == branch %}
                     {% editURL callLog.Category callLog.CallID as editTicketURL %}
                     <tr>
                         <td> {{ callLog.CallID }} </td>
@@ -88,7 +93,7 @@
                         <td> {{ callLog.Category }} </td>
                         <td id="status_{{ callLog.CallID }}"> {{ callLog.CallStatus }} </td>
                         {% if branch == "HR" or branch == "IT" %}
-                            <td> {% get_branch callLog.CallID %} </td>
+                                <td> {{ ticket_branch }} </td>
                         {% endif %}
                         <td style="text-align:left;"> {% descGet callLog.CallID %} </td>
                         <td>
@@ -125,13 +130,21 @@
 
                              <!--IT functionality -->
                             {% if status == "IT" %}
-                                <a id="myBtn_{{ callLog.CallID }}" class="cursor button" style="display:inline-block;"> <div>
-                                    {% if callLog.CallStatus == "Open" %}
-                                        <i class="fa fa-check" aria-hidden="true"></i> Resolved
-                                    {% else %}
-                                        <i class="fa fa-check" aria-hidden="true"></i> Re-open
-                                    {% endif %}
+                                {% if ticket_branch == "HR" %}
+                                    <a style="display:inline-block;"> <div class="button disabled" style="background-color:grey;" >
+                                            <i class="fa fa-check" aria-hidden="true"></i> Open
+                                {% else %}
+                                    <a id="myBtn_{{ callLog.CallID }}" class="cursor button" style="display:inline-block;"> <div>
+                                        {% if callLog.CallStatus == "Open" %}
+                                            <i class="fa fa-check" aria-hidden="true"></i> Resolved
+                                        {% else %}
+                                            <i class="fa fa-check" aria-hidden="true"></i> Re-open
+                                        {% endif %}
                                 </div></a>
+                            {% endif %}
+                            
+                            
+                                
                             <!-- If user is manager, replace resolve/reopen button with disapprove button if ticket is non-approved -->    
                             {% elif status == "manager" %}
                                     {% if callLog.CallStatus == "Needs Approval" or callLog.CallStatus == "Disapproved" %}
@@ -172,6 +185,7 @@
                         </td>
                     </tr>
                 {% endif %}
+            
 	        {% endfor %}
 	        </tbody>
         </table>
