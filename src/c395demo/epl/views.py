@@ -319,8 +319,10 @@ def manage(request):
 def total_count(lis, available, branch):
     count = 0
     for c in lis:
-        if ( c.Category in available and (branch == "any" or
+        if ( c.Category in available and (branch == "any" or 
              branch == "IT") ):
+            count += 1
+        elif ( c.Category == "HR" and branch == "HR" ):
             count += 1
         else:
             temp = c.Symptoms.split("|")
@@ -460,6 +462,18 @@ def detail(request, id):
             "Priority" : ticket.Priority
         }
     elif ( ticket.Category == "Other" ):
+        context = {
+            "CallID" : ticket.CallID,
+            "CustID" : ticket.CustID,
+            "RecvdDate" : recvdDate,
+            "System_type" : "NULL",
+            "problem" : temp[0],
+            "Category" : ticket.Category,
+            "CallStatus" : ticket.CallStatus,
+            "Priority" : ticket.Priority
+        }
+        
+    elif ( ticket.Category == "HR" ):
         context = {
             "CallID" : ticket.CallID,
             "CustID" : ticket.CustID,

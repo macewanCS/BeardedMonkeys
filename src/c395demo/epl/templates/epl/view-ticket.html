@@ -91,6 +91,7 @@
                     <i class="fa fa-check" aria-hidden="true"></i> Re-open
                 {% endif %}
             </a>
+        {% endif %}
         <!-- If manager, replace resolve/reopen button with disapprove button if non-approved ticket -->
         {% elif status == "manager" %}
             {% if CallStatus == "Needs Approval" or CallStatus == "Disapproved" %}
@@ -236,6 +237,11 @@
     
     {% if Category == "Other" %}
         <h5>What is your question/comment?</h5> 
+        <p>{{ problem }}</p>
+    {% endif %}
+    
+    {% if Category == "HR" %}
+        <h5>Details of issue:</h5> 
         <p>{{ problem }}</p>
     {% endif %}
     
