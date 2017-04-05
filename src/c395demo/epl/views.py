@@ -28,6 +28,7 @@ def index(request):
         return redirect('/login')
 
     username = get_username(request)
+    print(get_branch(username))
 
     context = { 'username': username }
     return render(request, 'epl/index.html', context)
@@ -66,7 +67,7 @@ def hardware(request):
             context = successTicketSummary(request, ticketId, "update")
 
         return render(request, "epl/hardware_submitted.html", context)
-
+    
     '''context = {}
     #return render(request, 'epl/hardware.html', context)
     form_class = HardwareTicketForm
@@ -213,11 +214,11 @@ def tickets(request):
     username = request.user.username
     callLogs = CallLog.objects.filter(CustID=username)
 
-    #obtaining user's branch
+    #obtaining user's status
     try:
-        branch = UserProfile.objects.get(user=request.user).branch
+        status = UserProfile.objects.get(user=request.user).status
     except:
-        branch = "staff"
+        status = "staff"
     
     available = ["Hardware", "Software", "Service", "Other", "Password"]
     count = total_count(callLogs, available)
@@ -227,7 +228,7 @@ def tickets(request):
         "username" : username,
         "callLogs" : callLogs,
         "available" : available,
-        "branch" : branch,
+        "status" : status,
         "count" : count
     }
     return render(request, 'epl/my-tickets.html', context)
@@ -265,7 +266,7 @@ def manage(request):
     elif  ( ticket_type == "other" ):
         callLogs = CallLog.objects.filter(Category="Other")
         visible = "other"
-        
+    
     # filter based on status of the ticket
     elif  ( ticket_type == "open" ):
         callLogs = CallLog.objects.filter(CallStatus="Open")
@@ -292,11 +293,11 @@ def manage(request):
     asgnmnts = Asgnmnt.objects.all()
     probTypes = ProbType.objects.all()
     
-    # obtaining user's branch
+    # obtaining user's status
     try:
-        branch = UserProfile.objects.get(user=request.user).branch
+        status = UserProfile.objects.get(user=request.user).status
     except:
-        branch = "staff"
+        status = "staff"
     
     available = ["Hardware", "Software", "Service", "Other", "Password"]
     count = total_count(callLogs, available)
@@ -308,8 +309,9 @@ def manage(request):
         "probTypes" : probTypes,
         "available" : available,
         "count" : count,
-        "branch" : branch,
-        "visible" : visible
+        "status" : status,
+        "visible" : visible,
+        "branch" : get_branch(request.user.username)
     }
     return render(request, 'epl/manage-tickets.html', context)
     
@@ -466,12 +468,12 @@ def detail(request, id):
     else:
         context = {}
 
-   # obtaining user's branch
+   # obtaining user's status
     try:
-        branch = UserProfile.objects.get(user=request.user).branch
+        status = UserProfile.objects.get(user=request.user).status
     except:
-        branch = "staff"
-    context['branch'] = branch
+        status = "staff"
+    context['status'] = status
 
     return render(request, 'epl/view-ticket.html', context)
 
@@ -483,12 +485,22 @@ def get_username(request):
 
     return username
 
-def get_branch(request, user):
-    branch = None
+# user status level, such as manager or staff
+def get_status(request, user):
+    status = None
     if request.user.is_authenticated():
-        branch = user.userprofile.get_branch()
+        status = user.userprofile.get_status()
 
-    return branch
+    return status
+
+# get the branch of the user
+def get_branch(username):
+    try:
+        user = User.objects.get(username=username)
+    except:
+        return "Unknown"
+    
+    return user.userprofile.get_branch()
 
 #---------------------------------
 # login and user authentication
@@ -711,6 +723,10 @@ def pass_database_saved(form, username, ticketID):
 
         # call log status
         callLog_Status = "Open"
+        
+        # save branch
+        callLog_Symptoms += "|"
+        callLog_Symptoms += get_branch(username)
 
         # CallLog Table
         if (ticketID == None):
@@ -853,11 +869,19 @@ def database_saved(form, username, ticketID):
 
         # call log status
         callLog_Status = "Open"
+        
+        # image url
+        callLog_Symptoms += "|"
+        callLog_Symptoms += image_url
+        
+        # save branch
+        callLog_Symptoms += "|"
+        callLog_Symptoms += get_branch(username)
 
         # CallLog Table
         if (ticketID == None):
             callLog_table = CallLog(
-            Symptoms = "|".join([callLog_Symptoms, image_url]), #adding the url of the image
+            Symptoms = callLog_Symptoms, #adding the url of the image
             Priority = callLog_Priority,
             CallSource = callLog_CallSource,
             RecvdDate = callLog_RecvdDate,
@@ -994,6 +1018,10 @@ def soft_database_saved(form, username, ticketID):
 
         # call log status
         callLog_Status = "Open"
+        
+        # save branch
+        callLog_Symptoms += "|"
+        callLog_Symptoms += get_branch(username)
 
         # CallLog Table
         if (ticketID == None):
@@ -1159,6 +1187,10 @@ def service_database_saved(form, username, ticketID):
             callLog_Status = "Needs Approval"
         else:
             callLog_Status = "Open"
+            
+        # save branch
+        callLog_Symptoms += "|"
+        callLog_Symptoms += get_branch(username)
 
         # CallLog Table
         if (ticketID == None):
@@ -1253,6 +1285,10 @@ def general_database_saved(form, username, ticketID):
 
         # call log status
         callLog_Status = "Open"
+        
+        # save branch
+        callLog_Symptoms += "|"
+        callLog_Symptoms += get_branch(username)
 
         # CallLog Table
         if (ticketID == None):

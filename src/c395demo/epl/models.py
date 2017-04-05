@@ -94,7 +94,8 @@ class ProbType(models.Model):
     
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
-    branch = models.CharField(max_length=20,default='staff')
+    status = models.CharField(max_length=20,default='staff')
+    branch = models.CharField(max_length=20,default='home')
 
     def __unicode__(self):
         return self.user.username
@@ -104,4 +105,7 @@ class UserProfile(models.Model):
         
     def get_branch(self):
         return self.branch
+        
+    def get_status(self):
+        return self.status
     

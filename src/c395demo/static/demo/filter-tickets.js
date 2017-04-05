@@ -43,6 +43,9 @@ function filters (visible){
         case 'closed':
             $("option[value='/manage-tickets/?ticketType=closed']").attr("selected","selected");
             break;
+        case 'needsapproval':
+            $("option[value='/manage-tickets/?ticketType=needsapproval']").attr("selected","selected");
+            break;
         case 'unapproved':
             $("option[value='/manage-tickets/?ticketType=unapproved']").attr("selected","selected");
             break;

@@ -6,7 +6,7 @@
 
 <html>
 <head>
-	<title>Branch Tickets</title>
+	<title>status Tickets</title>
 	{% load static %}
 	<link rel="stylesheet" type="text/css" href="{% static '/demo/scroll-top.css' %}">
 	<script src="{% static '/demo/sorttable.js' %}"></script>
@@ -58,6 +58,7 @@
 	                <th>Date</th>
 	                <th>Category</th>
 	                <th>Status</th>
+	                <th>Branch</th>
 	                <th class= "sorttable_nosort">Description</th>
 	                <th class= "sorttable_nosort">Options</th>
 	            </tr>
@@ -66,7 +67,8 @@
 	        {% load descGet %}
             {% editURL Category CallID as editTicketURL %}
 	        {% for callLog in callLogs %}
-	            {% if callLog.Category in available %}
+	            {% captureas user_branch %}{% get_branch callLog.CallID %}{% endcaptureas %}
+	            {% if callLog.Category in available and branch == user_branch %}
                    {% editURL callLog.Category callLog.CallID as editTicketURL %}
                     <tr>
                         <td> {{ callLog.CallID }} </td>
@@ -74,6 +76,7 @@
                         <td> {{ callLog.RecvdDate|get_date }} </td>
                         <td> {{ callLog.Category }} </td>
                         <td id="status_{{ callLog.CallID }}"> {{ callLog.CallStatus }} </td>
+                        <td> {% get_branch callLog.CallID %} </td>
                         <td style="text-align:left;"> {% descGet callLog.CallID %} </td>
                         <td>
                             <a href="{% url 'detail' id=callLog.CallID %}" style="display:inline-block;">
@@ -81,7 +84,7 @@
                             </a>
                             <!-- replace edit button with approve button if user is manager and ticket is non-approved -->
                             {% if callLog.CallStatus == "Needs Approval" or callLog.CallStatus == "Disapproved" %}
-                                {% if branch == "manager" %}
+                                {% if status == "manager" %}
                                     <a id="appBtn_{{ callLog.CallID }}" class="cursor button" style="display:inline-block;"> <div>
                                             <i class="fa fa-check" aria-hidden="true"></i> Approve
                                         </div></a>
@@ -108,7 +111,7 @@
                             {% endif %}
 
                              <!--IT functionality -->
-                            {% if branch == "IT" %}
+                            {% if status == "IT" %}
                                 <a id="myBtn_{{ callLog.CallID }}" class="cursor button" style="display:inline-block;"> <div>
                                     {% if callLog.CallStatus == "Open" %}
                                         <i class="fa fa-check" aria-hidden="true"></i> Resolved
@@ -117,7 +120,7 @@
                                     {% endif %}
                                 </div></a>
                             <!-- If user is manager, replace resolve/reopen button with disapprove button if ticket is non-approved -->    
-                            {% elif branch == "manager" %}
+                            {% elif status == "manager" %}
                                     {% if callLog.CallStatus == "Needs Approval" or callLog.CallStatus == "Disapproved" %}
                                     <a id="disBtn_{{ callLog.CallID }}" class="cursor button" style="display:inline-block;"> <div>
                                         <i class="fa fa-check" aria-hidden="true"></i> Disapprove

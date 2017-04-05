@@ -45,7 +45,7 @@
         
         <!-- If user is manager, replace edit button with approve button for non-approved tickets -->
         {% if CallStatus == "Needs Approval" or CallStatus == "Disapproved" %}
-                {% if branch == "manager" %}
+                {% if status == "manager" %}
                     <a id="appBtn_{{ CallID }}" class="cursor button" style="display:inline-block;"> <div>
                         <i class="fa fa-check" aria-hidden="true"></i> Approve
                     </div></a>
@@ -72,7 +72,7 @@
         {% endif %}
         
         <!-- IT functionality-->
-        {% if branch == "IT" %}
+        {% if status == "IT" %}
             <a id="myBtn_{{ CallID }}" class="button cursor">
                 {% if CallStatus == "Open" %}
                     <i class="fa fa-check" aria-hidden="true"></i> Resolved
@@ -81,7 +81,7 @@
                 {% endif %}
             </a>
         <!-- If manager, replace resolve/reopen button with disapprove button if non-approved ticket -->
-        {% elif branch == "manager" %}
+        {% elif status == "manager" %}
             {% if CallStatus == "Needs Approval" or CallStatus == "Disapproved" %}
                 <a id="disBtn_{{ CallID }}" class="cursor button" style="display:inline-block;"> <div>
                     <i class="fa fa-check" aria-hidden="true"></i> Disapprove
