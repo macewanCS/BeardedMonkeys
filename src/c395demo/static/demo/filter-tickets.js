@@ -53,6 +53,11 @@ function filters (visible){
             $("option[value='/manage-tickets/?ticketType=disapproved']").attr("selected","selected");
             break;
         default:
-            $("option[id='selected']").attr("selected","selected");
+            if(visible != null) {
+	            $("option[value='/manage-tickets/?ticketType=" + visible + "']").attr("selected","selected");
+            }
+            if(visible == "all") {
+	            $("option[id='selected']").attr("selected","selected");
+            }
     }
 }

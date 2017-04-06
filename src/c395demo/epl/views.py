@@ -46,10 +46,12 @@ def hardware(request):
     if (not request.user.is_authenticated()):
         return redirect('/login')
 
+    is_update = False
     ticketId = request.GET.get('ticketID')
     if ticketId == None:
         form = HardwareTicketForm(request.POST or None)
     else:
+        is_update = "update"
         context = successTicketSummary(request, ticketId, "update")
         form = HardwareTicketForm(request.POST or None, initial=context, auto_id=False)
 
@@ -67,13 +69,7 @@ def hardware(request):
 
         return render(request, "epl/hardware_submitted.html", context)
     
-    '''context = {}
-    #return render(request, 'epl/hardware.html', context)
-    form_class = HardwareTicketForm
-    return render(request, 'epl/hardware.html', {
-        'form': form_class,
-    })'''
-    context = {'form': form}
+    context = {'form': form, 'is_update' : is_update}
     return render(request, 'epl/hardware.html', context)
 
 # software tickets page view
@@ -82,10 +78,12 @@ def software(request):
     if (not request.user.is_authenticated()):
         return redirect('/login')
 
+    is_update = False
     ticketId = request.GET.get('ticketID')
     if ticketId == None:
         form = SoftwareTicketForm(request.POST or None)
     else:
+        is_update = "update"
         context = successTicketSummary(request, ticketId, "update")
         form = SoftwareTicketForm(request.POST or None, initial=context, auto_id=False)
 
@@ -103,13 +101,7 @@ def software(request):
 
         return render(request, "epl/software_submitted.html", context)
 
-    #context = {}
-    #return render(request, 'epl/software.html', context)
-    #form_class = SoftwareTicketForm
-    #return render(request, 'epl/software.html', {
-    #    'form': form_class,
-    #})
-    context = {'form': form}
+    context = {'form': form, 'is_update' : is_update }
     return render(request, 'epl/software.html', context)
 
 
@@ -119,10 +111,12 @@ def service(request):
     if (not request.user.is_authenticated()):
         return redirect('/login')
 
+    is_update = False
     ticketId = request.GET.get('ticketID')
     if ticketId == None:
         form = ServiceTicketForm(request.POST or None)
     else:
+        is_update = "update"
         context = successTicketSummary(request, ticketId, "update")
         form = ServiceTicketForm(request.POST or None, initial=context, auto_id=False)
 
@@ -140,7 +134,7 @@ def service(request):
 
         return render(request, "epl/service_submitted.html", context)
 
-    context = {'form': form}
+    context = {'form': form, 'is_update' : is_update}
     return render(request, 'epl/service.html', context)
 
 # general tickets page view
@@ -149,10 +143,12 @@ def general(request):
     if (not request.user.is_authenticated()):
         return redirect('/login')
 
+    is_update = False
     ticketId = request.GET.get('ticketID')
     if ticketId == None:
         form = GeneralTicketForm(request.POST or None)
     else:
+        is_update = "update"
         context = successTicketSummary(request, ticketId, "update")
         form = GeneralTicketForm(request.POST or None, initial=context, auto_id=False)
 
@@ -170,7 +166,7 @@ def general(request):
 
         return render(request, "epl/general_submitted.html", context)
 
-    context = {'form': form}
+    context = {'form': form, 'is_update' : is_update}
     return render(request, 'epl/general.html', context)
 
 # password recovery tickets page view
@@ -179,10 +175,12 @@ def password(request):
     if (not request.user.is_authenticated()):
         return redirect('/login')
 
+    is_update = False
     ticketId = request.GET.get('ticketID')
     if ticketId == None:
         form = PasswordTicketForm(request.POST or None)
     else:
+        is_update = "update"
         context = successTicketSummary(request, ticketId, "update")
         form = PasswordTicketForm(request.POST or None, initial=context, auto_id=False)
 
@@ -200,7 +198,7 @@ def password(request):
 
         return render(request, "epl/password_submitted.html", context)
 
-    context = {'form': form}
+    context = {'form': form, 'is_update' : is_update}
     return render(request, 'epl/password.html', context)
 
 # my all tickets page view
@@ -244,50 +242,57 @@ def manage(request):
     except:
         ticket_type = None
     
-    visible = "all"
+    visible = ticket_type
     # retriving all the data
     if ( ticket_type == None ):
         callLogs = CallLog.objects.all()
+        visible = "all"
         
     # filter based on the category of the ticket
     elif  ( ticket_type == "hardware" ):
         callLogs = CallLog.objects.filter(Category="Hardware")
-        visible = "hardware"
+
     elif  ( ticket_type == "software" ):
         callLogs = CallLog.objects.filter(Category="Software")
-        visible = "software"
+
     elif  ( ticket_type == "service" ):
         callLogs = CallLog.objects.filter(Category="Service")
-        visible = "service"
+
     elif  ( ticket_type == "password" ):
         callLogs = CallLog.objects.filter(Category="Password")
-        visible = "password"
+
     elif  ( ticket_type == "other" ):
         callLogs = CallLog.objects.filter(Category="Other")
-        visible = "other"
     
     # filter based on status of the ticket
     elif  ( ticket_type == "open" ):
         callLogs = CallLog.objects.filter(CallStatus="Open")
-        visible = "open"
+
     elif  ( ticket_type == "resolved" ):
         callLogs = CallLog.objects.filter(CallStatus="Resolved")
-        visible = "resolved"
+
     elif  ( ticket_type == "closed" ):
         callLogs = CallLog.objects.filter(CallStatus="Closed")
-        visible = "closed"
+
     elif  ( ticket_type == "disapproved" ):
         callLogs = CallLog.objects.filter(CallStatus="Disapproved")
-        visible = "disapproved"
+
     elif  ( ticket_type == "needsapproval" ):
         callLogs = CallLog.objects.filter(CallStatus="Needs Approval")
-        visible = "needsapproval"
+        
     elif  ( ticket_type == "progress" ):
         callLogs = CallLog.objects.filter(CallStatus="InProgress")
-        visible = "progress"
     
     else:
-        callLogs = CallLog.objects.all()
+        temp_logs = CallLog.objects.all()
+        callLogs = []
+        for c in temp_logs:
+            temp = c.Symptoms.split("|")
+            if (temp[len(temp)-1].lower() == ticket_type.lower()):
+                callLogs.append(c)
+        temp = visible
+        visible = visible[:1].upper()
+        visible += temp[1:]
     
     asgnmnts = Asgnmnt.objects.all()
     probTypes = ProbType.objects.all()
@@ -311,9 +316,21 @@ def manage(request):
         "count" : count,
         "status" : status,
         "visible" : visible,
-        "branch" : branch
+        "branch" : branch,
+        "branch_list" : get_branch_list()
     }
     return render(request, 'epl/manage-tickets.html', context)
+
+# get all the branch names
+def get_branch_list():
+    branch_list = []
+    users = User.objects.all()
+    for u in users:
+        temp = get_branch(u.username)
+        if (temp not in branch_list and
+            temp != "HR" and temp != "IT" ):
+            branch_list.append(temp)
+    return branch_list
     
 # counts the total number of tickets
 def total_count(lis, available, branch):
@@ -915,7 +932,7 @@ def database_saved(form, username, ticketID):
         else:
             callLog_table = CallLog(
                 CallID = ticketID,
-            Symptoms = "|".join([callLog_Symptoms, image_url]), #adding the url of the image
+            Symptoms = callLog_Symptoms, #adding the url of the image
             Priority = callLog_Priority,
             CallSource = callLog_CallSource,
             RecvdDate = callLog_RecvdDate,

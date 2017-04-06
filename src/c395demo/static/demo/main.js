@@ -66,6 +66,7 @@ $(document).ready(function(){
         $("#disYButton").click(function() {
             $("#disModal").css("display", "none");
             alterData(id, "Disapproved")
+            window.location.reload()
         });
     
     $(".nButton").click(function () {
