@@ -244,50 +244,57 @@ def manage(request):
     except:
         ticket_type = None
     
-    visible = "all"
+    visible = ticket_type
     # retriving all the data
     if ( ticket_type == None ):
         callLogs = CallLog.objects.all()
+        visible = "all"
         
     # filter based on the category of the ticket
     elif  ( ticket_type == "hardware" ):
         callLogs = CallLog.objects.filter(Category="Hardware")
-        visible = "hardware"
+
     elif  ( ticket_type == "software" ):
         callLogs = CallLog.objects.filter(Category="Software")
-        visible = "software"
+
     elif  ( ticket_type == "service" ):
         callLogs = CallLog.objects.filter(Category="Service")
-        visible = "service"
+
     elif  ( ticket_type == "password" ):
         callLogs = CallLog.objects.filter(Category="Password")
-        visible = "password"
+
     elif  ( ticket_type == "other" ):
         callLogs = CallLog.objects.filter(Category="Other")
-        visible = "other"
     
     # filter based on status of the ticket
     elif  ( ticket_type == "open" ):
         callLogs = CallLog.objects.filter(CallStatus="Open")
-        visible = "open"
+
     elif  ( ticket_type == "resolved" ):
         callLogs = CallLog.objects.filter(CallStatus="Resolved")
-        visible = "resolved"
+
     elif  ( ticket_type == "closed" ):
         callLogs = CallLog.objects.filter(CallStatus="Closed")
-        visible = "closed"
+
     elif  ( ticket_type == "disapproved" ):
         callLogs = CallLog.objects.filter(CallStatus="Disapproved")
-        visible = "disapproved"
+
     elif  ( ticket_type == "needsapproval" ):
         callLogs = CallLog.objects.filter(CallStatus="Needs Approval")
-        visible = "needsapproval"
+        
     elif  ( ticket_type == "progress" ):
         callLogs = CallLog.objects.filter(CallStatus="InProgress")
-        visible = "progress"
     
     else:
-        callLogs = CallLog.objects.all()
+        temp_logs = CallLog.objects.all()
+        callLogs = []
+        for c in temp_logs:
+            temp = c.Symptoms.split("|")
+            if (temp[len(temp)-1].lower() == ticket_type.lower()):
+                callLogs.append(c)
+        temp = visible
+        visible = visible[:1].upper()
+        visible += temp[1:]
     
     asgnmnts = Asgnmnt.objects.all()
     probTypes = ProbType.objects.all()
@@ -311,9 +318,21 @@ def manage(request):
         "count" : count,
         "status" : status,
         "visible" : visible,
-        "branch" : branch
+        "branch" : branch,
+        "branch_list" : get_branch_list()
     }
     return render(request, 'epl/manage-tickets.html', context)
+
+# get all the branch names
+def get_branch_list():
+    branch_list = []
+    users = User.objects.all()
+    for u in users:
+        temp = get_branch(u.username)
+        if (temp not in branch_list and
+            temp != "HR" and temp != "IT" ):
+            branch_list.append(temp)
+    return branch_list
     
 # counts the total number of tickets
 def total_count(lis, available, branch):
