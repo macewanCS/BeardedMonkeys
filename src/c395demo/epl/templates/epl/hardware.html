@@ -37,7 +37,13 @@
         {{form.image_url}} 
         <br><br><br>
         <!-- making button-->
-        <button type="submit" class="submit">Submit Ticket</button>
+        <button type="submit" class="submit">
+        {% if is_update == "update" %}
+            Update Ticket
+        {% else %}
+            Submit Ticket
+        {% endif %}
+        </button>
         <br><br><br>
     </form>
 

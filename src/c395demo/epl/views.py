@@ -46,10 +46,12 @@ def hardware(request):
     if (not request.user.is_authenticated()):
         return redirect('/login')
 
+    is_update = False
     ticketId = request.GET.get('ticketID')
     if ticketId == None:
         form = HardwareTicketForm(request.POST or None)
     else:
+        is_update = "update"
         context = successTicketSummary(request, ticketId, "update")
         form = HardwareTicketForm(request.POST or None, initial=context, auto_id=False)
 
@@ -67,13 +69,7 @@ def hardware(request):
 
         return render(request, "epl/hardware_submitted.html", context)
     
-    '''context = {}
-    #return render(request, 'epl/hardware.html', context)
-    form_class = HardwareTicketForm
-    return render(request, 'epl/hardware.html', {
-        'form': form_class,
-    })'''
-    context = {'form': form}
+    context = {'form': form, 'is_update' : is_update}
     return render(request, 'epl/hardware.html', context)
 
 # software tickets page view
@@ -82,10 +78,12 @@ def software(request):
     if (not request.user.is_authenticated()):
         return redirect('/login')
 
+    is_update = False
     ticketId = request.GET.get('ticketID')
     if ticketId == None:
         form = SoftwareTicketForm(request.POST or None)
     else:
+        is_update = "update"
         context = successTicketSummary(request, ticketId, "update")
         form = SoftwareTicketForm(request.POST or None, initial=context, auto_id=False)
 
@@ -103,13 +101,7 @@ def software(request):
 
         return render(request, "epl/software_submitted.html", context)
 
-    #context = {}
-    #return render(request, 'epl/software.html', context)
-    #form_class = SoftwareTicketForm
-    #return render(request, 'epl/software.html', {
-    #    'form': form_class,
-    #})
-    context = {'form': form}
+    context = {'form': form, 'is_update' : is_update }
     return render(request, 'epl/software.html', context)
 
 
@@ -119,10 +111,12 @@ def service(request):
     if (not request.user.is_authenticated()):
         return redirect('/login')
 
+    is_update = False
     ticketId = request.GET.get('ticketID')
     if ticketId == None:
         form = ServiceTicketForm(request.POST or None)
     else:
+        is_update = "update"
         context = successTicketSummary(request, ticketId, "update")
         form = ServiceTicketForm(request.POST or None, initial=context, auto_id=False)
 
@@ -140,7 +134,7 @@ def service(request):
 
         return render(request, "epl/service_submitted.html", context)
 
-    context = {'form': form}
+    context = {'form': form, 'is_update' : is_update}
     return render(request, 'epl/service.html', context)
 
 # general tickets page view
@@ -149,10 +143,12 @@ def general(request):
     if (not request.user.is_authenticated()):
         return redirect('/login')
 
+    is_update = False
     ticketId = request.GET.get('ticketID')
     if ticketId == None:
         form = GeneralTicketForm(request.POST or None)
     else:
+        is_update = "update"
         context = successTicketSummary(request, ticketId, "update")
         form = GeneralTicketForm(request.POST or None, initial=context, auto_id=False)
 
@@ -170,7 +166,7 @@ def general(request):
 
         return render(request, "epl/general_submitted.html", context)
 
-    context = {'form': form}
+    context = {'form': form, 'is_update' : is_update}
     return render(request, 'epl/general.html', context)
 
 # password recovery tickets page view
@@ -179,10 +175,12 @@ def password(request):
     if (not request.user.is_authenticated()):
         return redirect('/login')
 
+    is_update = False
     ticketId = request.GET.get('ticketID')
     if ticketId == None:
         form = PasswordTicketForm(request.POST or None)
     else:
+        is_update = "update"
         context = successTicketSummary(request, ticketId, "update")
         form = PasswordTicketForm(request.POST or None, initial=context, auto_id=False)
 
@@ -200,7 +198,7 @@ def password(request):
 
         return render(request, "epl/password_submitted.html", context)
 
-    context = {'form': form}
+    context = {'form': form, 'is_update' : is_update}
     return render(request, 'epl/password.html', context)
 
 # my all tickets page view
