@@ -96,7 +96,13 @@
                         <td> {{ callLog.CallID }} </td>
                         <td> {{ callLog.CustID }} </td>
                         <td> {{ callLog.RecvdDate|get_date }} </td>
-                        <td> {{ callLog.Category }} </td>
+                        {% if callLog.Category == "Workstation Software" %}
+                            <td> Software </td>
+                        {% elif callLog.Category == "System Service" %}
+                            <td> Service </td>
+                        {% else %}
+                            <td> {{ callLog.Category }} </td>
+                        {% endif %}
                         <td id="status_{{ callLog.CallID }}"> {{ callLog.CallStatus }} </td>
                         {% if branch == "HR" or branch == "IT" %}
                                 <td> {{ ticket_branch }} </td>

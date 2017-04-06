@@ -290,9 +290,12 @@ def manage(request):
             temp = c.Symptoms.split("|")
             if (temp[len(temp)-1].lower() == ticket_type.lower()):
                 callLogs.append(c)
-        temp = visible
-        visible = visible[:1].upper()
-        visible += temp[1:]
+        if (visible.lower() == "hr"):
+            visible = "HR"
+        else:
+            temp = visible
+            visible = visible[:1].upper()
+            visible += temp[1:]
     
     asgnmnts = Asgnmnt.objects.all()
     probTypes = ProbType.objects.all()
@@ -323,7 +326,7 @@ def manage(request):
 
 # get all the branch names
 def get_branch_list():
-    branch_list = []
+    branch_list = ["HR"]
     users = User.objects.all()
     for u in users:
         temp = get_branch(u.username)
