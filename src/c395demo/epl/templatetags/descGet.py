@@ -97,6 +97,10 @@ def descGet(id):
         string += temp[0]
         string += " password."
         return string
+     
+    elif (ticket.Category == "HR"):
+        string += "Hidden for privacy."
+        return string
         
     elif (ticket.Category == "Other"):
         return truncate(temp[0])

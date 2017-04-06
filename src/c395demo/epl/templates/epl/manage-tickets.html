@@ -136,7 +136,7 @@
 
                              <!--IT functionality -->
                             {% if status == "IT" %}
-                                {% if ticket_branch == "HR" %}
+                                {% if callLog.Category == "HR" %}
                                     <a style="display:inline-block;"> <div class="button disabled" style="background-color:grey;" >
                                             <i class="fa fa-check" aria-hidden="true"></i> Open
                                 {% else %}
