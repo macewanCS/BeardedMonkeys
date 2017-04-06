@@ -32,6 +32,8 @@
                 <img class="stat" src="{% static 'demo/view-ticket/resolved-bar.jpg' %}">
             {% elif CallStatus == "Closed" %}
                 <img class="stat" src="{% static 'demo/view-ticket/finished-bar.jpg' %}">
+            {% elif CallStatus == "Disapproved" %}
+                <img class="stat" src="{% static 'demo/view-ticket/disapproved-bar.jpg' %}">
             {% elif CallStatus == "Need Approval" or CallStatus == "Needs Approval" or CallStatus == "Unapproved" %}
                 <img class="stat" src="{% static 'demo/view-ticket/need-approval-bar.jpg' %}">
             {% else %}

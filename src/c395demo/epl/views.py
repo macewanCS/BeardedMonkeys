@@ -934,7 +934,7 @@ def database_saved(form, username, ticketID):
         else:
             callLog_table = CallLog(
                 CallID = ticketID,
-            Symptoms = "|".join([callLog_Symptoms, image_url]), #adding the url of the image
+            Symptoms = callLog_Symptoms, #adding the url of the image
             Priority = callLog_Priority,
             CallSource = callLog_CallSource,
             RecvdDate = callLog_RecvdDate,

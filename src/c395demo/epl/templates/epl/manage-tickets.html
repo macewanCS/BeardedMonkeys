@@ -51,10 +51,12 @@
             <option value="/manage-tickets/?ticketType=closed">Closed Tickets</option>
             <option value="/manage-tickets/?ticketType=needsapproval">Need Approval Tickets</option>
             <option value="/manage-tickets/?ticketType=disapproved">Disapproved Tickets</option>
-            <option selected disabled>-- Tickets Branch Filter --</option>
-            {% for branch_name in branch_list %}
-                <option value="/manage-tickets/?ticketType={{branch_name}}">{{branch_name}} Branch Tickets</option>
-            {% endfor %}
+            {% if branch == "IT" %}
+                <option selected disabled>-- Tickets Branch Filter --</option>
+                {% for branch_name in branch_list %}
+                    <option value="/manage-tickets/?ticketType={{branch_name}}">{{branch_name}} Branch Tickets</option>
+                {% endfor %}
+            {% endif %}
         </select>
     </div>
     <div class="clearfix"></div>
