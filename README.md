@@ -22,19 +22,20 @@ Please follow the following steps in order to get up and running with our web ap
 
 - To run the server the command is, `python manage.py runserver`
 
-- You may now access the web application by going to the url `localhost:8000
+- You may now access the web application by going to the url [localhost:8000](localhost:8000)
 
 - To create a new user, run `python manage.py createsuperuser`
 
-- Admin Access will be available at `localhost:8000/admin`.
+- Admin Access will be available at [localhost:8000/admin](localhost:8000/admin). You could add user, assign status and branch for each user in the admin pane
+
+- Note: We have made the branches dynamic. What it means is that whenever we assign a user to a branch, it will automatically adds that branch for "tickets filtration". No hard coding of branches required in order to make them appear in filtration options.
 
 
 ### Few Useful Git Commands:
-- When pushing your files, make sure you are in your own forked repository, not the group main repository.
-Run, git remote show origin
-- Cache credential for an hour, git config --global credential.helper 'cache --timeout=3600'
-- Add remote upstream, git remote add upstream http://link to repo
-- check configured remote repository, git remote -v
+- When pushing your files, make sure you are in your own forked repository, not the group main repository. Run, `git remote show origin`
+- Cache credential for an hour, `git config --global credential.helper 'cache --timeout=3600'`
+- Add remote upstream, `git remote add upstream http://link-to-repo`
+- check configured remote repository, `git remote -v`
 
 # We are BeardedMonkeys
 
