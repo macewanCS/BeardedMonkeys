@@ -30,6 +30,9 @@ Please follow the following steps in order to get up and running with our web ap
 
 - Note: We have made the branches dynamic. What it means is that whenever we assign a user to a branch, it will automatically adds that branch for "tickets filtration". No hard coding of branches required in order to make them appear in filtration options.
 
+### Localhost Setup:
+
+https://www.youtube.com/watch?v=q03YCMWPIhg
 
 ### Few Useful Git Commands:
 - When pushing your files, make sure you are in your own forked repository, not the group main repository. Run, `git remote show origin`
