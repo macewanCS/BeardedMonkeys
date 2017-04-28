@@ -30,6 +30,8 @@ Please follow the following steps in order to get up and running with our web ap
 
 - Note: We have made the branches dynamic. What it means is that whenever we assign a user to a branch, it will automatically adds that branch for "tickets filtration". No hard coding of branches required in order to make them appear in filtration options.
 
+**Important Note:** Please be sure to setup the branch for each user you create from the admin panel. Otherwise it will give you 404 Does not exist error for the user. For more information on that error, please watch the video tutorial on Localhost Setup, starting at 7m10s.
+
 ### Localhost Setup:
 
 https://www.youtube.com/watch?v=q03YCMWPIhg
