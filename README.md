@@ -14,9 +14,9 @@ Please follow the following steps in order to get up and running with our web ap
 
 - Activate the virtual environment by running `source virtual_environment_name/bin/activate`
 
-- Once the virtual environment is activated, if it is the first time, you may need to install Django. You can do so by simply running `pip install Django`
+- Once the virtual environment is activated, if it is the first time, you may need to install Django. You can do so by simply running `pip install Django==1.10`
 
-- You may verify the installed version of python and Django. To find out python version run `python --version`. For Django run `python manage.py --version`. Python version should be `3.4` and Django `1.10` is preferred.
+- You may verify the installed version of python and Django. To find out python version run `python --version`. For Django run `python manage.py --version` or `python -m django --version`. Python version should be `3.4` and Django `1.10` is preferred.
 
 - After installing the Django in your virtual environment, run `python manage.py migrate` to build the app. Note: In few cases, you may have to run `python manage.py makemigrations` before doing this step. For more information, please refer to the [Django documentation](https://docs.djangoproject.com/en/1.10/topics/migrations/).
 
