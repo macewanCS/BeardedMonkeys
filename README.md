@@ -60,8 +60,5 @@ You can checkout my current websites to know me better, [webpro.tech](http://www
 ### Abdullah Alshakhs
 I am Abdullah, and I am here to attend the CMPT395 lab and learn more about github and its feature. 
 
-### Connor Dykstra
-I am Connor Dykstra, and I'm not interested in saying anything interesting about myself.
-
 ### Mohammed Al Hamood
 i am Mohammed , and i am here in thursday lab lering how to use github.and i like to cude using C#.
